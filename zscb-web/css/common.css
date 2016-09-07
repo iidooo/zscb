@@ -1,0 +1,344 @@
+/*重写Html默认标签*/
+body {
+    font-family: "Microsoft YaHei", "Arial", "黑体", "宋体", sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #444444;
+    background: #ecf0f1;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+img {
+    vertical-align: middle;
+    border:0;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+a:focus{
+    text-decoration: none;
+}
+
+/*End*/
+
+/*重写bootstrap默认样式*/
+.navbar{
+    background-color: #F5633C;
+    border-radius: 0px;
+}
+
+.navbar-nav a{
+    color: #FFFFFF;
+}
+
+.navbar-nav a:hover{
+    background-color: #DB441B;
+    color: #F5633C;
+}
+
+.navbar-nav .active{
+    background-color: #DB441B;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #FF4329;
+    border-color: #FF4329;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #E3000C;
+    border-color: #E3000C;
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    color: #fff;
+    background-color: #E3000C;
+    border-color: #E3000C;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #00afd7;
+    border-color: #00afd7;
+}
+
+.panel{
+    border-radius: 0px;
+}
+
+.table{
+    margin-bottom: 0px;
+}
+
+.table tr {
+    background-color: #ffffff;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.table > thead > tr > th {
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.table > tbody > tr > td {
+    border-top: 0px solid #ddd;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.tab-content {
+    padding: 10px 0;
+}
+
+.breadcrumb {
+    border-radius: 0px;
+    background-color: transparent;
+    margin-bottom: 0px;
+}
+
+.bg-info {
+    background-color: #2b9ac9 !important;
+}
+
+.bg-success {
+    background-color: #58c9c7 !important;
+}
+/*End*/
+
+/*定义一些常用背景色*/
+.bg-222 {
+    background-color: #222222;
+}
+
+.bg-f5 {
+    background-color: #f5f5f5;
+}
+
+.bg-white{
+    background-color: #ffffff;
+}
+
+.text-dark {
+    color: #797979 !important;
+}
+/*End*/
+
+.box-shadow {
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.input-error {
+    border-color: #de615e;
+}
+
+.input-lg {
+    height: 46px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 4px;
+}
+
+.required {
+    color: red;
+}
+
+.img-square-48 {
+    width: 48px;
+    height: 48px;
+}
+
+.img-square-50 {
+    width: 50px;
+    height: 50px;
+}
+
+.img-square-100 {
+    width: 100px;
+    height: 100px;
+}
+
+.img-square-200 {
+    width: 200px;
+    height: 200px;
+}
+
+.img-rect-200x100 {
+    width: 200px;
+    height: 100px;
+}
+
+.width-50 {
+    width: 50px;
+}
+
+.width-100 {
+    width: 100px;
+}
+
+.width-200 {
+    width: 200px;
+}
+
+.width-240 {
+    width: 240px;
+}
+
+.width-400 {
+    width: 400px;
+}
+
+.width-per-60 {
+    width: 60%;
+}
+
+.width-per-40 {
+    width: 40%;
+}
+
+.height-30 {
+    height: 30px;
+}
+
+.margin-0{
+    margin: 0;
+}
+
+.margin-left-5 {
+    margin-left: 5px;
+}
+
+.margin-left-240 {
+    margin-left: 240px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-60 {
+    margin-top: 60px;
+}
+
+.margin-top-70 {
+    margin-top: 70px;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0;
+}
+
+.margin-bottom-10{
+    margin-bottom: 10px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.margin-bottom-60 {
+    margin-bottom: 60px;
+}
+
+.margin-bottom-70 {
+    margin-bottom: 70px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.padding-5 {
+    padding: 5px;
+}
+
+.padding-20{
+    padding: 20px;
+}
+
+.padding-left-0 {
+    padding-left: 0px;
+}
+
+.padding-right-0 {
+    padding-right: 0px;
+}
+
+.padding-right-5 {
+    padding-right: 5px;
+}
+
+.padding-h-10 {
+    padding: 0 10px;
+}
+
+.padding-h-50 {
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.spacer10 {
+    height: 10px;
+    width: 100%;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: block;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+/*超出宽度就换行*/
+.break-word {
+    word-wrap: break-word;
+}
+
+/*将对象呈递为内联对象，但是对象的内容作为块对象呈递。旁边的内联对象会被呈递在同一行内*/
+.inline-block {
+    display: inline-block;
+}
+
+.content-page {
+    margin-left: 240px;
+    overflow: hidden;
+}
+
+.title h4 {
+    display: inline-block;
+    text-indent: 8px;
+    border-left: 2px solid #428bca;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+/*定义字体样式*/
+.font-size-24{
+    font-size: 24px;
+}
+
+.font-weight-600{
+    font-weight: 600;
+}
