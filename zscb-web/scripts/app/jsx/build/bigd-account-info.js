@@ -44,10 +44,10 @@ var AccountInfo = React.createClass({displayName: "AccountInfo",
     render: function () {
         return (
             React.createElement("div", null, 
-                React.createElement(Header, {activeMenuID: "mainMenuBigD"}), 
+                React.createElement(Header, {activeMenuID: "mainMenuSysManage"}), 
 
                 React.createElement("div", {id: "main", className: "container-fluid margin-top-60"}, 
-                    React.createElement(SideBar, {activeMenuID: "sideMenuBigDAccountInfo"}), 
+                    React.createElement(SideBar, {activeMainMenuID: "mainMenuSysManage", activeMenuID: "sideMenuBigDAccountInfo"}), 
 
                     React.createElement("div", {className: "content-page"}, 
                         React.createElement(Breadcrumb, {page: Page.bigdAccountInfo}), 

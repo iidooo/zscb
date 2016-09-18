@@ -3,18 +3,15 @@ var OrderListActions = Reflux.createActions(['search']);
 var OrderListStore = Reflux.createStore({
     listenables: [OrderListActions],
     onSearch: function (data) {
-        var url = SiteProperties.serverURL + API.searchContentList;
-        data.accessKey = SecurityClient.accessKey;
-        data.accessSecret = SecurityClient.accessSecret;
+        var url = SiteProperties.serverURL + BigDAPI.getOrderList;
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        data.siteID = sessionStorage.getItem(SessionKey.siteID);
 
         // 检查token是否过期
-        if (data.accessToken == null || data.accessToken == "") {
-            location.href = SiteProperties.clientURL + Page.login;
-            return false;
-        }
+        //if (data.accessToken == null || data.accessToken == "") {
+        //    location.href = SiteProperties.clientURL + Page.login;
+        //    return false;
+        //}
 
         var self = this;
         var callback = function (result) {
@@ -32,15 +29,15 @@ var OrderListStore = Reflux.createStore({
 });
 
 var OrderList = React.createClass({displayName: "OrderList",
-    mixins: [Reflux.connect(OrderListStore, 'contentsData')],
+    mixins: [Reflux.connect(OrderListStore, 'orderListData')],
     getInitialState: function () {
         return {
             searchCondition:{
                 channelID: 0
             },
-            contentsData: {
+            orderListData: {
                 page: {},
-                contentList: []
+                orderList: []
             }
         };
     },
@@ -55,14 +52,16 @@ var OrderList = React.createClass({displayName: "OrderList",
             forceParse: 0,
             format: 'yyyy-mm-dd'
         });
+
+        OrderListActions.search(this.state);
     },
     render: function () {
         return (
             React.createElement("div", null, 
-                React.createElement(Header, {activeMenuID: "mainMenuBigD"}), 
+                React.createElement(Header, {activeMenuID: "mainMenuSysManage"}), 
 
                 React.createElement("div", {id: "main", className: "container-fluid margin-top-60"}, 
-                    React.createElement(SideBar, {activeMenuID: "sideMenuBigDOrderHistory"}), 
+                    React.createElement(SideBar, {activeMainMenuID: "mainMenuSysManage", activeMenuID: "sideMenuBigDOrderHistory"}), 
                     React.createElement("div", {className: "content-page"}, 
                         React.createElement(Breadcrumb, {page: Page.bigdOrderList}), 
                         React.createElement("div", {className: "panel panel-default"}, 
@@ -108,12 +107,12 @@ var OrderList = React.createClass({displayName: "OrderList",
                                 )
                             )
                         ), 
-                        React.createElement(OrderListTable, {contentList: this.state.contentsData.contentList}), 
+                        React.createElement(OrderListTable, {orderList: this.state.orderListData.orderList}), 
 
                         React.createElement(Pager, {callbackParent: this.onChildChanged, 
-                               recordSum: this.state.contentsData.page.recordSum, 
-                               currentPage: this.state.contentsData.page.currentPage, 
-                               pageSum: this.state.contentsData.page.pageSum}), 
+                               recordSum: this.state.orderListData.page.recordSum, 
+                               currentPage: this.state.orderListData.page.currentPage, 
+                               pageSum: this.state.orderListData.page.pageSum}), 
 
                         React.createElement(Footer, null)
 
@@ -131,18 +130,18 @@ var OrderListTable = React.createClass({displayName: "OrderListTable",
             React.createElement("table", {className: "table table-hover"}, 
                 React.createElement("thead", null, 
                 React.createElement("tr", null, 
-                    React.createElement("th", null, "栏目"), 
-                    React.createElement("th", {className: "width-400"}, "标题"), 
-                    React.createElement("th", null, "类型"), 
+                    React.createElement("th", null, "订单ID"), 
+                    React.createElement("th", null, "订单号"), 
                     React.createElement("th", null, "状态"), 
-                    React.createElement("th", null, "发布者"), 
-                    React.createElement("th", null, "发布时间"), 
-                    React.createElement("th", null, "更新时间")
+                    React.createElement("th", null, "创建时间"), 
+                    React.createElement("th", null, "支付时间"), 
+                    React.createElement("th", null, "完成时间"), 
+                    React.createElement("th", null, "支付费用")
                 )
                 ), 
                 React.createElement("tbody", null, 
-                this.props.contentList.map(function (item) {
-                    return React.createElement(OrderListTableRow, {key: item.contentID, content: item})
+                this.props.orderList.map(function (item) {
+                    return React.createElement(OrderListTableRow, {key: item.id, order: item})
                 })
                 )
             )
@@ -151,20 +150,24 @@ var OrderListTable = React.createClass({displayName: "OrderListTable",
 });
 
 var OrderListTableRow = React.createClass({displayName: "OrderListTableRow",
-    handleLink: function (contentID) {
-        sessionStorage.setItem(SessionKey.contentID, contentID);
-        location.href = SiteProperties.clientURL + Page.content;
+    handleLink: function (orderID) {
+        sessionStorage.setItem(SessionKey.orderID, orderID);
+        location.href = SiteProperties.webURL + Page.bigdOrderDetail;
     },
     render: function () {
         return (
-            React.createElement("tr", {onClick: this.handleLink.bind(null, this.props.content.contentID)}, 
-                React.createElement("td", null, this.props.content.channel.channelName), 
-                React.createElement("td", null, React.createElement("a", {href: "javascript:void(0)", onClick: this.handleLink.bind(null, this.props.content.contentID)}, this.props.content.contentTitle)), 
-                React.createElement("td", null, ContentTypeMap[this.props.content.contentType]), 
-                React.createElement("td", null, ContentStatusMap[this.props.content.status]), 
-                React.createElement("td", null, this.props.content.createUser.userName), 
-                React.createElement("td", null, new Date(this.props.content.createTime).format('yyyy-MM-dd hh:mm:ss')), 
-                React.createElement("td", null, new Date(this.props.content.updateTime).format('yyyy-MM-dd hh:mm:ss'))
+            React.createElement("tr", null, 
+                React.createElement("td", null, React.createElement("a", {href: "javascript:void(0)", onClick: this.handleLink.bind(null, this.props.order.id)}, 
+                    this.props.order.id
+                )), 
+                React.createElement("td", null, React.createElement("a", {href: "javascript:void(0)", onClick: this.handleLink.bind(null, this.props.order.id)}, 
+                    this.props.order.serial_number
+                )), 
+                React.createElement("td", null, this.props.order.status), 
+                React.createElement("td", null, this.props.order.create_time), 
+                React.createElement("td", null, this.props.order.pay_time), 
+                React.createElement("td", null, this.props.order.complete_time), 
+                React.createElement("td", null, this.props.order.actual_cost)
             )
         );
     }

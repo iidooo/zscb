@@ -3,18 +3,15 @@ var OrderListActions = Reflux.createActions(['search']);
 var OrderListStore = Reflux.createStore({
     listenables: [OrderListActions],
     onSearch: function (data) {
-        var url = SiteProperties.serverURL + API.searchContentList;
-        data.accessKey = SecurityClient.accessKey;
-        data.accessSecret = SecurityClient.accessSecret;
+        var url = SiteProperties.serverURL + BigDAPI.getOrderList;
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        data.siteID = sessionStorage.getItem(SessionKey.siteID);
 
         // 检查token是否过期
-        if (data.accessToken == null || data.accessToken == "") {
-            location.href = SiteProperties.clientURL + Page.login;
-            return false;
-        }
+        //if (data.accessToken == null || data.accessToken == "") {
+        //    location.href = SiteProperties.clientURL + Page.login;
+        //    return false;
+        //}
 
         var self = this;
         var callback = function (result) {
@@ -32,15 +29,15 @@ var OrderListStore = Reflux.createStore({
 });
 
 var OrderList = React.createClass({
-    mixins: [Reflux.connect(OrderListStore, 'contentsData')],
+    mixins: [Reflux.connect(OrderListStore, 'orderListData')],
     getInitialState: function () {
         return {
             searchCondition:{
                 channelID: 0
             },
-            contentsData: {
+            orderListData: {
                 page: {},
-                contentList: []
+                orderList: []
             }
         };
     },
@@ -55,14 +52,16 @@ var OrderList = React.createClass({
             forceParse: 0,
             format: 'yyyy-mm-dd'
         });
+
+        OrderListActions.search(this.state);
     },
     render: function () {
         return (
             <div>
-                <Header activeMenuID="mainMenuBigD"/>
+                <Header activeMenuID="mainMenuSysManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMenuID="sideMenuBigDOrderHistory"/>
+                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuBigDOrderHistory"/>
                     <div className="content-page">
                         <Breadcrumb page={Page.bigdOrderList}/>
                         <div className="panel panel-default">
@@ -108,12 +107,12 @@ var OrderList = React.createClass({
                                 </div>
                             </div>
                         </div>
-                        <OrderListTable contentList={this.state.contentsData.contentList}/>
+                        <OrderListTable orderList={this.state.orderListData.orderList}/>
 
                         <Pager callbackParent={this.onChildChanged}
-                               recordSum={this.state.contentsData.page.recordSum}
-                               currentPage={this.state.contentsData.page.currentPage}
-                               pageSum={this.state.contentsData.page.pageSum}/>
+                               recordSum={this.state.orderListData.page.recordSum}
+                               currentPage={this.state.orderListData.page.currentPage}
+                               pageSum={this.state.orderListData.page.pageSum}/>
 
                         <Footer/>
 
@@ -131,18 +130,18 @@ var OrderListTable = React.createClass({
             <table className="table table-hover">
                 <thead>
                 <tr>
-                    <th>栏目</th>
-                    <th className="width-400">标题</th>
-                    <th>类型</th>
+                    <th>订单ID</th>
+                    <th>订单号</th>
                     <th>状态</th>
-                    <th>发布者</th>
-                    <th>发布时间</th>
-                    <th>更新时间</th>
+                    <th>创建时间</th>
+                    <th>支付时间</th>
+                    <th>完成时间</th>
+                    <th>支付费用</th>
                 </tr>
                 </thead>
                 <tbody>
-                {this.props.contentList.map(function (item) {
-                    return <OrderListTableRow key={item.contentID} content={item}/>
+                {this.props.orderList.map(function (item) {
+                    return <OrderListTableRow key={item.id} order={item}/>
                 })}
                 </tbody>
             </table>
@@ -151,20 +150,24 @@ var OrderListTable = React.createClass({
 });
 
 var OrderListTableRow = React.createClass({
-    handleLink: function (contentID) {
-        sessionStorage.setItem(SessionKey.contentID, contentID);
-        location.href = SiteProperties.clientURL + Page.content;
+    handleLink: function (orderID) {
+        sessionStorage.setItem(SessionKey.orderID, orderID);
+        location.href = SiteProperties.webURL + Page.bigdOrderDetail;
     },
     render: function () {
         return (
-            <tr onClick={this.handleLink.bind(null, this.props.content.contentID)}>
-                <td>{this.props.content.channel.channelName}</td>
-                <td><a href="javascript:void(0)" onClick={this.handleLink.bind(null, this.props.content.contentID)}>{this.props.content.contentTitle}</a></td>
-                <td>{ContentTypeMap[this.props.content.contentType]}</td>
-                <td>{ContentStatusMap[this.props.content.status]}</td>
-                <td>{this.props.content.createUser.userName}</td>
-                <td>{new Date(this.props.content.createTime).format('yyyy-MM-dd hh:mm:ss')}</td>
-                <td>{new Date(this.props.content.updateTime).format('yyyy-MM-dd hh:mm:ss')}</td>
+            <tr>
+                <td><a href="javascript:void(0)" onClick={this.handleLink.bind(null, this.props.order.id)}>
+                    {this.props.order.id}
+                </a></td>
+                <td><a href="javascript:void(0)" onClick={this.handleLink.bind(null, this.props.order.id)}>
+                    {this.props.order.serial_number}
+                </a></td>
+                <td>{this.props.order.status}</td>
+                <td>{this.props.order.create_time}</td>
+                <td>{this.props.order.pay_time}</td>
+                <td>{this.props.order.complete_time}</td>
+                <td>{this.props.order.actual_cost}</td>
             </tr>
         );
     }

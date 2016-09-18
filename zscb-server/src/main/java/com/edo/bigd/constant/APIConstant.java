@@ -11,4 +11,12 @@ public class APIConstant {
     public static final String BIGD_API_LOGIN = "/auth/login";
     
     public static final String BIGD_API_ORDER = "/order";
+
+    public static final String BIGD_API_NEW_ORDER = "/order/openapi/neworder";
+    
+    public static final String BIGD_API_NEW_ORDER_SIMPLE = "/order/openapi/neworder/simple";
+    
+    public static final String BIGD_API_ORDER_EXPORT = "/order/exportJson/";
+    
+    public static final String BIGD_COOKIE_PATH = "/Users/Ethan/bigdcookie";
 }

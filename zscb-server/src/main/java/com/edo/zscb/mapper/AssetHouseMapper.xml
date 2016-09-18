@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edo.zscb.mapper.AssetHouseMapper" >
+  <resultMap id="BaseResultMap" type="com.edo.zscb.model.po.AssetHouse" >
+    <id column="HouseID" property="houseID" jdbcType="INTEGER" />
+    <result column="IdentityID" property="identityID" jdbcType="INTEGER" />
+    <result column="Number" property="number" jdbcType="VARCHAR" />
+    <result column="Address" property="address" jdbcType="VARCHAR" />
+    <result column="Status" property="status" jdbcType="VARCHAR" />
+    <result column="Remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UpdateUserID" property="updateUserID" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
+    <result column="IsDelete" property="isDelete" jdbcType="BIT" />
+    <result column="Version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    HouseID, IdentityID, Number, Address, Status, Remarks, UpdateTime, UpdateUserID, 
+    CreateTime, CreateUserID, IsDelete, Version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from credit_asset_house
+    where HouseID = #{houseID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from credit_asset_house
+    where HouseID = #{houseID,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.edo.zscb.model.po.AssetHouse" >
+    insert into credit_asset_house (HouseID, IdentityID, Number, 
+      Address, Status, Remarks, 
+      UpdateTime, UpdateUserID, CreateTime, 
+      CreateUserID, IsDelete, Version
+      )
+    values (#{houseID,jdbcType=INTEGER}, #{identityID,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateUserID,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserID,jdbcType=INTEGER}, #{isDelete,jdbcType=BIT}, #{version,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.edo.zscb.model.po.AssetHouse" >
+    insert into credit_asset_house
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="houseID != null" >
+        HouseID,
+      </if>
+      <if test="identityID != null" >
+        IdentityID,
+      </if>
+      <if test="number != null" >
+        Number,
+      </if>
+      <if test="address != null" >
+        Address,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="remarks != null" >
+        Remarks,
+      </if>
+      <if test="updateTime != null" >
+        UpdateTime,
+      </if>
+      <if test="updateUserID != null" >
+        UpdateUserID,
+      </if>
+      <if test="createTime != null" >
+        CreateTime,
+      </if>
+      <if test="createUserID != null" >
+        CreateUserID,
+      </if>
+      <if test="isDelete != null" >
+        IsDelete,
+      </if>
+      <if test="version != null" >
+        Version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="houseID != null" >
+        #{houseID,jdbcType=INTEGER},
+      </if>
+      <if test="identityID != null" >
+        #{identityID,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserID != null" >
+        #{updateUserID,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserID != null" >
+        #{createUserID,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edo.zscb.model.po.AssetHouse" >
+    update credit_asset_house
+    <set >
+      <if test="identityID != null" >
+        IdentityID = #{identityID,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        Number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        Address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        Remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserID != null" >
+        UpdateUserID = #{updateUserID,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        CreateTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserID != null" >
+        CreateUserID = #{createUserID,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        IsDelete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        Version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where HouseID = #{houseID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.AssetHouse" >
+    update credit_asset_house
+    set IdentityID = #{identityID,jdbcType=INTEGER},
+      Number = #{number,jdbcType=VARCHAR},
+      Address = #{address,jdbcType=VARCHAR},
+      Status = #{status,jdbcType=VARCHAR},
+      Remarks = #{remarks,jdbcType=VARCHAR},
+      UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
+      UpdateUserID = #{updateUserID,jdbcType=INTEGER},
+      CreateTime = #{createTime,jdbcType=TIMESTAMP},
+      CreateUserID = #{createUserID,jdbcType=INTEGER},
+      IsDelete = #{isDelete,jdbcType=BIT},
+      Version = #{version,jdbcType=INTEGER}
+    where HouseID = #{houseID,jdbcType=INTEGER}
+  </update>
+</mapper>

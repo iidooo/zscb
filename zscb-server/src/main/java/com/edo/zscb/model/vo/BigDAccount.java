@@ -2,6 +2,8 @@ package com.edo.zscb.model.vo;
 
 import java.math.BigDecimal;
 
+import net.sf.json.JSONObject;
+
 public class BigDAccount {
     
     // UID
@@ -38,6 +40,28 @@ public class BigDAccount {
     private String create_time;
     
     private BigDAccountDetail detail;
+    
+    public BigDAccount(){
+        
+    }
+    
+    public BigDAccount(JSONObject json){
+        this.username = json.getString("username");
+        this.status = json.getString("status");
+        this.blocked_fund = BigDecimal.valueOf(json.getDouble("blocked_fund"));
+        this.user_type = json.getString("user_type");
+        this.is_super_admin = json.getBoolean("is_super_admin");
+        this.phone = json.getString("phone");
+        this.create_time = json.getString("create_time");
+        this.id = json.getInt("id");
+        this.roles = json.getString("roles");
+        
+        detail = new BigDAccountDetail(json.getJSONObject("detail"));
+        
+
+        this.balance = BigDecimal.valueOf(json.getDouble("balance"));
+        this.email = json.getString("email");
+    }
 
     public Integer getId() {
         return id;

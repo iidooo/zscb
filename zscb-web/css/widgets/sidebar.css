@@ -108,6 +108,11 @@
     padding: 10px 25px 10px 65px;
 }
 
+.sidebar-menu ul ul i{
+    margin-right: 10px;
+}
+
+
 .sidebar-menu ul ul ul a {
     display: block;
     padding: 10px 25px 10px 85px;

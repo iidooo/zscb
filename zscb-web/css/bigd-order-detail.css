@@ -1,0 +1,22 @@
+.table th {
+    background: #F7F7F7;
+    text-align: right;
+}
+
+.table .text-center{
+    text-align: center;
+}
+
+.title{
+    color: #333;
+    font-size: 20px;
+    margin-top: 30px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.sub-title{
+    color: #BF1A21;
+    font-size: 14px;
+    margin: 10px 0 6px;
+}

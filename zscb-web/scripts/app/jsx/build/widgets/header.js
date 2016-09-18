@@ -38,14 +38,11 @@ var MainMenu = React.createClass({displayName: "MainMenu",
     render: function () {
         return (
             React.createElement("ul", {className: "nav navbar-nav"}, 
-                React.createElement("li", {id: "mainMenuBigD"}, 
-                    React.createElement("a", {href: SiteProperties.webURL + Page.contents}, "浩数接口")
+                React.createElement("li", {id: "mainMenuSysManage"}, 
+                    React.createElement("a", {href: SiteProperties.webURL + Page.systemManage}, "系统管理")
                 ), 
-                React.createElement("li", {id: "menuAccountManage"}, 
-                    React.createElement("a", {href: SiteProperties.webURL + Page.account}, "账户管理")
-                ), 
-                React.createElement("li", {id: "menuSystemManage"}, 
-                    React.createElement("a", {href: SiteProperties.webURL + Page.users}, "系统管理")
+                React.createElement("li", {id: "mainMenuBussinessManage"}, 
+                    React.createElement("a", {href: SiteProperties.webURL + Page.creditSearch}, "征信业务")
                 )
             )
         );
@@ -56,7 +53,7 @@ var LoginInfo = React.createClass({displayName: "LoginInfo",
     handleLogout: function () {
         sessionStorage.removeItem(SessionKey.accessToken);
         sessionStorage.removeItem(SessionKey.operatorID);
-        location.href = SiteProperties.clientURL + Page.login;
+        location.href = SiteProperties.webURL + Page.login;
     },
 
     render: function () {

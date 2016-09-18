@@ -1,85 +1,22 @@
-/**
- * Created by Ethan on 16/5/20.
- */
+var OrderDetailActions = Reflux.createActions(['getOrder']);
 
-var ContentActions = Reflux.createActions(['save', 'getContent', 'delete']);
-
-var ContentStore = Reflux.createStore({
-    listenables: [ContentActions],
-    onSave: function (data) {
-        var url = SiteProperties.serverURL + API.createContent;
-
-        data.contentID = sessionStorage.getItem(SessionKey.contentID);
-        if (data.contentID != null) {
-            url = SiteProperties.serverURL + API.updateContent;
-        }
-
-        data.accessKey = SecurityClient.accessKey;
-        data.accessSecret = SecurityClient.accessSecret;
+var OrderDetailStore = Reflux.createStore({
+    listenables: [OrderDetailActions],
+    onGetOrder: function (data) {
+        var url = SiteProperties.serverURL + BigDAPI.getOrder;
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        data.siteID = sessionStorage.getItem(SessionKey.siteID);
+        data.id = sessionStorage.getItem(SessionKey.orderID);
         // 检查token是否过期
         if (data.accessToken == null || data.accessToken == "") {
-            location.href = SiteProperties.clientURL + Page.login;
-            return false;
+            //location.href = SiteProperties.clientURL + Page.login;
+            //return false;
         }
 
         var self = this;
         var callback = function (result) {
             if (result.status == 200) {
-                sessionStorage.setItem(SessionKey.contentID, result.data.contentID);
-                alert(Message.SAVE_SUCCESS);
-                self.trigger(result.data);
-            } else {
-                console.log(result);
-            }
-        };
-
-        ajaxPost(url, data, callback);
-    },
-    onDelete: function (data) {
-        var url = SiteProperties.serverURL + API.deleteContent;
-        data.accessKey = SecurityClient.accessKey;
-        data.accessSecret = SecurityClient.accessSecret;
-        data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
-        data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        data.siteID = sessionStorage.getItem(SessionKey.siteID);
-        data.contentID = sessionStorage.getItem(SessionKey.contentID);
-        // 检查token是否过期
-        if (data.accessToken == null || data.accessToken == "") {
-            location.href = SiteProperties.clientURL + Page.login;
-            return false;
-        }
-
-        var self = this;
-        var callback = function (result) {
-            if (result.status == 200) {
-                sessionStorage.setItem(SessionKey.contentID, result.data.contentID);
-                alert(Message.DELETE_SUCCESS);
-                location.href = SiteProperties.clientURL + Page.contents;
-            } else {
-                console.log(result);
-            }
-        };
-
-        ajaxPost(url, data, callback);
-    },
-    onGetContent: function (data) {
-        var url = SiteProperties.serverURL + API.getContent;
-        data.accessKey = SecurityClient.accessKey;
-        data.accessSecret = SecurityClient.accessSecret;
-        data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
-        data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        // 检查token是否过期
-        if (data.accessToken == null || data.accessToken == "") {
-            location.href = SiteProperties.clientURL + Page.login;
-            return false;
-        }
-
-        var self = this;
-        var callback = function (result) {
-            if (result.status == 200) {
+                //console.log(result.data.details);
                 self.trigger(result.data);
             } else {
                 console.log(result);
@@ -90,337 +27,246 @@ var ContentStore = Reflux.createStore({
     },
 });
 
-var Content = React.createClass({
-    mixins: [Reflux.connect(ContentStore, 'content')],
+var OrderDetail = React.createClass({
+    mixins: [Reflux.connect(OrderDetailStore, 'order')],
     getInitialState: function () {
         return {
-            content: {}
+            order: {
+                details: []
+            }
         };
     },
-    componentDidMount: function(){
-
-        this.state.content.contentID = sessionStorage.getItem(SessionKey.contentID);
-        if (this.state.content.contentID != null) {
-            ContentActions.getContent(this.state.content);
-        } else {
-            // 新建的内容类型需要选定
-            this.state.content.contentType = sessionStorage.getItem(SessionKey.contentType);
-            if (this.state.content.contentType == ContentType.NEWS) {
-                $("#newsFields").show();
-            }
-            $("#inputContentType").val(this.state.content.contentType);
-        }
-        //文件上传前触发事件
-        $('#uploadContentImageTitle').bind('fileuploadsubmit', function (e, data) {
-            data.formData = {
-                'accessKey': SecurityClient.accessKey,
-                'accessSecret': SecurityClient.accessSecret,
-                'accessToken': sessionStorage.getItem(SessionKey.accessToken),
-                'operatorID': sessionStorage.getItem(SessionKey.operatorID),
-                'siteID': sessionStorage.getItem(SessionKey.siteID),
-                'width': '200',
-                'height': '200',
-                'isCompress': 'true'
-            };  //如果需要额外添加参数可以在这里添加
-        });
-
-        // 上传内容图片列表
-        $("#uploadContentImageTitle").fileupload({
-            url: SiteProperties.serverURL + API.uploadFile,
-            dataType: 'json',
-            autoUpload: true,
-            acceptFileTypes: /(\.|\/)(jpe?g|png|gif|bmp)$/i,
-            maxNumberOfFiles: 1,
-            maxFileSize: 10000000,
-            done: function (e, result) {
-                var data = result.result;
-                if (data.status == "200") {
-                    $("#imgContentImageTitle").attr("src", data.data.url);
-                    $("#inputContentImageTitle").val(data.data.url);
-                } else {
-                    console.log(data);
-                }
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10) + "%";
-
-                console.log(progress);
-            },
-            error: function (e, data) {
-                console.log(data);
-            },
-            fail: function (e, data) {
-                console.log(data);
-            }
-        });
-    },
-    componentDidUpdate: function () {
-
-        if (this.state.content.contentType == ContentType.NEWS) {
-            $("#newsFields").show();
-        }
-        $("#inputChannelTree").val(this.state.content.channelID);
-        $("#inputContentType").val(this.state.content.contentType);
-        $("#inputContentStatus").val(this.state.content.status);
-        if(this.state.content.isSilent == 1){
-            $("#checkboxIsSilent").attr("checked",true);
-        } else{
-            $("#checkboxIsSilent").attr("checked",false);
-        }
-        $("#inputStickyIndex").val(this.state.content.stickyIndex);
-        this.refs.inputContentTitle.value = this.state.content.contentTitle;
-        this.refs.inputContentSubTitle.value = this.state.content.contentSubTitle;
-
-        if(this.state.content.contentImageTitle != "") {
-            this.refs.inputContentImageTitle.value = this.state.content.contentImageTitle;
-            $("#imgContentImageTitle").attr("src", this.state.content.contentImageTitle);
-        }
-
-        this.refs.inputAuthor.value = this.state.content.author;
-        this.refs.inputSource.value = this.state.content.source;
-        this.refs.inputSourceURL.value = this.state.content.sourceURL;
-        this.refs.inputContentSummary.value = this.state.content.contentSummary;
-    },
-    handleSave: function () {
-        this.state.content.channelID = $("#inputChannelTree").val();
-        this.state.content.contentType = $("#inputContentType").val();
-        this.state.content.contentTitle = this.refs.inputContentTitle.value;
-        this.state.content.contentSubTitle = this.refs.inputContentSubTitle.value;
-        this.state.content.contentImageTitle = this.refs.inputContentImageTitle.value;
-        this.state.content.stickyIndex = this.refs.inputStickyIndex.value;
-        this.state.content.status = $("#inputContentStatus").val();
-        var isSilent = $("#checkboxIsSilent").prop("checked");
-        if(isSilent == true){
-            this.state.content.isSilent = 1;
-        } else {
-            this.state.content.isSilent = 0;
-        }
-        this.state.content.author = this.refs.inputAuthor.value;
-        this.state.content.source = this.refs.inputSource.value;
-        this.state.content.sourceURL = this.refs.inputSourceURL.value;
-        this.state.content.contentSummary = this.refs.inputContentSummary.value;
-        this.state.content.contentBody = $("#markdownContent").val();
-
-        if (this.state.content.channelID == "" || this.state.content.contentType == "" || this.state.content.contentTitle == "") {
-            $("#messageBox").show().text(Message.INPUT_REQUIRED);
-            return false;
-        }
-
-        ContentActions.save(this.state.content);
-    },
-    handleDelete : function(){
-        if(window.confirm(Message.DELETE_CONFIRM)) {
-            ContentActions.delete(this.state.content);
-        }
-    },
-    uploadImageTitle: function () {
-        openFileBrowse("uploadContentImageTitle");
-    },
-    handleFileListDialog: function () {
-        var contentID = sessionStorage.getItem(SessionKey.contentID);
-        if(contentID == null){
-            $("#messageBox").show().text(Message.SAVE_FIRST);
-            return;
-        }
-        $('#fileListDialog').modal('show');
-    },
-    handlePictureListDialog: function () {
-        var contentID = sessionStorage.getItem(SessionKey.contentID);
-        if(contentID == null){
-            $("#messageBox").show().text(Message.SAVE_FIRST);
-            return;
-        }
-        $("#pictureListDialog").modal('show');
-    },
-    handleContentTypeChange : function(){
-        var contentType = $("#inputContentType").val();
-        if (contentType == ContentType.NEWS) {
-            $("#newsFields").show();
-        }
+    componentDidMount: function () {
+        OrderActions.getOrder(this.state);
     },
     render: function () {
+        var detailSelf = {};
+        var detailMeta = {};
+        if (this.state.order != null && this.state.order.details.length > 0) {
+            detailSelf = this.state.order.details[0];
+            if (this.state.order.details.length >= 2) {
+                detailMeta = this.state.order.details[1];
+            }
+        }
+        console.log(detailSelf);
+        console.log(detailMeta);
         return (
             <div>
-                <Header/>
+                <Header activeMenuID="mainMenuSysManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMenuID="menuContentManage"/>
+                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuBigDOrderHistory"/>
+
                     <div className="content-page">
-                        <Breadcrumb page={Page.content}/>
+                        <Breadcrumb page={Page.bigdOrderDetail}/>
+
                         <div className="panel panel-default">
-                            <div className="panel-heading">内容信息</div>
+                            <div className="panel-heading">资信查询详细说明</div>
                             <div className="panel-body">
-                                <MessageBox/>
-                                <PictureListDialog/>
-                                <FileListDialog/>
-                                <div className="row form-horizontal form-group">
-                                    <div className="col-sm-6">
-                                        <div className="col-sm-3 control-label">
-                                            <label className="required">所属栏目</label>
-                                        </div>
-                                        <div className="col-sm-9">
-                                            <ChannelTreeList isContainBlank="false"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="col-sm-3 control-label">
-                                            <label className="required">内容类型</label>
-                                        </div>
-                                        <div className="col-sm-9">
-                                            <ContentTypeList contentType={this.state.content.contentType} disabled="disabled" onChange={this.handleContentTypeChange}/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="row form-group form-horizontal">
-                                    <div className="col-sm-6">
-                                        <div className="col-sm-3 control-label">
-                                            <label className="required">内容标题</label>
-                                        </div>
-                                        <div className="col-sm-9">
-                                            <input type="text" className="form-control" ref="inputContentTitle"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="col-sm-3 control-label">
-                                            <label>内容副标题</label>
-                                        </div>
-                                        <div className="col-sm-9">
-                                            <input type="text" className="form-control" ref="inputContentSubTitle"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="row form-group form-horizontal">
+                                <div className="row">
                                     <div className="col-xs-6">
-                                        <div className="col-xs-3 control-label">
-                                            <label>摘要</label>
-                                        </div>
-                                        <div className="col-xs-9">
-                                    <textarea id="inputContentSummary" cols="100" rows="6" ref="inputContentSummary"
-                                              className="form-control"></textarea>
-                                        </div>
+                                        <OrderDetailSelf detail={detailSelf}/>
                                     </div>
                                     <div className="col-xs-6">
-                                        <div className="col-xs-3 control-label">
-                                            <label>标题图</label>
-                                        </div>
-                                        <div className="col-xs-9">
-                                            <button type="button" className="btn btn-info btn-block" onClick={this.uploadImageTitle}>
-                                                上传标题图
-                                            </button>
-                                            <div id="divImageTitle" className="col-xs-9 padding-5">
-                                                <input id="inputContentImageTitle" ref="inputContentImageTitle" type="hidden"/>
-                                                <img id="imgContentImageTitle" className="width-100" src="../img/upload.png"/>
-                                                <input id="uploadContentImageTitle" type="file" name="file" className="hidden"
-                                                       accept="image/gif,image/jpeg,image/x-ms-bmp,image/x-png,image/png"/>
-                                            </div>
-                                        </div>
+                                        <OrderDetailMate detail={detailMeta}/>
                                     </div>
                                 </div>
-
-                                <div className="row form-group form-horizontal">
-                                    <div className="col-xs-6">
-                                        <div className="col-xs-3 control-label">
-                                            <label>内容展示图</label>
-                                        </div>
-                                        <div className="col-xs-9">
-                                            <button type="button" className="btn btn-info btn-block" onClick={this.handlePictureListDialog}>
-                                                内容展示图管理
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="col-xs-6">
-                                        <div className="col-xs-3 control-label">
-                                            <label>内容附件</label>
-                                        </div>
-                                        <div className="col-xs-9">
-                                            <button type="button" className="btn btn-info btn-block" onClick={this.handleFileListDialog}>
-                                                内容附件管理
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="row form-group form-horizontal">
-                                    <div className="col-sm-6">
-                                        <div className="col-sm-3 control-label">
-                                            <label>置顶级别</label>
-                                        </div>
-                                        <div className="col-sm-9">
-                                            <input type="number" className="form-control" ref="inputStickyIndex"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="col-sm-3 control-label">
-                                            <label>状态</label>
-                                        </div>
-                                        <div className="col-sm-5">
-                                            <ContentStatusList contentStatus={this.state.content.status}/>
-                                        </div>
-                                        <div className="col-sm-4 checkbox">
-                                            <label>
-                                                <input type="checkbox" id="checkboxIsSilent" ref="checkboxIsSilent"/>
-                                                禁止评论
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="newsFields" style={{display:"none"}}>
-                                    <div className="row form-group form-horizontal">
-                                        <div className="col-sm-6">
-                                            <div className="col-sm-3 control-label">
-                                                <label>新闻作者</label>
-                                            </div>
-                                            <div className="col-sm-9">
-                                                <input type="text" className="form-control" ref="inputAuthor"/>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6">
-                                            <div className="col-sm-3 control-label">
-                                                <label>新闻来源</label>
-                                            </div>
-                                            <div className="col-sm-9">
-                                                <input type="text" className="form-control" ref="inputSource"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row form-group form-horizontal">
-                                        <div className="col-sm-6">
-                                            <div className="col-sm-3 control-label">
-                                                <label>新闻URL</label>
-                                            </div>
-                                            <div className="col-sm-9">
-                                                <input type="text" className="form-control" ref="inputSourceURL"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <MarkdownEditor text={this.state.content.contentBody}/>
-                                </div>
-
                             </div>
                         </div>
 
-
-                        <div className="text-right">
-                            <button className="btn btn-primary" type="button" onClick={this.handleSave}>保&nbsp;存
-                            </button>
-                            &nbsp;
-                            <button className="btn btn-danger" type="button" onClick={this.handleDelete}>删&nbsp;除</button>
-                        </div>
-
                         <Footer/>
+                    </div>
                 </div>
-                </div>
+
             </div>
         );
     }
 });
 
+
+var OrderDetailSelf = React.createClass({
+    render: function () {
+        return (
+            <table className="table table-bordered table-condensed table_inline">
+                <tbody>
+                <tr>
+                    <th colSpan="4" className="text-center">借款人</th>
+                </tr>
+                <tr>
+                    <th className="col-xs-1">序号</th>
+                    <th className="col-xs-3">描述</th>
+                    <th className="col-xs-3">标签名称</th>
+                    <th className="col-xs-3">查询参数</th>
+                    <th className="col-xs-2">查询结果</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>手机号与姓名是否匹配</td>
+                    <td>tn_is_match</td>
+                    <td>{this.props.detail.telephone} , {this.props.detail.name}</td>
+                    <td>{this.props.detail.result.tn_is_match}</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>登记人身份证与姓名是否匹配</td>
+                    <td>idn_is_match</td>
+                    <td>{this.props.detail.id_number} , {this.props.detail.name}</td>
+                    <td>{this.props.detail.result.idn_is_match}</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>手机号和身份证是否匹配</td>
+                    <td>tid_is_match</td>
+                    <td>{this.props.detail.telephone} , {this.props.detail.id_number}</td>
+                    <td>{this.props.detail.result.tid_is_match}</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>手机号、姓名、身份证是否匹配</td>
+                    <td>tnid_is_match</td>
+                    <td>{this.props.detail.telephone} , {this.props.detail.id_number}, {this.props.detail.name}</td>
+                    <td>{this.props.detail.result.tnid_is_match}</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>年龄层次</td>
+                    <td>age</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.age}</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>性别</td>
+                    <td>sex</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.sex}</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>终端厂家</td>
+                    <td>terminal_manufacturers</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.terminal_manufacturers}</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>终端机型</td>
+                    <td>terminal_model</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.terminal_model}</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>操作系统</td>
+                    <td>operating_system</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.operating_system}</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>手机入网时间</td>
+                    <td>in_date</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.in_date}</td>
+                </tr>
+                </tbody>
+            </table>
+        );
+    }
+});
+
+var OrderDetailMate = React.createClass({
+    render: function () {
+        return (
+            <table className="table table-bordered table-condensed table_inline">
+                <tbody>
+                <tr>
+                    <th colSpan="4" className="text-center">借款人</th>
+                </tr>
+                <tr>
+                    <th className="col-xs-1">序号</th>
+                    <th className="col-xs-3">描述</th>
+                    <th className="col-xs-3">标签名称</th>
+                    <th className="col-xs-3">查询参数</th>
+                    <th className="col-xs-2">查询结果</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>手机号与姓名是否匹配</td>
+                    <td>tn_is_match</td>
+                    <td>{this.props.detail.telephone} , {this.props.detail.name}</td>
+                    <td>{this.props.detail.result.tn_is_match}</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>登记人身份证与姓名是否匹配</td>
+                    <td>idn_is_match</td>
+                    <td>{this.props.detail.id_number} , {this.props.detail.name}</td>
+                    <td>{this.props.detail.result.idn_is_match}</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>手机号和身份证是否匹配</td>
+                    <td>tid_is_match</td>
+                    <td>{this.props.detail.telephone} , {this.props.detail.id_number}</td>
+                    <td>{this.props.detail.result.tid_is_match}</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>手机号、姓名、身份证是否匹配</td>
+                    <td>tnid_is_match</td>
+                    <td>{this.props.detail.telephone} , {this.props.detail.id_number}, {this.props.detail.name}</td>
+                    <td>{this.props.detail.result.tnid_is_match}</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>年龄层次</td>
+                    <td>age</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.age}</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>性别</td>
+                    <td>sex</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.sex}</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>终端厂家</td>
+                    <td>terminal_manufacturers</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.terminal_manufacturers}</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>终端机型</td>
+                    <td>terminal_model</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.terminal_model}</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>操作系统</td>
+                    <td>operating_system</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.operating_system}</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>手机入网时间</td>
+                    <td>in_date</td>
+                    <td>{this.props.detail.telephone}</td>
+                    <td>{this.props.detail.result.in_date}</td>
+                </tr>
+                </tbody>
+            </table>
+        );
+    }
+});
+
 ReactDOM.render(
-    <Content />,
+    <OrderDetail />,
     document.getElementById('page')
 );

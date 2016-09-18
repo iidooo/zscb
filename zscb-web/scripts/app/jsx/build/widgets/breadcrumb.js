@@ -13,7 +13,7 @@ var Breadcrumb = React.createClass({displayName: "Breadcrumb",
     },
     render: function () {
         var path = new Array();
-        switch (this.props.page){
+        switch (this.props.page) {
             case Page.bigdAccountInfo:
                 path.push(React.createElement(BigDBreadcrumb, {key: "BigDBreadcrumb"}));
                 path.push(React.createElement(BigDAccountInfoBreadcrumb, {key: "BigDAccountInfoBreadcrumb"}));
@@ -21,6 +21,30 @@ var Breadcrumb = React.createClass({displayName: "Breadcrumb",
             case Page.bigdOrderList:
                 path.push(React.createElement(BigDBreadcrumb, {key: "BigDBreadcrumb"}));
                 path.push(React.createElement(BigDOrderListBreadcrumb, {key: "BigDOrderListBreadcrumb"}));
+                break;
+            case Page.bigdNewOrder:
+                path.push(React.createElement(BigDBreadcrumb, {key: "BigDBreadcrumb"}));
+                path.push(React.createElement(CreditSearchBreadcrumb, {key: "BigDNewOrderBreadcrumb"}));
+                break;
+            case Page.bigdOrderDetail:
+                path.push(React.createElement(BigDBreadcrumb, {key: "BigDBreadcrumb"}));
+                path.push(React.createElement(BigDOrderListBreadcrumb, {key: "BigDOrderListBreadcrumb"}));
+                path.push(React.createElement(BigDOrderDetailBreadcrumb, {key: "BigDOrderDetailBreadcrumb"}));
+                break;
+            case Page.creditSearch:
+                path.push(React.createElement(BusinessManageBreadcrumb, {key: "BusinessManageBreadcrumb"}));
+                path.push(React.createElement(BusinessCenterBreadcrumb, {key: "BusinessCenterBreadcrumb"}));
+                path.push(React.createElement(CreditSearchBreadcrumb, {key: "CreditSearchBreadcrumb"}));
+                break;
+            case Page.creditSearchHistory:
+                path.push(React.createElement(BusinessManageBreadcrumb, {key: "BusinessManageBreadcrumb"}));
+                path.push(React.createElement(BusinessCenterBreadcrumb, {key: "BusinessCenterBreadcrumb"}));
+                path.push(React.createElement(CreditSearchHistoryBreadcrumb, {key: "CreditSearchHistoryBreadcrumb"}));
+                break;
+            case Page.creditBasicReport:
+                path.push(React.createElement(BusinessManageBreadcrumb, {key: "BusinessManageBreadcrumb"}));
+                path.push(React.createElement(BusinessCenterBreadcrumb, {key: "BusinessCenterBreadcrumb"}));
+                path.push(React.createElement(CreditReportBreadcrumb, {key: "CreditReportBreadcrumb"}));
                 break;
         }
 
@@ -34,10 +58,26 @@ var Breadcrumb = React.createClass({displayName: "Breadcrumb",
     }
 });
 
+var BusinessManageBreadcrumb = React.createClass({displayName: "BusinessManageBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", null, React.createElement("a", {href: SiteProperties.webURL + Page.creditSearch}, "征信业务"))
+        );
+    }
+});
+
+var BusinessCenterBreadcrumb = React.createClass({displayName: "BusinessCenterBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", null, React.createElement("a", {href: SiteProperties.webURL + Page.creditSearch}, "业务中心"))
+        );
+    }
+});
+
 var BigDBreadcrumb = React.createClass({displayName: "BigDBreadcrumb",
     render: function () {
         return (
-            React.createElement("li", null, React.createElement("a", {href: SiteProperties.webURL + BigDAPI.getAccountInfo}, "浩数接口"))
+            React.createElement("li", null, React.createElement("a", {href: SiteProperties.webURL + Page.bigdAccountInfo}, "浩数接口"))
         );
     }
 });
@@ -52,9 +92,31 @@ var BigDAccountInfoBreadcrumb = React.createClass({displayName: "BigDAccountInfo
 var BigDOrderListBreadcrumb = React.createClass({displayName: "BigDOrderListBreadcrumb",
     render: function () {
         return (
-            React.createElement("li", {className: "active"}, "查询历史")
+            React.createElement("li", {className: "active"}, React.createElement("a", {href: SiteProperties.webURL + Page.bigdOrderList}, "查询历史"))
+        );
+    }
+});
+var CreditReportBreadcrumb = React.createClass({displayName: "CreditReportBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", {className: "active"}, "资信基础报告")
         );
     }
 });
 
+var CreditSearchBreadcrumb = React.createClass({displayName: "CreditSearchBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", {className: "active"}, "资信查询")
+        );
+    }
+});
+
+var CreditSearchHistoryBreadcrumb = React.createClass({displayName: "CreditSearchHistoryBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", {className: "active"}, "查询历史")
+        );
+    }
+});
 

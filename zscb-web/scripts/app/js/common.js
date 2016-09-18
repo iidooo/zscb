@@ -17,6 +17,8 @@ SiteProperties = {
 
 // 存储在SessionStorage中的key
 SessionKey = {
+    orderID: "ORDER_ID",
+
     accessToken: "ACCESS_TOKEN",
     operatorID: "OPERATOR_ID",// Login 的User ID
     userID: "USER_ID", // 编辑中的User ID
@@ -26,7 +28,6 @@ SessionKey = {
     siteMap: "SITE_MAP",
     siteOwnerMap: "SITE_OWNER_MAP",
     channelID: "CHANNEL_ID",
-    contentID: "CONTENT_ID",
     commentID: "COMMENT_ID",
     contentType: "CONTENT_TYPE",
     pictureID: "PICTURE_ID"
@@ -98,6 +99,9 @@ ContentTypeList = [];
 
 BigDAPI = {
     getAccountInfo: "/bigd/getAccountInfo",
+    getOrderList: "/bigd/getOrderList",
+    createNewOrder: "/bigd/createNewOrder",
+    getOrder: "/bigd/getOrder",
 }
 
 API = {
@@ -166,19 +170,18 @@ Page = {
     bigdAccountInfo: "/page/bigd-account-info.html",
     bigdOrderList: "/page/bigd-order-list.html",
     bigdOrderDetail: "/page/bigd-order-detail.html",
+    bigdNewOrder: "/page/bigd-new-order.html",
+    systemManage: "/page/system-manage.html",
+    creditSearch: "/page/credit-search.html",
+    creditSearchHistory: "/page/credit_search_history.html",
+    creditBasicReport: "/page/credit-basic-report.html",
 
-    register: "/pages/register.html",
-    site: "/pages/site.html",
-    dashboard: "/pages/dashboard.html",
-    channels: "/pages/channels.html",
-    comments: "/pages/comments.html",
     comment: "/pages/comment.html",
     profile: "/pages/profile.html",
     password: "/pages/password.html",
     users: "/pages/users.html",
     user: "/pages/user.html",
     admin: "/pages/admin.html",
-    admins: "/pages/admins.html",
     access: "/pages/access.html",
 };
 

@@ -44,10 +44,10 @@ var AccountInfo = React.createClass({
     render: function () {
         return (
             <div>
-                <Header activeMenuID="mainMenuBigD"/>
+                <Header activeMenuID="mainMenuSysManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMenuID="sideMenuBigDAccountInfo"/>
+                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuBigDAccountInfo"/>
 
                     <div className="content-page">
                         <Breadcrumb page={Page.bigdAccountInfo}/>

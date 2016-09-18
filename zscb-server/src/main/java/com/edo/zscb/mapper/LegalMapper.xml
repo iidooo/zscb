@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edo.zscb.mapper.LegalMapper" >
+  <resultMap id="BaseResultMap" type="com.edo.zscb.model.po.Legal" >
+    <id column="LegalID" property="legalID" jdbcType="INTEGER" />
+    <result column="IdentityID" property="identityID" jdbcType="INTEGER" />
+    <result column="JudgeDoc" property="judgeDoc" jdbcType="VARCHAR" />
+    <result column="ExecutiveInfo" property="executiveInfo" jdbcType="VARCHAR" />
+    <result column="CreditInfo" property="creditInfo" jdbcType="VARCHAR" />
+    <result column="CourtAnnounce" property="courtAnnounce" jdbcType="VARCHAR" />
+    <result column="ServiceAnnounce" property="serviceAnnounce" jdbcType="VARCHAR" />
+    <result column="JudgeProcess" property="judgeProcess" jdbcType="VARCHAR" />
+    <result column="LiquidationInfo" property="liquidationInfo" jdbcType="VARCHAR" />
+    <result column="Remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UpdateUserID" property="updateUserID" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
+    <result column="IsDelete" property="isDelete" jdbcType="BIT" />
+    <result column="Version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    LegalID, IdentityID, JudgeDoc, ExecutiveInfo, CreditInfo, CourtAnnounce, ServiceAnnounce, 
+    JudgeProcess, LiquidationInfo, Remarks, UpdateTime, UpdateUserID, CreateTime, CreateUserID, 
+    IsDelete, Version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from credit_legal
+    where LegalID = #{legalID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from credit_legal
+    where LegalID = #{legalID,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.edo.zscb.model.po.Legal" >
+    insert into credit_legal (LegalID, IdentityID, JudgeDoc, 
+      ExecutiveInfo, CreditInfo, CourtAnnounce, 
+      ServiceAnnounce, JudgeProcess, LiquidationInfo, 
+      Remarks, UpdateTime, UpdateUserID, 
+      CreateTime, CreateUserID, IsDelete, 
+      Version)
+    values (#{legalID,jdbcType=INTEGER}, #{identityID,jdbcType=INTEGER}, #{judgeDoc,jdbcType=VARCHAR}, 
+      #{executiveInfo,jdbcType=VARCHAR}, #{creditInfo,jdbcType=VARCHAR}, #{courtAnnounce,jdbcType=VARCHAR}, 
+      #{serviceAnnounce,jdbcType=VARCHAR}, #{judgeProcess,jdbcType=VARCHAR}, #{liquidationInfo,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUserID,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUserID,jdbcType=INTEGER}, #{isDelete,jdbcType=BIT}, 
+      #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.edo.zscb.model.po.Legal" >
+    insert into credit_legal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="legalID != null" >
+        LegalID,
+      </if>
+      <if test="identityID != null" >
+        IdentityID,
+      </if>
+      <if test="judgeDoc != null" >
+        JudgeDoc,
+      </if>
+      <if test="executiveInfo != null" >
+        ExecutiveInfo,
+      </if>
+      <if test="creditInfo != null" >
+        CreditInfo,
+      </if>
+      <if test="courtAnnounce != null" >
+        CourtAnnounce,
+      </if>
+      <if test="serviceAnnounce != null" >
+        ServiceAnnounce,
+      </if>
+      <if test="judgeProcess != null" >
+        JudgeProcess,
+      </if>
+      <if test="liquidationInfo != null" >
+        LiquidationInfo,
+      </if>
+      <if test="remarks != null" >
+        Remarks,
+      </if>
+      <if test="updateTime != null" >
+        UpdateTime,
+      </if>
+      <if test="updateUserID != null" >
+        UpdateUserID,
+      </if>
+      <if test="createTime != null" >
+        CreateTime,
+      </if>
+      <if test="createUserID != null" >
+        CreateUserID,
+      </if>
+      <if test="isDelete != null" >
+        IsDelete,
+      </if>
+      <if test="version != null" >
+        Version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="legalID != null" >
+        #{legalID,jdbcType=INTEGER},
+      </if>
+      <if test="identityID != null" >
+        #{identityID,jdbcType=INTEGER},
+      </if>
+      <if test="judgeDoc != null" >
+        #{judgeDoc,jdbcType=VARCHAR},
+      </if>
+      <if test="executiveInfo != null" >
+        #{executiveInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="creditInfo != null" >
+        #{creditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="courtAnnounce != null" >
+        #{courtAnnounce,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceAnnounce != null" >
+        #{serviceAnnounce,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeProcess != null" >
+        #{judgeProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationInfo != null" >
+        #{liquidationInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserID != null" >
+        #{updateUserID,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserID != null" >
+        #{createUserID,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edo.zscb.model.po.Legal" >
+    update credit_legal
+    <set >
+      <if test="identityID != null" >
+        IdentityID = #{identityID,jdbcType=INTEGER},
+      </if>
+      <if test="judgeDoc != null" >
+        JudgeDoc = #{judgeDoc,jdbcType=VARCHAR},
+      </if>
+      <if test="executiveInfo != null" >
+        ExecutiveInfo = #{executiveInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="creditInfo != null" >
+        CreditInfo = #{creditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="courtAnnounce != null" >
+        CourtAnnounce = #{courtAnnounce,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceAnnounce != null" >
+        ServiceAnnounce = #{serviceAnnounce,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeProcess != null" >
+        JudgeProcess = #{judgeProcess,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationInfo != null" >
+        LiquidationInfo = #{liquidationInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        Remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserID != null" >
+        UpdateUserID = #{updateUserID,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        CreateTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserID != null" >
+        CreateUserID = #{createUserID,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        IsDelete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        Version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where LegalID = #{legalID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.Legal" >
+    update credit_legal
+    set IdentityID = #{identityID,jdbcType=INTEGER},
+      JudgeDoc = #{judgeDoc,jdbcType=VARCHAR},
+      ExecutiveInfo = #{executiveInfo,jdbcType=VARCHAR},
+      CreditInfo = #{creditInfo,jdbcType=VARCHAR},
+      CourtAnnounce = #{courtAnnounce,jdbcType=VARCHAR},
+      ServiceAnnounce = #{serviceAnnounce,jdbcType=VARCHAR},
+      JudgeProcess = #{judgeProcess,jdbcType=VARCHAR},
+      LiquidationInfo = #{liquidationInfo,jdbcType=VARCHAR},
+      Remarks = #{remarks,jdbcType=VARCHAR},
+      UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
+      UpdateUserID = #{updateUserID,jdbcType=INTEGER},
+      CreateTime = #{createTime,jdbcType=TIMESTAMP},
+      CreateUserID = #{createUserID,jdbcType=INTEGER},
+      IsDelete = #{isDelete,jdbcType=BIT},
+      Version = #{version,jdbcType=INTEGER}
+    where LegalID = #{legalID,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -36,7 +36,7 @@ var SideBar = React.createClass({
     mixins: [Reflux.connect(SideBarMenuStore, 'channelList')],
     getInitialState: function () {
         return {
-            user:{},
+            user: {},
             role: {},
             channelList: []
         };
@@ -62,12 +62,12 @@ var SideBar = React.createClass({
 
         // 展开所有的父UL
         var $parentULList = $("#" + activeMenuID).parents("ul");
-        $.each($parentULList, function(index, item){
+        $.each($parentULList, function (index, item) {
             $ul = $(item);
             $a = $ul.prev();
             $a.addClass("active");
-            if($ul.is(":hidden")){
-                $a.find(".fa-plus").removeClass("fa-plus").addClass("fa-minus");
+            if ($ul.is(":hidden")) {
+                $a.find(".fa-angle-right").removeClass("fa-angle-right").addClass("fa-angle-down");
                 $ul.toggle(300)
             }
         });
@@ -81,73 +81,113 @@ var SideBar = React.createClass({
         //    createChannelTree($contentChannelTree, item, index);
         //});
     },
-    handleToggleSub: function(event){
+    handleToggleSub: function (event) {
         var $a = $(event.target);
         var $next = $a.next("ul");
-
-        if($next.is(":hidden")){
-            $a.find(".fa-plus").removeClass("fa-plus").addClass("fa-minus");
-        } else{
-            $a.find(".fa-minus").removeClass("fa-minus").addClass("fa-plus");
+        if ($next.is(":hidden")) {
+            $a.find(".fa-angle-right").removeClass("fa-angle-right").addClass("fa-angle-down");
+        } else {
+            $a.find(".fa-angle-down").removeClass("fa-angle-down").addClass("fa-angle-right");
         }
 
         $next.toggle(300);
     },
     render: function () {
+        var sidebar = <SysManageSideBar/>;
+        if(this.props.activeMainMenuID == "mainMenuBussinessManage"){
+            sidebar = <BusinessManageSideBar callbackParent={this.handleToggleSub}/>;
+        }
         return (
             <div id="sidebar" className="sidebar">
                 <div id="sidebarMenu" className="sidebar-menu">
-                    <ul>
-                        <li>
-                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>
-                                <i className="fa fa-user"></i>
-                                <span>账户信息</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a id="sideMenuBigDOrder" href="javascript:void(0)" className="has-sub" onClick={this.handleToggleSub}>
-                                <i className="fa fa-search"></i>
-                                <span>业务中心</span>
-                                <span className="pull-right">
-                                    <i className="fa fa-minus"></i>
-                                </span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a id="sideMenuBigDOrderSearch" href={SiteProperties.webURL + Page.bigdOrderList}>资信查询</a>
-                                </li>
-                                <li>
-                                    <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>查询历史</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    {sidebar}
                 </div>
             </div>
         );
     }
 });
 
-function createChannelTree($channelTree, item, index) {
-    var $li = $("<li></li>");
-    var $a = $("<a href='javascript:void(0)'></a>");
-    $a.text(item.text);
-    $li.append($a);
 
-    //var text = "";
-    //for (var i = 0; i < index; i++) {
-    //    text += "&nbsp;";
-    //}
-    //text = text + item.text;
-    //$option.html(text);
-    $channelTree.append($li);
-
-    if (item.nodes.length > 0) {
-        var $ul = $("<ul></ul>");
-        $li.append($ul);
-        $.each(item.nodes, function (index, item) {
-            index = index + 1;
-            createChannelTree($ul, item, index);
-        });
+var SysManageSideBar = React.createClass({
+    render: function () {
+        return (
+            <ul>
+                <li>
+                    <a id="sideMenuBigD" href="javascript:void(0)" className="has-sub"
+                       onClick={this.handleToggleSub}>
+                        <i className="fa fa-minus"></i>
+                        <span>浩数接口</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>账户信息</a>
+                        </li>
+                        <li>
+                            <a id="sideMenuBigDNewOrder" href={SiteProperties.webURL + Page.bigdNewOrder}>资信查询</a>
+                        </li>
+                        <li>
+                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>查询历史</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        );
     }
-}
+});
+
+var BusinessManageSideBar = React.createClass({
+    render: function () {
+        return (
+            <ul>
+                <li>
+                    <a id="sideMenuBussinessCenter" href="javascript:void(0)" className="has-sub"
+                       onClick={this.props.callbackParent}>
+                        <i className="fa fa-angle-down"></i>
+                        <span>业务中心</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a id="sideMenuCreditSearch" href={SiteProperties.webURL + Page.creditSearch}>
+                                <i className="fa fa-search"></i>
+                                <span>资信查询</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="sideMenuCreditSearchHistory" href={SiteProperties.webURL + Page.creditSearchHistory}>
+                                <i className="fa fa-list"></i>
+                                <span>查询历史</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a id="sideMenuBigD" href="javascript:void(0)" className="has-sub"
+                       onClick={this.props.callbackParent}>
+                        <i className="fa fa-angle-right"></i>
+                        <span>统计中心</span>
+                    </a>
+                    <ul style={{display:"none"}}>
+                        <li>
+                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>查询记录</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a id="sideMenuBigD" href="javascript:void(0)" className="has-sub"
+                       onClick={this.props.callbackParent}>
+                        <i className="fa fa-angle-right"></i>
+                        <span>个人中心</span>
+                    </a>
+                    <ul style={{display:"none"}}>
+                        <li>
+                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>基本资料</a>
+                        </li>
+                        <li>
+                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>密码修改</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        );
+    }
+});

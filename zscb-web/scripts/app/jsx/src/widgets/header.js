@@ -38,14 +38,11 @@ var MainMenu = React.createClass({
     render: function () {
         return (
             <ul className="nav navbar-nav">
-                <li id="mainMenuBigD">
-                    <a href={SiteProperties.webURL + Page.contents}>浩数接口</a>
+                <li id="mainMenuSysManage">
+                    <a href={SiteProperties.webURL + Page.systemManage}>系统管理</a>
                 </li>
-                <li id="menuAccountManage">
-                    <a href={SiteProperties.webURL + Page.account}>账户管理</a>
-                </li>
-                <li id="menuSystemManage">
-                    <a href={SiteProperties.webURL + Page.users}>系统管理</a>
+                <li id="mainMenuBussinessManage">
+                    <a href={SiteProperties.webURL + Page.creditSearch}>征信业务</a>
                 </li>
             </ul>
         );
@@ -56,7 +53,7 @@ var LoginInfo = React.createClass({
     handleLogout: function () {
         sessionStorage.removeItem(SessionKey.accessToken);
         sessionStorage.removeItem(SessionKey.operatorID);
-        location.href = SiteProperties.clientURL + Page.login;
+        location.href = SiteProperties.webURL + Page.login;
     },
 
     render: function () {
