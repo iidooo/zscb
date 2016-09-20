@@ -25,6 +25,15 @@
     from credit_asset_house
     where HouseID = #{houseID,jdbcType=INTEGER}
   </select>
+  
+  <!-- 通过身份ID获得房产列表 -->
+  <select id="selectByIdentityID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from credit_asset_house H
+    where H.IsDelete = 0 and H.IdentityID = #{identityID,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from credit_asset_house
     where HouseID = #{houseID,jdbcType=INTEGER}

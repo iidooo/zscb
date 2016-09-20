@@ -18,6 +18,8 @@ public class Identity {
     private Boolean isMatch;
 
     private Integer mateID;
+    
+    private Identity mate;
 
     private String remarks;
 
@@ -95,6 +97,14 @@ public class Identity {
 
     public void setMateID(Integer mateID) {
         this.mateID = mateID;
+    }
+
+    public Identity getMate() {
+        return mate;
+    }
+
+    public void setMate(Identity mate) {
+        this.mate = mate;
     }
 
     public String getRemarks() {

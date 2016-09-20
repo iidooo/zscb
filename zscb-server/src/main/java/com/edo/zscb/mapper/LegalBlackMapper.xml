@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.edo.zscb.mapper.LegalBlackListMapper" >
-  <resultMap id="BaseResultMap" type="com.edo.zscb.model.po.LegalBlackList" >
+<mapper namespace="com.edo.zscb.mapper.LegalBlackMapper" >
+  <resultMap id="BaseResultMap" type="com.edo.zscb.model.po.LegalBlack" >
     <id column="BlackID" property="blackID" jdbcType="INTEGER" />
     <result column="LegalID" property="legalID" jdbcType="INTEGER" />
     <result column="Detail" property="detail" jdbcType="VARCHAR" />
@@ -20,15 +20,15 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from credit_legal_blacklist
+    from credit_legal_black
     where BlackID = #{blackID,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from credit_legal_blacklist
+    delete from credit_legal_black
     where BlackID = #{blackID,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.edo.zscb.model.po.LegalBlackList" >
-    insert into credit_legal_blacklist (BlackID, LegalID, Detail, 
+  <insert id="insert" parameterType="com.edo.zscb.model.po.LegalBlack" >
+    insert into credit_legal_black (BlackID, LegalID, Detail, 
       Remarks, UpdateTime, UpdateUserID, 
       CreateTime, CreateUserID, IsDelete, 
       Version)
@@ -37,8 +37,8 @@
       #{createTime,jdbcType=TIMESTAMP}, #{createUserID,jdbcType=INTEGER}, #{isDelete,jdbcType=BIT}, 
       #{version,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.edo.zscb.model.po.LegalBlackList" >
-    insert into credit_legal_blacklist
+  <insert id="insertSelective" parameterType="com.edo.zscb.model.po.LegalBlack" >
+    insert into credit_legal_black
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="blackID != null" >
         BlackID,
@@ -104,8 +104,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.edo.zscb.model.po.LegalBlackList" >
-    update credit_legal_blacklist
+  <update id="updateByPrimaryKeySelective" parameterType="com.edo.zscb.model.po.LegalBlack" >
+    update credit_legal_black
     <set >
       <if test="legalID != null" >
         LegalID = #{legalID,jdbcType=INTEGER},
@@ -137,8 +137,8 @@
     </set>
     where BlackID = #{blackID,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.LegalBlackList" >
-    update credit_legal_blacklist
+  <update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.LegalBlack" >
+    update credit_legal_black
     set LegalID = #{legalID,jdbcType=INTEGER},
       Detail = #{detail,jdbcType=VARCHAR},
       Remarks = #{remarks,jdbcType=VARCHAR},

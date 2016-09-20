@@ -173,7 +173,7 @@ var UsersTable = React.createClass({displayName: "UsersTable",
                 )
                 ), 
                 React.createElement("tbody", null, 
-                this.props.userList.map(function (item) {
+                this.props.userList.map(function (item, index) {
                     return React.createElement(UsersTableRow, {key: item.userID, siteUser: item})
                 })
                 )

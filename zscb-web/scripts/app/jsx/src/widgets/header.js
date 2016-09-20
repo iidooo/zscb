@@ -5,10 +5,10 @@ var Header = React.createClass({
         };
     },
     componentWillMount: function () {
-        //this.state.user = JSON.parse(sessionStorage.getItem(SessionKey.user));
-        //if(this.state.user == null){
-        //    location.href = SiteProperties.clientURL + Page.login;
-        //}
+        this.state.user = JSON.parse(sessionStorage.getItem(SessionKey.user));
+        if(this.state.user == null){
+            location.href = SiteProperties.webURL + Page.login;
+        }
     },
     render: function () {
         return (

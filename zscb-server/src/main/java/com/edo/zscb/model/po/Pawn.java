@@ -1,7 +1,9 @@
 package com.edo.zscb.model.po;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Pawn {
     private Integer pawnID;
@@ -33,6 +35,8 @@ public class Pawn {
     private Boolean isDelete;
 
     private Integer version;
+    
+    private List<PawnPeople> peopleList;
 
     public Integer getPawnID() {
         return pawnID;
@@ -152,5 +156,17 @@ public class Pawn {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public List<PawnPeople> getPeopleList() {
+        return peopleList;
+    }
+
+    public void setPeopleList(List<PawnPeople> peopleList) {
+        this.peopleList = peopleList;
+    }
+    
+    public Pawn(){
+        this.peopleList = new ArrayList<PawnPeople>();
     }
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.edo.zscb.mapper.DebtMapper" >
   <resultMap id="BaseResultMap" type="com.edo.zscb.model.po.Debt" >
-    <id column="HouseID" property="houseID" jdbcType="INTEGER" />
+    <id column="DebtID" property="debtID" jdbcType="INTEGER" />
     <result column="IdentityID" property="identityID" jdbcType="INTEGER" />
     <result column="HousingLoanNum" property="housingLoanNum" jdbcType="INTEGER" />
     <result column="HousingLoanAmount" property="housingLoanAmount" jdbcType="DECIMAL" />
@@ -30,7 +30,7 @@
     <result column="Version" property="version" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    HouseID, IdentityID, HousingLoanNum, HousingLoanAmount, TradLoanNum, TradLoanAmount, 
+    DebtID, IdentityID, HousingLoanNum, HousingLoanAmount, TradLoanNum, TradLoanAmount, 
     OtherLoanNum, OtherLoanAmount, CreditCardNum, CreditCardAmount, OverdueLoanNum, OverdueLoanNumTerm, 
     OverdueLoanAccount, OverdueLoanAccountTerm, GuaranteeNum, GuaranteeAmount, LoanRepayAmount, 
     CreditUsedAmount, CreditOverdraftAmount, Remarks, UpdateTime, UpdateUserID, CreateTime, 
@@ -40,14 +40,23 @@
     select 
     <include refid="Base_Column_List" />
     from credit_debt
-    where HouseID = #{houseID,jdbcType=INTEGER}
+    where DebtID = #{debtID,jdbcType=INTEGER}
   </select>
+  
+  <!-- 通过IdentityID获得负债信息 -->
+  <select id="selectByIdentityID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from credit_debt D
+    where D.IsDelete = 0 and D.IdentityID = #{identityID,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from credit_debt
-    where HouseID = #{houseID,jdbcType=INTEGER}
+    where DebtID = #{debtID,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.edo.zscb.model.po.Debt" >
-    insert into credit_debt (HouseID, IdentityID, HousingLoanNum, 
+    insert into credit_debt (DebtID, IdentityID, HousingLoanNum, 
       HousingLoanAmount, TradLoanNum, TradLoanAmount, 
       OtherLoanNum, OtherLoanAmount, CreditCardNum, 
       CreditCardAmount, OverdueLoanNum, OverdueLoanNumTerm, 
@@ -57,7 +66,7 @@
       Remarks, UpdateTime, UpdateUserID, 
       CreateTime, CreateUserID, IsDelete, 
       Version)
-    values (#{houseID,jdbcType=INTEGER}, #{identityID,jdbcType=INTEGER}, #{housingLoanNum,jdbcType=INTEGER}, 
+    values (#{debtID,jdbcType=INTEGER}, #{identityID,jdbcType=INTEGER}, #{housingLoanNum,jdbcType=INTEGER}, 
       #{housingLoanAmount,jdbcType=DECIMAL}, #{tradLoanNum,jdbcType=INTEGER}, #{tradLoanAmount,jdbcType=DECIMAL}, 
       #{otherLoanNum,jdbcType=INTEGER}, #{otherLoanAmount,jdbcType=DECIMAL}, #{creditCardNum,jdbcType=INTEGER}, 
       #{creditCardAmount,jdbcType=DECIMAL}, #{overdueLoanNum,jdbcType=INTEGER}, #{overdueLoanNumTerm,jdbcType=INTEGER}, 
@@ -71,8 +80,8 @@
   <insert id="insertSelective" parameterType="com.edo.zscb.model.po.Debt" >
     insert into credit_debt
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="houseID != null" >
-        HouseID,
+      <if test="debtID != null" >
+        DebtID,
       </if>
       <if test="identityID != null" >
         IdentityID,
@@ -151,8 +160,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="houseID != null" >
-        #{houseID,jdbcType=INTEGER},
+      <if test="debtID != null" >
+        #{debtID,jdbcType=INTEGER},
       </if>
       <if test="identityID != null" >
         #{identityID,jdbcType=INTEGER},
@@ -310,7 +319,7 @@
         Version = #{version,jdbcType=INTEGER},
       </if>
     </set>
-    where HouseID = #{houseID,jdbcType=INTEGER}
+    where DebtID = #{debtID,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.Debt" >
     update credit_debt
@@ -339,6 +348,6 @@
       CreateUserID = #{createUserID,jdbcType=INTEGER},
       IsDelete = #{isDelete,jdbcType=BIT},
       Version = #{version,jdbcType=INTEGER}
-    where HouseID = #{houseID,jdbcType=INTEGER}
+    where DebtID = #{debtID,jdbcType=INTEGER}
   </update>
 </mapper>

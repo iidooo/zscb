@@ -1,26 +1,22 @@
-var SearchHistoryActions = Reflux.createActions(['searchSiteUserList']);
+var SearchHistoryActions = Reflux.createActions(['getIdentityList']);
 
 var SearchHistoryStore = Reflux.createStore({
     listenables: [SearchHistoryActions],
-    onSearchSiteUserList: function (data) {
-        var url = SiteProperties.serverURL + API.searchSiteUserList;
-        data.accessKey = SecurityClient.accessKey;
-        data.accessSecret = SecurityClient.accessSecret;
+    onGetIdentityList: function (data) {
+        var url = SiteProperties.serverURL + BussinessAPI.getIdentityList;
+
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        data.siteID = sessionStorage.getItem(SessionKey.siteID);
-        data.roles = "[1,2]";
 
         // 检查token是否过期
-        //if (data.accessToken == null || data.accessToken == "") {
-        //    location.href = SiteProperties.clientURL + Page.login;
-        //    return false;
-        //}
+        if (data.accessToken == null || data.accessToken == "") {
+            location.href = SiteProperties.webURL + Page.login;
+            return false;
+        }
 
         var self = this;
         var callback = function (result) {
-
-            //console.log(result.data);
+            console.log(result.data);
             if (result.status == 200) {
                 self.trigger(result.data);
             } else {
@@ -43,7 +39,7 @@ var SearchHistory = React.createClass({displayName: "SearchHistory",
         };
     },
     componentDidMount: function () {
-        //SearchHistoryActions.searchSiteUserList(this.state);
+        SearchHistoryActions.getIdentityList(this.state);
     },
     onChildChanged: function (childState) {
         if (childState.currentPage != null) {
@@ -148,19 +144,23 @@ var IdentityDataTable = React.createClass({displayName: "IdentityDataTable",
 });
 
 var IdentityTableRow = React.createClass({displayName: "IdentityTableRow",
-    handleLink: function (userID) {
-        sessionStorage.setItem(SessionKey.userID, userID);
-        location.href = SiteProperties.clientURL + Page.admin;
+    handleLink: function (selfIdentityID, mateIdentityID) {
+        sessionStorage.setItem(SessionKey.selfIdentityID, selfIdentityID);
+        sessionStorage.setItem(SessionKey.mateIdentityID, mateIdentityID);
+        location.href = SiteProperties.webURL + Page.creditBasicReport;
     },
     render: function () {
         return (
             React.createElement("tr", null, 
                 React.createElement("td", null, this.props.identity.name), 
-                React.createElement("td", null, this.props.identity.IDNumber), 
+                React.createElement("td", null, this.props.identity.idnumber), 
                 React.createElement("td", null, this.props.identity.mate.name), 
-                React.createElement("td", null, this.props.identity.mate.IDNumber), 
+                React.createElement("td", null, this.props.identity.mate.idnumber), 
                 React.createElement("td", null, new Date(this.props.identity.createTime).format('yyyy-MM-dd hh:mm:ss')), 
-                React.createElement("td", null, React.createElement("a", {href: "javascript:void(0)", onClick: this.handleLink(this.props.identity.identityID)}, "查看报告"))
+                React.createElement("td", null, 
+                    React.createElement("a", {href: "javascript:void(0)", 
+                       onClick: this.handleLink.bind(null, this.props.identity.identityID, this.props.identity.mateID)}, "查看报告")
+                )
             )
         );
     }

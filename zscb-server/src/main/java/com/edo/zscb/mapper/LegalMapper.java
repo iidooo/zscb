@@ -10,6 +10,13 @@ public interface LegalMapper {
     int insertSelective(Legal record);
 
     Legal selectByPrimaryKey(Integer legalID);
+    
+    /**
+     * 通过IdentityID获得司法信息
+     * @param identityID 身份ID
+     * @return 司法信息对象
+     */
+    Legal selectByIdentityID(Integer identityID);
 
     int updateByPrimaryKeySelective(Legal record);
 

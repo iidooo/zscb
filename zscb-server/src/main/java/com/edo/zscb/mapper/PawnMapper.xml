@@ -17,17 +17,53 @@
     <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
     <result column="IsDelete" property="isDelete" jdbcType="BIT" />
     <result column="Version" property="version" jdbcType="INTEGER" />
+    <collection select="selectPeopleList" column="pawnID" property="peopleList" ofType="com.edo.zscb.model.po.PawnPeople"></collection>
   </resultMap>
   <sql id="Base_Column_List" >
-    PawnID, IdentityID, HouseNo, HouseWorth, HouseAge, RegisterNum, District, Address, 
-    Remarks, UpdateTime, UpdateUserID, CreateTime, CreateUserID, IsDelete, Version
+    P.PawnID, P.IdentityID, P.HouseNo, P.HouseWorth, P.HouseAge, P.RegisterNum, P.District, P.Address, 
+    P.Remarks, P.UpdateTime, P.UpdateUserID, P.CreateTime, P.CreateUserID, P.IsDelete, P.Version
   </sql>
+  
+  <resultMap id="PeopleResultMap" type="com.edo.zscb.model.po.PawnPeople" >
+    <id column="PeopleID" property="peopleID" jdbcType="INTEGER" />
+    <result column="PawnID" property="pawnID" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="IDNumber" property="IDNumber" jdbcType="VARCHAR" />
+    <result column="IsMatch" property="isMatch" jdbcType="BIT" />
+    <result column="Remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UpdateUserID" property="updateUserID" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
+    <result column="IsDelete" property="isDelete" jdbcType="BIT" />
+    <result column="Version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="People_Column_List" >
+    L.PeopleID, L.PawnID, L.Name, L.IDNumber, L.IsMatch, L.Remarks, L.UpdateTime, L.UpdateUserID, L.CreateTime, 
+    L.CreateUserID, L.IsDelete, L.Version
+  </sql>
+  <select id="selectPeopleList" resultMap="PeopleResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="People_Column_List" />
+    from credit_pawn_people L
+    where L.IsDelete = 0 and L.PawnID = #{pawnID,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from credit_pawn
     where PawnID = #{pawnID,jdbcType=INTEGER}
   </select>
+  
+  <!-- 通过IdentityID获得抵押信息 -->
+  <select id="selectByIdentityID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from credit_pawn P
+    where P.IsDelete = 0 and P.IdentityID = #{identityID,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from credit_pawn
     where PawnID = #{pawnID,jdbcType=INTEGER}

@@ -11,6 +11,13 @@ public interface RegisterMapper {
 
     Register selectByPrimaryKey(Integer registerID);
 
+    /**
+     * 通过身份ID获取注册户籍信息
+     * @param identityID 身份ID
+     * @return 户籍信息
+     */
+    Register selectByIdentityID(Integer identityID);
+    
     int updateByPrimaryKeySelective(Register record);
 
     int updateByPrimaryKey(Register record);

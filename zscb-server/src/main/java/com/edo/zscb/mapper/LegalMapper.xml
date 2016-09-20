@@ -18,18 +18,52 @@
     <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
     <result column="IsDelete" property="isDelete" jdbcType="BIT" />
     <result column="Version" property="version" jdbcType="INTEGER" />
+    <collection select="selectBlackList" column="legalID" property="blackList" ofType="com.edo.zscb.model.po.LegalBlack"></collection>
   </resultMap>
   <sql id="Base_Column_List" >
-    LegalID, IdentityID, JudgeDoc, ExecutiveInfo, CreditInfo, CourtAnnounce, ServiceAnnounce, 
-    JudgeProcess, LiquidationInfo, Remarks, UpdateTime, UpdateUserID, CreateTime, CreateUserID, 
-    IsDelete, Version
+    L.LegalID, L.IdentityID, L.JudgeDoc, L.ExecutiveInfo, L.CreditInfo, L.CourtAnnounce, L.ServiceAnnounce, 
+    L.JudgeProcess, L.LiquidationInfo, L.Remarks, L.UpdateTime, L.UpdateUserID, L.CreateTime, L.CreateUserID, 
+    L.IsDelete, L.Version
   </sql>
+  
+  <resultMap id="BlackResultMap" type="com.edo.zscb.model.po.LegalBlack" >
+    <id column="BlackID" property="blackID" jdbcType="INTEGER" />
+    <result column="LegalID" property="legalID" jdbcType="INTEGER" />
+    <result column="Detail" property="detail" jdbcType="VARCHAR" />
+    <result column="Remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UpdateUserID" property="updateUserID" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
+    <result column="IsDelete" property="isDelete" jdbcType="BIT" />
+    <result column="Version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Black_Column_List" >
+    B.BlackID, B.LegalID, B.Detail, B.Remarks, B.UpdateTime, B.UpdateUserID, B.CreateTime, B.CreateUserID, 
+    B.IsDelete, B.Version
+  </sql>
+  <select id="selectBlackList" resultMap="BlackResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Black_Column_List" />
+    from credit_legal_black B
+    where B.IsDelete = 0 and B.LegalID = #{legalID,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from credit_legal
     where LegalID = #{legalID,jdbcType=INTEGER}
   </select>
+  
+  <!-- 通过IdentityID获得司法信息 -->
+  <select id="selectByIdentityID" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select 
+    <include refid="Base_Column_List" />
+    from credit_legal L
+    where L.IsDelete = 0 and L.IdentityID = #{identityID,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from credit_legal
     where LegalID = #{legalID,jdbcType=INTEGER}

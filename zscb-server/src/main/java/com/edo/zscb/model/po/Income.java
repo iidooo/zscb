@@ -1,7 +1,9 @@
 package com.edo.zscb.model.po;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Income {
     private Integer incomeID;
@@ -27,6 +29,8 @@ public class Income {
     private Boolean isDelete;
 
     private Integer version;
+    
+    private List<IncomeCard> cardList;
 
     public Integer getIncomeID() {
         return incomeID;
@@ -122,5 +126,17 @@ public class Income {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public List<IncomeCard> getCardList() {
+        return cardList;
+    }
+
+    public void setCardList(List<IncomeCard> cardList) {
+        this.cardList = cardList;
+    }
+    
+    public Income(){
+        this.cardList = new ArrayList<IncomeCard>();
     }
 }

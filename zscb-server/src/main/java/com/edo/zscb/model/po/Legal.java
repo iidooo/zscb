@@ -1,6 +1,8 @@
 package com.edo.zscb.model.po;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Legal {
     private Integer legalID;
@@ -35,6 +37,8 @@ public class Legal {
 
     private Integer version;
 
+    private List<LegalBlack> blackList;
+    
     public Integer getLegalID() {
         return legalID;
     }
@@ -161,5 +165,17 @@ public class Legal {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public List<LegalBlack> getBlackList() {
+        return blackList;
+    }
+
+    public void setBlackList(List<LegalBlack> blackList) {
+        this.blackList = blackList;
+    }
+    
+    public Legal(){
+        this.blackList = new ArrayList<LegalBlack>();
     }
 }

@@ -25,6 +25,15 @@
     from credit_asset_vehicle
     where VehicleID = #{vehicleID,jdbcType=INTEGER}
   </select>
+  
+  <!-- 通过身份ID获得车辆资产列表 -->
+  <select id="selectByIdentityID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from credit_asset_vehicle V
+    where V.IsDelete = 0 and V.IdentityID = #{identityID,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from credit_asset_vehicle
     where VehicleID = #{vehicleID,jdbcType=INTEGER}

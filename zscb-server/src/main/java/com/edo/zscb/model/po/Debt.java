@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Debt {
-    private Integer houseID;
+    private Integer debtID;
 
     private Integer identityID;
 
@@ -56,12 +56,12 @@ public class Debt {
 
     private Integer version;
 
-    public Integer getHouseID() {
-        return houseID;
+    public Integer getDebtID() {
+        return debtID;
     }
 
-    public void setHouseID(Integer houseID) {
-        this.houseID = houseID;
+    public void setDebtID(Integer debtID) {
+        this.debtID = debtID;
     }
 
     public Integer getIdentityID() {

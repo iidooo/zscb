@@ -17,25 +17,18 @@ SiteProperties = {
 
 // 存储在SessionStorage中的key
 SessionKey = {
-    orderID: "ORDER_ID",
-
     accessToken: "ACCESS_TOKEN",
     operatorID: "OPERATOR_ID",// Login 的User ID
     userID: "USER_ID", // 编辑中的User ID
     user: "SECURITY_USER",
-    siteID: "SITE_ID",
-    siteCode: "SITE_CODE",
-    siteMap: "SITE_MAP",
-    siteOwnerMap: "SITE_OWNER_MAP",
-    channelID: "CHANNEL_ID",
-    commentID: "COMMENT_ID",
-    contentType: "CONTENT_TYPE",
-    pictureID: "PICTURE_ID"
+    selfIdentityID: "SELF_IDENTITY_ID",
+    mateIdentityID: "MATE_IDENTITY_ID",
+    orderID: "ORDER_ID",
 };
 
 SecurityClient = {
-    accessKey: "cmsadmin",
-    accessSecret: "e96b669ba65848bcb20f5de53dcc370e"
+    accessKey: "zscb",
+    accessSecret: "7580715fc2fa4b75ba789f75b6d19bda"
 };
 
 Message = {
@@ -102,6 +95,24 @@ BigDAPI = {
     getOrderList: "/bigd/getOrderList",
     createNewOrder: "/bigd/createNewOrder",
     getOrder: "/bigd/getOrder",
+}
+
+BussinessAPI = {
+    getIdentityList: "/bussiness/getIdentityList",
+    getIdentityInfo: "/bussiness/getIdentityInfo",
+    getRegisterInfo: "/bussiness/getRegisterInfo",
+    getStaffInfo: "/bussiness/getStaffInfo",
+    getBussinessList: "/bussiness/getBussinessList",
+    getHouseList: "/bussiness/getHouseList",
+    getVehicleList: "/bussiness/getVehicleList",
+    getDebtInfo: "/bussiness/getDebtInfo",
+    getIncomeInfo: "/bussiness/getIncomeInfo",
+    getLegalInfo: "/bussiness/getLegalInfo",
+    getPawnInfo: "/bussiness/getPawnInfo",
+}
+
+CommonAPI = {
+    login:"/login"
 }
 
 API = {
@@ -174,7 +185,7 @@ Page = {
     systemManage: "/page/system-manage.html",
     creditSearch: "/page/credit-search.html",
     creditSearchHistory: "/page/credit_search_history.html",
-    creditBasicReport: "/page/credit-basic-report.html",
+    creditBasicReport: "/page/credit_basic_report.html",
 
     comment: "/pages/comment.html",
     profile: "/pages/profile.html",
@@ -218,6 +229,16 @@ Date.prototype.format = function (format) {
             RegExp.$1.length == 1 ? o[k] :
                 ("00" + o[k]).substr(("" + o[k]).length));
     return format;
+}
+
+function formatDate(dateString){
+    if(dateString != null) {
+        var pattern = /(\d{4})(\d{2})(\d{2})/;
+        var formatedDate = dateString.replace(pattern, '$1-$2-$3');
+        return formatedDate;
+    } else{
+        return "";
+    }
 }
 
 // 得到地址栏中的路径指定参数值

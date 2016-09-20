@@ -14,10 +14,11 @@
     <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
     <result column="IsDelete" property="isDelete" jdbcType="BIT" />
     <result column="Version" property="version" jdbcType="INTEGER" />
+    <collection select="selectCardList" column="incomeID" property="cardList" ofType="com.edo.zscb.model.po.IncomeCard"></collection>
   </resultMap>
   <sql id="Base_Column_List" >
-    IncomeID, IdentityID, Company, TaxAmount, IncomeRange, Remarks, UpdateTime, UpdateUserID, 
-    CreateTime, CreateUserID, IsDelete, Version
+    I.IncomeID, I.IdentityID, I.Company, I.TaxAmount, I.IncomeRange, I.Remarks, I.UpdateTime, I.UpdateUserID, 
+    I.CreateTime, I.CreateUserID, I.IsDelete, I.Version
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -25,6 +26,39 @@
     from credit_income
     where IncomeID = #{incomeID,jdbcType=INTEGER}
   </select>
+  
+  <resultMap id="CardResultMap" type="com.edo.zscb.model.po.IncomeCard" >
+    <id column="CardID" property="cardID" jdbcType="INTEGER" />
+    <result column="IncomeID" property="incomeID" jdbcType="INTEGER" />
+    <result column="CardBank" property="cardBank" jdbcType="VARCHAR" />
+    <result column="CardNo" property="cardNo" jdbcType="VARCHAR" />
+    <result column="Remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UpdateUserID" property="updateUserID" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
+    <result column="IsDelete" property="isDelete" jdbcType="BIT" />
+    <result column="Version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Card_Column_List" >
+    C.CardID, C.IncomeID, C.CardBank, C.CardNo, C.Remarks, C.UpdateTime, C.UpdateUserID, C.CreateTime, 
+    C.CreateUserID, C.IsDelete, C.Version
+  </sql>
+  <select id="selectCardList" resultMap="CardResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Card_Column_List" />
+    from credit_income_card C
+    where C.IsDelete = 0 and C.IncomeID = #{incomeID,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 通过IdentityID获得收入信息 -->
+  <select id="selectByIdentityID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from credit_income I
+    where I.IsDelete = 0 and I.IdentityID = #{identityID,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from credit_income
     where IncomeID = #{incomeID,jdbcType=INTEGER}

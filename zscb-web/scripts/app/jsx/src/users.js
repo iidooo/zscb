@@ -173,7 +173,7 @@ var UsersTable = React.createClass({
                 </tr>
                 </thead>
                 <tbody>
-                {this.props.userList.map(function (item) {
+                {this.props.userList.map(function (item, index) {
                     return <UsersTableRow key={item.userID} siteUser={item}/>
                 })}
                 </tbody>

@@ -45,21 +45,19 @@ var CreditReport = React.createClass({
     },
     render: function () {
         var detailSelf = {};
-        var detailMeta = {};
+        var detailMate = {};
         if (this.state.order != null && this.state.order.details.length > 0) {
             detailSelf = this.state.order.details[0];
             if (this.state.order.details.length >= 2) {
-                detailMeta = this.state.order.details[1];
+                detailMate = this.state.order.details[1];
             }
         }
-        console.log(detailSelf);
-        console.log(detailMeta);
         return (
             <div>
                 <Header activeMenuID="mainMenuBussinessManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMainMenuID="mainMenuBussinessManage" activeMenuID="sideMenuCreditSearch"/>
+                    <SideBar activeMainMenuID="mainMenuBussinessManage" activeMenuID="sideMenuCreditSearchHistory"/>
 
                     <div className="content-page">
                         <Breadcrumb page={Page.creditBasicReport}/>
@@ -72,19 +70,27 @@ var CreditReport = React.createClass({
                                         <ReportAbstractSelf detail={detailSelf}/>
                                     </div>
                                     <div className="col-xs-6">
-                                        <ReportAbstractMate detail={detailMeta}/>
+                                        <ReportAbstractMate detail={detailMate}/>
                                     </div>
                                 </div>
-                                <h3 className="title">一、身份信息</h3>
 
-                                <div className="row">
-                                    <div className="col-xs-6">
-                                        <ReportIdentitySelf detail={detailSelf}/>
-                                    </div>
-                                    <div className="col-xs-6">
-                                        <ReportIdentityMate detail={detailMeta}/>
-                                    </div>
-                                </div>
+                                <ReportIdentity/>
+
+                                <ReportRegister/>
+
+                                <ReportStaff/>
+
+                                <ReportBussiness/>
+
+                                <ReportAsset/>
+
+                                <ReportDebt/>
+
+                                <ReportIncome/>
+
+                                <ReportLegal/>
+
+                                <ReportPawn/>
                             </div>
                         </div>
 
@@ -277,91 +283,10 @@ var ReportAbstractMate = React.createClass({
     }
 });
 
-var ReportIdentitySelf = React.createClass({
-    render: function () {
-        return (
-            <table className="table table-bordered table-condensed table_inline">
-                <tbody>
-                <tr>
-                    <th colSpan="4" className="text-center">借款人</th>
-                </tr>
-                <tr>
-                    <th className="col-xs-3">姓名</th>
-                    <td colSpan="2"></td>
-                    <td className="col-xs-3 text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>身份证号</th>
-                    <td colSpan="2"></td>
-                    <td className="text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>联系方式</th>
-                    <td colSpan="2"></td>
-                    <td className="text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>银行卡号</th>
-                    <td colSpan="2"></td>
-                    <td className="text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>房产证号</th>
-                    <td colSpan="2"></td>
-                    <td className="text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>要素验证结果</th>
-                    <td colSpan="3"></td>
-                </tr>
-                </tbody>
-            </table>
-        );
-    }
-});
 
-var ReportIdentityMate = React.createClass({
-    render: function () {
-        return (
-            <table className="table table-bordered table-condensed table_inline">
-                <tbody>
-                <tr>
-                    <th colSpan="4" className="text-center">配偶</th>
-                </tr>
-                <tr>
-                    <th className="col-xs-3">姓名</th>
-                    <td colSpan="2"></td>
-                    <td className="col-xs-3 text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>身份证号</th>
-                    <td colSpan="2"></td>
-                    <td className="text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>联系方式</th>
-                    <td colSpan="2"></td>
-                    <td className="text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>银行卡号</th>
-                    <td colSpan="2"></td>
-                    <td className="text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>房产证号</th>
-                    <td colSpan="2"></td>
-                    <td className="text-center"><a href="#">详细</a></td>
-                </tr>
-                <tr>
-                    <th>要素验证结果</th>
-                    <td colSpan="3"></td>
-                </tr>
-                </tbody>
-            </table>
-        );
-    }
-});
+
+
+
 
 ReactDOM.render(
     <CreditReport />,

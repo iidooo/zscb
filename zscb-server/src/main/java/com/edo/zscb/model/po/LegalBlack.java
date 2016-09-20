@@ -2,7 +2,7 @@ package com.edo.zscb.model.po;
 
 import java.util.Date;
 
-public class LegalBlackList {
+public class LegalBlack {
     private Integer blackID;
 
     private Integer legalID;

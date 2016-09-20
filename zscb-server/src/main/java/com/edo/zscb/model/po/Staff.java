@@ -1,6 +1,8 @@
 package com.edo.zscb.model.po;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Staff {
     private Integer staffID;
@@ -36,6 +38,8 @@ public class Staff {
     private Boolean isDelete;
 
     private Integer version;
+    
+    private List<StaffExp> staffExpList;
 
     public Integer getStaffID() {
         return staffID;
@@ -171,5 +175,17 @@ public class Staff {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public List<StaffExp> getStaffExpList() {
+        return staffExpList;
+    }
+
+    public void setStaffExpList(List<StaffExp> staffExpList) {
+        this.staffExpList = staffExpList;
+    }
+    
+    public Staff(){
+        this.staffExpList = new ArrayList<StaffExp>();
     }
 }
