@@ -46,6 +46,21 @@ var Breadcrumb = React.createClass({displayName: "Breadcrumb",
                 path.push(React.createElement(BusinessCenterBreadcrumb, {key: "BusinessCenterBreadcrumb"}));
                 path.push(React.createElement(CreditReportBreadcrumb, {key: "CreditReportBreadcrumb"}));
                 break;
+            case Page.creditSearchLog:
+                path.push(React.createElement(BusinessManageBreadcrumb, {key: "BusinessManageBreadcrumb"}));
+                path.push(React.createElement(StatisticCenterBreadcrumb, {key: "StatisticCenterBreadcrumb"}));
+                path.push(React.createElement(CreditSearchLogBreadcrumb, {key: "CreditSearchLogBreadcrumb"}));
+                break;
+            case Page.profile:
+                path.push(React.createElement(BusinessManageBreadcrumb, {key: "BusinessManageBreadcrumb"}));
+                path.push(React.createElement(AccountCenterBreadcrumb, {key: "AccountCenterBreadcrumb"}));
+                path.push(React.createElement(ProfileBreadcrumb, {key: "ProfileBreadcrumb"}));
+                break;
+            case Page.password:
+                path.push(React.createElement(BusinessManageBreadcrumb, {key: "BusinessManageBreadcrumb"}));
+                path.push(React.createElement(AccountCenterBreadcrumb, {key: "AccountCenterBreadcrumb"}));
+                path.push(React.createElement(PasswordBreadcrumb, {key: "PasswordBreadcrumb"}));
+                break;
         }
 
         return (
@@ -70,6 +85,38 @@ var BusinessCenterBreadcrumb = React.createClass({displayName: "BusinessCenterBr
     render: function () {
         return (
             React.createElement("li", null, React.createElement("a", {href: SiteProperties.webURL + Page.creditSearch}, "业务中心"))
+        );
+    }
+});
+
+var StatisticCenterBreadcrumb = React.createClass({displayName: "StatisticCenterBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", null, React.createElement("a", {href: SiteProperties.webURL + Page.creditSearchLog}, "统计中心"))
+        );
+    }
+});
+
+var AccountCenterBreadcrumb = React.createClass({displayName: "AccountCenterBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", null, React.createElement("a", {href: SiteProperties.webURL + Page.profile}, "个人中心"))
+        );
+    }
+});
+
+var ProfileBreadcrumb = React.createClass({displayName: "ProfileBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", {className: "active"}, "基本资料")
+        );
+    }
+});
+
+var PasswordBreadcrumb = React.createClass({displayName: "PasswordBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", {className: "active"}, "密码修改")
         );
     }
 });
@@ -116,6 +163,14 @@ var CreditSearchHistoryBreadcrumb = React.createClass({displayName: "CreditSearc
     render: function () {
         return (
             React.createElement("li", {className: "active"}, "查询历史")
+        );
+    }
+});
+
+var CreditSearchLogBreadcrumb = React.createClass({displayName: "CreditSearchLogBreadcrumb",
+    render: function () {
+        return (
+            React.createElement("li", {className: "active"}, "查询记录")
         );
     }
 });

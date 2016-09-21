@@ -15,8 +15,10 @@ var Header = React.createClass({displayName: "Header",
             React.createElement("nav", {className: "navbar navbar-fixed-top", role: "navigation"}, 
                 React.createElement("div", {className: "navbar-inner"}, 
                     React.createElement("div", {className: "navbar-header width-240"}, 
-                        React.createElement("div", {className: "navbar-brand"}, 
-                            React.createElement("img", {src: "../img/zslogo.png", style: {height:"38px",marginTop:"-8px"}})
+                        React.createElement("div", {className: "navbar-brand"}
+                            
+                                //<img src="../img/zslogo.png" style={{height:"38px",marginTop:"-8px"}}></img>
+                            
                         )
                     ), 
                     React.createElement("div", {id: "navbar", className: "navbar-collapse collapse"}, 
@@ -66,10 +68,10 @@ var LoginInfo = React.createClass({displayName: "LoginInfo",
                     ), 
                     React.createElement("ul", {className: "dropdown-menu"}, 
                         React.createElement("li", null, 
-                            React.createElement("a", {href: SiteProperties.clientURL + Page.profile}, React.createElement("i", {className: "fa fa-user"}), "  个人信息")
+                            React.createElement("a", {href: SiteProperties.webURL + Page.profile}, React.createElement("i", {className: "fa fa-user"}), "  个人信息")
                         ), 
                         React.createElement("li", null, 
-                            React.createElement("a", {href: SiteProperties.clientURL + Page.password}, React.createElement("i", {className: "fa fa-pencil"}), "  密码修改")
+                            React.createElement("a", {href: SiteProperties.webURL + Page.password}, React.createElement("i", {className: "fa fa-pencil"}), "  密码修改")
                         ), 
                         
                             //<li><a href="/pricing"><i className="fa fa-clipboard"></i>&nbsp;&nbsp;Plans</a></li>

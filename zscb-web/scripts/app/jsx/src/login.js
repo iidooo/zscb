@@ -32,7 +32,9 @@ var Login = React.createClass({
         return (
             <div className="container">
                 <h1 id="logoWrap" className="text-center">
-                    <img src="../img/zslogoB.png"></img>
+                    {
+                        //<img src="../img/zslogoB.png"></img>
+                    }
                 </h1>
                 <h2 id="loginTitle" className="text-center">个人审贷资信验证平台</h2>
                 <LoginForm/>

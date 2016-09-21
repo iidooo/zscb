@@ -16,7 +16,9 @@ var Header = React.createClass({
                 <div className="navbar-inner">
                     <div className="navbar-header width-240">
                         <div className="navbar-brand">
-                            <img src="../img/zslogo.png" style={{height:"38px",marginTop:"-8px"}}></img>
+                            {
+                                //<img src="../img/zslogo.png" style={{height:"38px",marginTop:"-8px"}}></img>
+                            }
                         </div>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
@@ -66,10 +68,10 @@ var LoginInfo = React.createClass({
                     </a>
                     <ul className="dropdown-menu">
                         <li>
-                            <a href={SiteProperties.clientURL + Page.profile}><i className="fa fa-user"></i>&nbsp;&nbsp;个人信息</a>
+                            <a href={SiteProperties.webURL + Page.profile}><i className="fa fa-user"></i>&nbsp;&nbsp;个人信息</a>
                         </li>
                         <li>
-                            <a href={SiteProperties.clientURL + Page.password}><i className="fa fa-pencil"></i>&nbsp;&nbsp;密码修改</a>
+                            <a href={SiteProperties.webURL + Page.password}><i className="fa fa-pencil"></i>&nbsp;&nbsp;密码修改</a>
                         </li>
                         {
                             //<li><a href="/pricing"><i className="fa fa-clipboard"></i>&nbsp;&nbsp;Plans</a></li>

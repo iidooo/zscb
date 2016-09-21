@@ -132,8 +132,8 @@ var Profile = React.createClass({
         ProfileActions.getUser(this.state);
     },
     componentDidUpdate: function () {
-        this.refs.inputPhoto.value = this.state.user.photoURL;
-        $("#imgPhoto").attr("src", this.state.user.photoURL);
+        //this.refs.inputPhoto.value = this.state.user.photoURL;
+        //$("#imgPhoto").attr("src", this.state.user.photoURL);
         this.refs.inputLoginID.value = this.state.user.loginID;
         this.refs.inputUserName.value = this.state.user.userName;
         this.refs.inputMobile.value = this.state.user.mobile;
@@ -145,7 +145,7 @@ var Profile = React.createClass({
         this.refs.inputLastLoginTime.value = new Date(this.state.user.lastLoginTime).format('yyyy-MM-dd hh:mm:ss');
     },
     handleSave:function(){
-        this.state.user.photoURL = this.refs.inputPhoto.value;
+        //this.state.user.photoURL = this.refs.inputPhoto.value;
         this.state.user.userName = this.refs.inputUserName.value;
         this.state.user.mobile = this.refs.inputMobile.value;
         this.state.user.email = this.refs.inputEmail.value;
@@ -167,27 +167,31 @@ var Profile = React.createClass({
     render: function () {
         return (
             <div>
-                <Header/>
+                <Header activeMenuID="mainMenuBussinessManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMenuID="menuProfile"/>
+                    <SideBar activeMainMenuID="mainMenuBussinessManage" activeMenuID="sideMenuProfile"/>
                     <div className="content-page">
                         <Breadcrumb page={Page.profile}/>
                         <div className="panel panel-default">
                             <div className="panel-heading">用户信息</div>
                             <div className="panel-body">
                                 <MessageBox/>
-                                <div className="row form-group form-horizontal">
-                                    <div className="col-xs-2 control-label">
-                                        <label>头像</label>
-                                    </div>
-                                    <div id="divPhoto" className="col-xs-10">
-                                        <input id="inputPhoto" ref="inputPhoto" type="hidden"/>
-                                        <a href="javascript:void(0)" onClick={this.uploadPhoto}><img id="imgPhoto" className="width-100" src="../img/upload.png"/></a>
-                                        <input id="uploadPhoto" type="file" name="file" className="hidden"
-                                               accept="image/gif,image/jpeg,image/x-ms-bmp,image/x-png,image/png"/>
-                                    </div>
-                                </div>
+                                {
+                                    //<div className="row form-group form-horizontal">
+                                    //    <div className="col-xs-2 control-label">
+                                    //        <label>头像</label>
+                                    //    </div>
+                                    //    <div id="divPhoto" className="col-xs-10">
+                                    //        <input id="inputPhoto" ref="inputPhoto" type="hidden"/>
+                                    //        <a href="javascript:void(0)" onClick={this.uploadPhoto}><img id="imgPhoto"
+                                    //                                                                     className="width-100"
+                                    //                                                                     src="../img/upload.png"/></a>
+                                    //        <input id="uploadPhoto" type="file" name="file" className="hidden"
+                                    //               accept="image/gif,image/jpeg,image/x-ms-bmp,image/x-png,image/png"/>
+                                    //    </div>
+                                    //</div>
+                                }
                                 <div className="row form-group form-horizontal">
                                     <div className="col-xs-2 control-label">
                                         <label className="required">用户ID</label>

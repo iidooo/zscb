@@ -168,7 +168,7 @@ var BusinessManageSideBar = React.createClass({displayName: "BusinessManageSideB
                     ), 
                     React.createElement("ul", {style: {display:"none"}}, 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDAccountInfo", href: SiteProperties.webURL + Page.bigdAccountInfo}, "查询记录")
+                            React.createElement("a", {id: "sideMenuCreditSearchLog", href: SiteProperties.webURL + Page.creditSearchLog}, "查询记录")
                         )
                     )
                 ), 
@@ -180,10 +180,10 @@ var BusinessManageSideBar = React.createClass({displayName: "BusinessManageSideB
                     ), 
                     React.createElement("ul", {style: {display:"none"}}, 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDAccountInfo", href: SiteProperties.webURL + Page.bigdAccountInfo}, "基本资料")
+                            React.createElement("a", {id: "sideMenuProfile", href: SiteProperties.webURL + Page.profile}, "基本资料")
                         ), 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDAccountInfo", href: SiteProperties.webURL + Page.bigdAccountInfo}, "密码修改")
+                            React.createElement("a", {id: "sideMenuPassword", href: SiteProperties.webURL + Page.password}, "密码修改")
                         )
                     )
                 )

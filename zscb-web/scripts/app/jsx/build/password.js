@@ -63,10 +63,10 @@ var Password = React.createClass({displayName: "Password",
     render: function () {
         return (
             React.createElement("div", null, 
-                React.createElement(Header, null), 
+                React.createElement(Header, {activeMenuID: "mainMenuBussinessManage"}), 
 
                 React.createElement("div", {id: "main", className: "container-fluid margin-top-60 margin-bottom-60"}, 
-                    React.createElement(SideBar, {activeMenuID: "menuPassword"}), 
+                    React.createElement(SideBar, {activeMainMenuID: "mainMenuBussinessManage", activeMenuID: "sideMenuPassword"}), 
                     React.createElement("div", {className: "content-page"}, 
                         React.createElement(Breadcrumb, {page: Page.password}), 
                         React.createElement("div", {className: "panel panel-default"}, 

@@ -11,7 +11,7 @@ SiteProperties = {
     //clientURL : "http://www.iidooo.com/cms-admin",
     //serverURL : "http://www.iidooo.com/cms-server",
 
-    siteVersion: "0.1.1.0 B20160711",
+    siteVersion: "1.0.0.0 B20160921",
     cmsAPIVersion: "0.1.1.0 B20160711",
 };
 
@@ -185,11 +185,11 @@ Page = {
     systemManage: "/page/system-manage.html",
     creditSearch: "/page/credit-search.html",
     creditSearchHistory: "/page/credit_search_history.html",
+    creditSearchLog: "/page/credit_search_log.html",
     creditBasicReport: "/page/credit_basic_report.html",
+    profile: "/page/profile.html",
+    password: "/page/password.html",
 
-    comment: "/pages/comment.html",
-    profile: "/pages/profile.html",
-    password: "/pages/password.html",
     users: "/pages/users.html",
     user: "/pages/user.html",
     admin: "/pages/admin.html",

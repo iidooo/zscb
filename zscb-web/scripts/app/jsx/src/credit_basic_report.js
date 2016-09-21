@@ -63,17 +63,15 @@ var CreditReport = React.createClass({
                         <Breadcrumb page={Page.creditBasicReport}/>
 
                         <div className="panel panel-default">
-                            <div className="panel-heading">资信验证基础报告</div>
-                            <div className="panel-body">
+                            <div className="panel-heading">
                                 <div className="row">
-                                    <div className="col-xs-6">
-                                        <ReportAbstractSelf detail={detailSelf}/>
-                                    </div>
-                                    <div className="col-xs-6">
-                                        <ReportAbstractMate detail={detailMate}/>
+                                    <div className="col-xs-6">资信验证基础报告</div>
+                                    <div className="col-xs-6 text-right">
+                                        <button type="button" className="btn btn-primary">下载报告</button>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div className="panel-body">
                                 <ReportIdentity/>
 
                                 <ReportRegister/>
@@ -282,10 +280,6 @@ var ReportAbstractMate = React.createClass({
         );
     }
 });
-
-
-
-
 
 
 ReactDOM.render(

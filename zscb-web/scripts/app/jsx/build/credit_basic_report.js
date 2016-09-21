@@ -63,17 +63,15 @@ var CreditReport = React.createClass({displayName: "CreditReport",
                         React.createElement(Breadcrumb, {page: Page.creditBasicReport}), 
 
                         React.createElement("div", {className: "panel panel-default"}, 
-                            React.createElement("div", {className: "panel-heading"}, "资信验证基础报告"), 
-                            React.createElement("div", {className: "panel-body"}, 
+                            React.createElement("div", {className: "panel-heading"}, 
                                 React.createElement("div", {className: "row"}, 
-                                    React.createElement("div", {className: "col-xs-6"}, 
-                                        React.createElement(ReportAbstractSelf, {detail: detailSelf})
-                                    ), 
-                                    React.createElement("div", {className: "col-xs-6"}, 
-                                        React.createElement(ReportAbstractMate, {detail: detailMate})
+                                    React.createElement("div", {className: "col-xs-6"}, "资信验证基础报告"), 
+                                    React.createElement("div", {className: "col-xs-6 text-right"}, 
+                                        React.createElement("button", {type: "button", className: "btn btn-primary"}, "下载报告")
                                     )
-                                ), 
-
+                                )
+                            ), 
+                            React.createElement("div", {className: "panel-body"}, 
                                 React.createElement(ReportIdentity, null), 
 
                                 React.createElement(ReportRegister, null), 
@@ -282,10 +280,6 @@ var ReportAbstractMate = React.createClass({displayName: "ReportAbstractMate",
         );
     }
 });
-
-
-
-
 
 
 ReactDOM.render(

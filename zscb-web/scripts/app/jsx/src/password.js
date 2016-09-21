@@ -63,10 +63,10 @@ var Password = React.createClass({
     render: function () {
         return (
             <div>
-                <Header/>
+                <Header activeMenuID="mainMenuBussinessManage"/>
 
                 <div id="main" className="container-fluid margin-top-60 margin-bottom-60">
-                    <SideBar activeMenuID="menuPassword"/>
+                    <SideBar activeMainMenuID="mainMenuBussinessManage" activeMenuID="sideMenuPassword"/>
                     <div className="content-page">
                         <Breadcrumb page={Page.password}/>
                         <div className="panel panel-default">

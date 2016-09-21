@@ -168,7 +168,7 @@ var BusinessManageSideBar = React.createClass({
                     </a>
                     <ul style={{display:"none"}}>
                         <li>
-                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>查询记录</a>
+                            <a id="sideMenuCreditSearchLog" href={SiteProperties.webURL + Page.creditSearchLog}>查询记录</a>
                         </li>
                     </ul>
                 </li>
@@ -180,10 +180,10 @@ var BusinessManageSideBar = React.createClass({
                     </a>
                     <ul style={{display:"none"}}>
                         <li>
-                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>基本资料</a>
+                            <a id="sideMenuProfile" href={SiteProperties.webURL + Page.profile}>基本资料</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>密码修改</a>
+                            <a id="sideMenuPassword" href={SiteProperties.webURL + Page.password}>密码修改</a>
                         </li>
                     </ul>
                 </li>

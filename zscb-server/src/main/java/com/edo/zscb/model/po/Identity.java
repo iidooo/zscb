@@ -2,6 +2,8 @@ package com.edo.zscb.model.po;
 
 import java.util.Date;
 
+import com.iidooo.core.model.po.SecurityUser;
+
 public class Identity {
     private Integer identityID;
 
@@ -30,6 +32,8 @@ public class Identity {
     private Date createTime;
 
     private Integer createUserID;
+    
+    private SecurityUser createUser;
 
     private Boolean isDelete;
 
@@ -145,6 +149,14 @@ public class Identity {
 
     public void setCreateUserID(Integer createUserID) {
         this.createUserID = createUserID;
+    }    
+
+    public SecurityUser getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(SecurityUser createUser) {
+        this.createUser = createUser;
     }
 
     public Boolean getIsDelete() {

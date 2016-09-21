@@ -31,8 +31,10 @@ var Login = React.createClass({displayName: "Login",
     render: function () {
         return (
             React.createElement("div", {className: "container"}, 
-                React.createElement("h1", {id: "logoWrap", className: "text-center"}, 
-                    React.createElement("img", {src: "../img/zslogoB.png"})
+                React.createElement("h1", {id: "logoWrap", className: "text-center"}
+                    
+                        //<img src="../img/zslogoB.png"></img>
+                    
                 ), 
                 React.createElement("h2", {id: "loginTitle", className: "text-center"}, "个人审贷资信验证平台"), 
                 React.createElement(LoginForm, null)

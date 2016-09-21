@@ -132,8 +132,8 @@ var Profile = React.createClass({displayName: "Profile",
         ProfileActions.getUser(this.state);
     },
     componentDidUpdate: function () {
-        this.refs.inputPhoto.value = this.state.user.photoURL;
-        $("#imgPhoto").attr("src", this.state.user.photoURL);
+        //this.refs.inputPhoto.value = this.state.user.photoURL;
+        //$("#imgPhoto").attr("src", this.state.user.photoURL);
         this.refs.inputLoginID.value = this.state.user.loginID;
         this.refs.inputUserName.value = this.state.user.userName;
         this.refs.inputMobile.value = this.state.user.mobile;
@@ -145,7 +145,7 @@ var Profile = React.createClass({displayName: "Profile",
         this.refs.inputLastLoginTime.value = new Date(this.state.user.lastLoginTime).format('yyyy-MM-dd hh:mm:ss');
     },
     handleSave:function(){
-        this.state.user.photoURL = this.refs.inputPhoto.value;
+        //this.state.user.photoURL = this.refs.inputPhoto.value;
         this.state.user.userName = this.refs.inputUserName.value;
         this.state.user.mobile = this.refs.inputMobile.value;
         this.state.user.email = this.refs.inputEmail.value;
@@ -167,27 +167,31 @@ var Profile = React.createClass({displayName: "Profile",
     render: function () {
         return (
             React.createElement("div", null, 
-                React.createElement(Header, null), 
+                React.createElement(Header, {activeMenuID: "mainMenuBussinessManage"}), 
 
                 React.createElement("div", {id: "main", className: "container-fluid margin-top-60"}, 
-                    React.createElement(SideBar, {activeMenuID: "menuProfile"}), 
+                    React.createElement(SideBar, {activeMainMenuID: "mainMenuBussinessManage", activeMenuID: "sideMenuProfile"}), 
                     React.createElement("div", {className: "content-page"}, 
                         React.createElement(Breadcrumb, {page: Page.profile}), 
                         React.createElement("div", {className: "panel panel-default"}, 
                             React.createElement("div", {className: "panel-heading"}, "用户信息"), 
                             React.createElement("div", {className: "panel-body"}, 
                                 React.createElement(MessageBox, null), 
-                                React.createElement("div", {className: "row form-group form-horizontal"}, 
-                                    React.createElement("div", {className: "col-xs-2 control-label"}, 
-                                        React.createElement("label", null, "头像")
-                                    ), 
-                                    React.createElement("div", {id: "divPhoto", className: "col-xs-10"}, 
-                                        React.createElement("input", {id: "inputPhoto", ref: "inputPhoto", type: "hidden"}), 
-                                        React.createElement("a", {href: "javascript:void(0)", onClick: this.uploadPhoto}, React.createElement("img", {id: "imgPhoto", className: "width-100", src: "../img/upload.png"})), 
-                                        React.createElement("input", {id: "uploadPhoto", type: "file", name: "file", className: "hidden", 
-                                               accept: "image/gif,image/jpeg,image/x-ms-bmp,image/x-png,image/png"})
-                                    )
-                                ), 
+                                
+                                    //<div className="row form-group form-horizontal">
+                                    //    <div className="col-xs-2 control-label">
+                                    //        <label>头像</label>
+                                    //    </div>
+                                    //    <div id="divPhoto" className="col-xs-10">
+                                    //        <input id="inputPhoto" ref="inputPhoto" type="hidden"/>
+                                    //        <a href="javascript:void(0)" onClick={this.uploadPhoto}><img id="imgPhoto"
+                                    //                                                                     className="width-100"
+                                    //                                                                     src="../img/upload.png"/></a>
+                                    //        <input id="uploadPhoto" type="file" name="file" className="hidden"
+                                    //               accept="image/gif,image/jpeg,image/x-ms-bmp,image/x-png,image/png"/>
+                                    //    </div>
+                                    //</div>
+                                
                                 React.createElement("div", {className: "row form-group form-horizontal"}, 
                                     React.createElement("div", {className: "col-xs-2 control-label"}, 
                                         React.createElement("label", {className: "required"}, "用户ID")

@@ -18,12 +18,24 @@
 		<result column="IsDelete" property="isDelete" jdbcType="BIT" />
 		<result column="Version" property="version" jdbcType="INTEGER" />
 		<association select="selectMate" column="mateID" property="mate" javaType="com.edo.zscb.model.po.Identity"></association>
+		<association select="selectCreateUser" column="createUserID" property="createUser" javaType="com.iidooo.core.model.po.SecurityUser"></association>
 	</resultMap>
 	<sql id="Base_Column_List">
 		I.IdentityID, I.Name, I.IDNumber, I.Mobile, I.BankNumber, I.HouseNumber, I.IsMatch, I.MateID, I.Remarks,
-		I.UpdateTime, I.UpdateUserID, I.CreateTime, I.CreateUserID, I.IsDelete, I.Version
+		I.UpdateTime, I.UpdateUserID,
+		I.CreateTime, I.CreateUserID, I.IsDelete, I.Version
 	</sql>
-	
+
+	<select id="selectCreateUser" parameterType="java.lang.Integer" resultType="com.iidooo.core.model.po.SecurityUser">
+		select
+		U.UserID, U.LoginID, '' as password, U.UserName, U.Mobile,
+		U.Email, U.Sex, U.Birthday, U.WeixinID, U.PhotoURL,
+		U.IsSilent, U.IsDisable, U.UserType, U.Level, U.Points, U.Experience, U.Remarks, U.UpdateTime,
+		U.UpdateUserID,
+		U.CreateTime, U.CreateUserID, U.IsDelete, U.Version
+		from security_user U where UserID = #{createUserID,jdbcType=INTEGER}
+	</select>
+
 	<!-- 通过IdentityID获得身份信息 -->
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
@@ -31,7 +43,7 @@
 		from credit_identity I
 		where I.IsDelete = 0 and I.IdentityID = #{identityID,jdbcType=INTEGER}
 	</select>
-	
+
 	<!-- 查询配偶信息 -->
 	<select id="selectMate" resultType="com.edo.zscb.model.po.Identity" parameterType="java.lang.Integer">
 		select
@@ -85,14 +97,18 @@
 	<insert id="insert" parameterType="com.edo.zscb.model.po.Identity">
 		insert into credit_identity (IdentityID, Name, IDNumber,
 		Mobile, BankNumber, HouseNumber,
-		IsMatch, MateID, Remarks,
+		IsMatch, MateID,
+		Remarks,
 		UpdateTime, UpdateUserID, CreateTime,
 		CreateUserID, IsDelete, Version
 		)
-		values (#{identityID,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{IDNumber,jdbcType=VARCHAR},
+		values (#{identityID,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		#{IDNumber,jdbcType=VARCHAR},
 		#{mobile,jdbcType=VARCHAR}, #{bankNumber,jdbcType=VARCHAR}, #{houseNumber,jdbcType=VARCHAR},
-		#{isMatch,jdbcType=BIT}, #{mateID,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR},
-		#{updateTime,jdbcType=TIMESTAMP}, #{updateUserID,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+		#{isMatch,jdbcType=BIT},
+		#{mateID,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP}, #{updateUserID,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
 		#{createUserID,jdbcType=INTEGER}, #{isDelete,jdbcType=BIT}, #{version,jdbcType=INTEGER}
 		)
 	</insert>
@@ -244,10 +260,12 @@
 	<update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.Identity">
 		update credit_identity
 		set Name = #{name,jdbcType=VARCHAR},
-		IDNumber = #{IDNumber,jdbcType=VARCHAR},
+		IDNumber =
+		#{IDNumber,jdbcType=VARCHAR},
 		Mobile = #{mobile,jdbcType=VARCHAR},
 		BankNumber = #{bankNumber,jdbcType=VARCHAR},
-		HouseNumber = #{houseNumber,jdbcType=VARCHAR},
+		HouseNumber =
+		#{houseNumber,jdbcType=VARCHAR},
 		IsMatch = #{isMatch,jdbcType=BIT},
 		MateID = #{mateID,jdbcType=INTEGER},
 		Remarks = #{remarks,jdbcType=VARCHAR},
@@ -257,6 +275,7 @@
 		CreateUserID = #{createUserID,jdbcType=INTEGER},
 		IsDelete = #{isDelete,jdbcType=BIT},
 		Version = #{version,jdbcType=INTEGER}
-		where IdentityID = #{identityID,jdbcType=INTEGER}
+		where IdentityID =
+		#{identityID,jdbcType=INTEGER}
 	</update>
 </mapper>

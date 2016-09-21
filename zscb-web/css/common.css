@@ -45,6 +45,10 @@ a:focus{
     background-color: #DB441B;
 }
 
+.navbar-right {
+    margin-right: 0px;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #FF4329;
