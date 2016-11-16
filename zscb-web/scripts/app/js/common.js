@@ -3,8 +3,8 @@ SiteProperties = {
     webURL: "http://localhost:63342/zscb-web",
     serverURL: "http://localhost:8080/zscb-server",
     // 测试环境
-    //clientURL: "http://www.iidooo.com/gauge-web",
-    //serverURL : "http://zgvemc.iidooo.com/gauge-server"
+    //webURL: "http://www.edo-network.com/zscb-web",
+    //serverURL: "http://www.edo-network.com/zscb-server",
 
 
     // 正式环境
@@ -97,6 +97,10 @@ BigDAPI = {
     getOrder: "/bigd/getOrder",
 }
 
+WescrAPI = {
+    getPersonBadInfo: "/wescr/getPersonBadInfo",
+}
+
 BussinessAPI = {
     getIdentityList: "/bussiness/getIdentityList",
     getIdentityInfo: "/bussiness/getIdentityInfo",
@@ -112,7 +116,7 @@ BussinessAPI = {
 }
 
 CommonAPI = {
-    login:"/login"
+    login: "/login"
 }
 
 API = {
@@ -176,9 +180,9 @@ role = {
     readonly: "readonly"
 };
 
-Page = {
+Pages = {
     login: "/page/login.html",
-    bigdAccountInfo: "/page/bigd-account-info.html",
+    bigdAccountInfo: "/page/bigd_account_info.html",
     bigdOrderList: "/page/bigd-order-list.html",
     bigdOrderDetail: "/page/bigd-order-detail.html",
     bigdNewOrder: "/page/bigd-new-order.html",
@@ -189,6 +193,8 @@ Page = {
     creditBasicReport: "/page/credit_basic_report.html",
     profile: "/page/profile.html",
     password: "/page/password.html",
+
+    wescrPersonalBadInfo :"/page/wescr_personal_bad_info.html",
 
     users: "/pages/users.html",
     user: "/pages/user.html",
@@ -231,12 +237,12 @@ Date.prototype.format = function (format) {
     return format;
 }
 
-function formatDate(dateString){
-    if(dateString != null) {
+function formatDate(dateString) {
+    if (dateString != null) {
         var pattern = /(\d{4})(\d{2})(\d{2})/;
         var formatedDate = dateString.replace(pattern, '$1-$2-$3');
         return formatedDate;
-    } else{
+    } else {
         return "";
     }
 }
@@ -363,8 +369,8 @@ function dataPermission(messageBoxID, content) {
 }
 
 /*
-* 验证Email的正确格式
-* */
+ * 验证Email的正确格式
+ * */
 function validateEmail(email) {
     var regex = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.|\-]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     if (!regex.test(email)) {
@@ -374,22 +380,22 @@ function validateEmail(email) {
 }
 
 /*
-* 验证英文或数字
-* */
-function validateEnglish(input){
+ * 验证英文或数字
+ * */
+function validateEnglish(input) {
     var regex = /^[a-zA-Z]*$/;
-    if(!regex.test(input)){
+    if (!regex.test(input)) {
         return false;
     }
     return true;
 }
 
 /*
-* 验证数字
-* */
-function validateNumber(input){
+ * 验证数字
+ * */
+function validateNumber(input) {
     var regex = /^[0-9]*$/;
-    if(!regex.test(input)){
+    if (!regex.test(input)) {
         return false;
     }
     return true;

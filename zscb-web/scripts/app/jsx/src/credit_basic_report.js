@@ -88,7 +88,7 @@ var CreditReport = React.createClass({
 
                                 <ReportLegal/>
 
-                                <ReportPawn/>
+
                             </div>
                         </div>
 

@@ -13,7 +13,7 @@ var SideBarMenuStore = Reflux.createStore({
         //
         //// 检查token是否过期
         //if (data.accessToken == null || data.accessToken == "") {
-        //    location.href = SiteProperties.clientURL + Page.login;
+        //    location.href = SiteProperties.clientURL + Pages.login;
         //    return false;
         //}
         //
@@ -46,7 +46,7 @@ var SideBar = React.createClass({displayName: "SideBar",
 
         //this.state.user = JSON.parse(sessionStorage.getItem(SessionKey.user));
         //if(this.state.user == null){
-        //    location.href = SiteProperties.clientURL + Page.login;
+        //    location.href = SiteProperties.clientURL + Pages.login;
         //}
         //
         //// 得到该用户的当前站点角色
@@ -94,7 +94,7 @@ var SideBar = React.createClass({displayName: "SideBar",
     },
     render: function () {
         var sidebar = React.createElement(SysManageSideBar, null);
-        if(this.props.activeMainMenuID == "mainMenuBussinessManage"){
+        if (this.props.activeMainMenuID == "mainMenuBussinessManage") {
             sidebar = React.createElement(BusinessManageSideBar, {callbackParent: this.handleToggleSub});
         }
         return (
@@ -120,13 +120,61 @@ var SysManageSideBar = React.createClass({displayName: "SysManageSideBar",
                     ), 
                     React.createElement("ul", null, 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDAccountInfo", href: SiteProperties.webURL + Page.bigdAccountInfo}, "账户信息")
+                            React.createElement("a", {id: "sideMenuBigDAccountInfo", href: SiteProperties.webURL + Pages.bigdAccountInfo}, "账户信息")
                         ), 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDNewOrder", href: SiteProperties.webURL + Page.bigdNewOrder}, "资信查询")
+                            React.createElement("a", {id: "sideMenuBigDNewOrder", href: SiteProperties.webURL + Pages.bigdNewOrder}, "资信查询")
                         ), 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Page.bigdOrderList}, "查询历史")
+                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Pages.bigdOrderList}, "查询历史")
+                        )
+                    )
+                ), 
+                React.createElement("li", null, 
+                    React.createElement("a", {id: "sideMenuWescr", href: "javascript:void(0)", className: "has-sub", 
+                       onClick: this.handleToggleSub}, 
+                        React.createElement("i", {className: "fa fa-minus"}), 
+                        React.createElement("span", null, "维氏盾")
+                    ), 
+                    React.createElement("ul", null, 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuWescrPersonBadInfo", href: SiteProperties.webURL + Pages.wescrPersonalBadInfo}, "个人不良记录")
+                        ), 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuBigDNewOrder", href: SiteProperties.webURL + Pages.bigdNewOrder}, "个人户籍及同住人")
+                        ), 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Pages.bigdOrderList}, "个人黑名单信息")
+                        ), 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Pages.bigdOrderList}, "个人社保信息")
+                        ), 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Pages.bigdOrderList}, "个人银行卡交易记录")
+                        )
+                    )
+                ), 
+                React.createElement("li", null, 
+                    React.createElement("a", {id: "sideMenuZrr", href: "javascript:void(0)", className: "has-sub", 
+                       onClick: this.handleToggleSub}, 
+                        React.createElement("i", {className: "fa fa-minus"}), 
+                        React.createElement("span", null, "海豚")
+                    ), 
+                    React.createElement("ul", null, 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuWescrPersonBadInfo", href: SiteProperties.webURL + Pages.wescrPersonalBadInfo}, "个人不良记录")
+                        ), 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuBigDNewOrder", href: SiteProperties.webURL + Pages.bigdNewOrder}, "个人户籍及同住人")
+                        ), 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Pages.bigdOrderList}, "个人黑名单信息")
+                        ), 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Pages.bigdOrderList}, "个人社保信息")
+                        ), 
+                        React.createElement("li", null, 
+                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Pages.bigdOrderList}, "个人银行卡交易记录")
                         )
                     )
                 )
@@ -147,13 +195,13 @@ var BusinessManageSideBar = React.createClass({displayName: "BusinessManageSideB
                     ), 
                     React.createElement("ul", null, 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuCreditSearch", href: SiteProperties.webURL + Page.creditSearch}, 
+                            React.createElement("a", {id: "sideMenuCreditSearch", href: SiteProperties.webURL + Pages.creditSearch}, 
                                 React.createElement("i", {className: "fa fa-search"}), 
                                 React.createElement("span", null, "资信查询")
                             )
                         ), 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuCreditSearchHistory", href: SiteProperties.webURL + Page.creditSearchHistory}, 
+                            React.createElement("a", {id: "sideMenuCreditSearchHistory", href: SiteProperties.webURL + Pages.creditSearchHistory}, 
                                 React.createElement("i", {className: "fa fa-list"}), 
                                 React.createElement("span", null, "查询历史")
                             )
@@ -168,7 +216,7 @@ var BusinessManageSideBar = React.createClass({displayName: "BusinessManageSideB
                     ), 
                     React.createElement("ul", {style: {display:"none"}}, 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuCreditSearchLog", href: SiteProperties.webURL + Page.creditSearchLog}, "查询记录")
+                            React.createElement("a", {id: "sideMenuCreditSearchLog", href: SiteProperties.webURL + Pages.creditSearchLog}, "查询记录")
                         )
                     )
                 ), 
@@ -180,10 +228,10 @@ var BusinessManageSideBar = React.createClass({displayName: "BusinessManageSideB
                     ), 
                     React.createElement("ul", {style: {display:"none"}}, 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuProfile", href: SiteProperties.webURL + Page.profile}, "基本资料")
+                            React.createElement("a", {id: "sideMenuProfile", href: SiteProperties.webURL + Pages.profile}, "基本资料")
                         ), 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuPassword", href: SiteProperties.webURL + Page.password}, "密码修改")
+                            React.createElement("a", {id: "sideMenuPassword", href: SiteProperties.webURL + Pages.password}, "密码修改")
                         )
                     )
                 )

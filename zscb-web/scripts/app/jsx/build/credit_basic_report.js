@@ -86,9 +86,9 @@ var CreditReport = React.createClass({displayName: "CreditReport",
 
                                 React.createElement(ReportIncome, null), 
 
-                                React.createElement(ReportLegal, null), 
+                                React.createElement(ReportLegal, null)
 
-                                React.createElement(ReportPawn, null)
+
                             )
                         ), 
 
