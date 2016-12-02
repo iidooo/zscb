@@ -1,9 +1,9 @@
-var PageActions = Reflux.createActions(['getPersonBadInfo']);
+var PageActions = Reflux.createActions(['queryPersonalSocialInfo']);
 
 var PageStore = Reflux.createStore({
     listenables: [PageActions],
-    getPersonBadInfo: function (data) {
-        var url = SiteProperties.serverURL + WescrAPI.getPersonBadInfo;
+    queryPersonalSocialInfo: function (data) {
+        var url = SiteProperties.serverURL + WescrAPI.queryPersonalSocialInfo;
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
 
@@ -29,12 +29,13 @@ var PageStore = Reflux.createStore({
 });
 
 var PageContent = React.createClass({
-    mixins: [Reflux.connect(PageStore, 'personBadInfo')],
+    mixins: [Reflux.connect(PageStore, 'resultData')],
     getInitialState: function () {
         return {
-            idNumber: "440181198810260616",
-            name: "何家俊",
-            personBadInfo: ""
+            idNumber: "310108197202134025",
+            name: "刘黎霖",
+            mobile: "13621790399",
+            resultData: ""
         };
     },
     handleChange: function (name, event) {
@@ -43,8 +44,8 @@ var PageContent = React.createClass({
         this.setState(newState);
     },
     handleSearch: function () {
-        this.setState({personBadInfo: ""});
-        PageActions.getPersonBadInfo(this.state);
+        this.setState({resultData: ""});
+        PageActions.queryPersonalSocialInfo(this.state);
     },
     render: function () {
         return (
@@ -52,13 +53,13 @@ var PageContent = React.createClass({
                 <Header activeMenuID="mainMenuSysManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuWescrPersonBadInfo"/>
+                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuWescrQueryPersonalSocialInfo"/>
 
                     <div className="content-page">
                         <ol className="breadcrumb">
                             <li><a href="#">系统管理</a></li>
                             <li><a href="#">维氏盾</a></li>
-                            <li className='active'>个人不良记录</li>
+                            <li className='active'>个人社保信息</li>
                         </ol>
                         <div className="panel panel-default">
                             <div className="panel-heading">查询条件</div>
@@ -83,14 +84,24 @@ var PageContent = React.createClass({
                                         </div>
                                     </div>
                                     <div className="col-xs-4">
-                                        <button type="button" className="btn btn-primary" onClick={this.handleSearch}>
-                                            查询
-                                        </button>
+                                        <div className="col-xs-3 control-label">
+                                            <label>手机号</label>
+                                        </div>
+                                        <div className="col-xs-6">
+                                            <input type="text" className="form-control" value={this.state.mobile}
+                                                   onChange={this.handleChange.bind(this,"mobile")}/>
+                                        </div>
+                                        <div className="col-xs-3">
+                                            <button type="button" className="btn btn-primary"
+                                                    onClick={this.handleSearch}>
+                                                查询
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <SearchResult personBadInfo={this.state.personBadInfo}/>
+                        <SearchResult resultData={this.state.resultData}/>
                         <Footer/>
 
                     </div>
@@ -104,7 +115,7 @@ var PageContent = React.createClass({
 var SearchResult = React.createClass({
     getInitialState: function () {
         return {
-            personBadInfo: {}
+            resultData: {}
         };
     },
     handleChange: function (event) {
@@ -118,8 +129,8 @@ var SearchResult = React.createClass({
             <div className="panel panel-info">
                 <div className="panel-heading">查询结果</div>
                 <div className="panel-body">
-                    <textarea className="form-control" rows="10" value={this.props.personBadInfo}
-                              onChange={this.handleChange.bind(this,"personBadInfo")}></textarea>
+                    <textarea className="form-control" rows="10" value={this.props.resultData}
+                              onChange={this.handleChange.bind(this,"resultData")}></textarea>
                 </div>
             </div>
         );

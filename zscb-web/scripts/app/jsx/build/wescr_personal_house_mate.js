@@ -1,9 +1,9 @@
-var PageActions = Reflux.createActions(['getPersonBadInfo']);
+var PageActions = Reflux.createActions(['getPersonalHouseMate']);
 
 var PageStore = Reflux.createStore({
     listenables: [PageActions],
-    getPersonBadInfo: function (data) {
-        var url = SiteProperties.serverURL + WescrAPI.getPersonBadInfo;
+    getPersonalHouseMate: function (data) {
+        var url = SiteProperties.serverURL + WescrAPI.getPersonalHouseMate;
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
 
@@ -29,12 +29,12 @@ var PageStore = Reflux.createStore({
 });
 
 var PageContent = React.createClass({displayName: "PageContent",
-    mixins: [Reflux.connect(PageStore, 'personBadInfo')],
+    mixins: [Reflux.connect(PageStore, 'personalHouseMate')],
     getInitialState: function () {
         return {
-            idNumber: "440181198810260616",
-            name: "何家俊",
-            personBadInfo: ""
+            idNumber: "33020619730129061X",
+            name: "王旭军",
+            personalHouseMate: ""
         };
     },
     handleChange: function (name, event) {
@@ -43,8 +43,8 @@ var PageContent = React.createClass({displayName: "PageContent",
         this.setState(newState);
     },
     handleSearch: function () {
-        this.setState({personBadInfo: ""});
-        PageActions.getPersonBadInfo(this.state);
+        this.setState({personalHouseMate: ""});
+        PageActions.getPersonalHouseMate(this.state);
     },
     render: function () {
         return (
@@ -52,13 +52,13 @@ var PageContent = React.createClass({displayName: "PageContent",
                 React.createElement(Header, {activeMenuID: "mainMenuSysManage"}), 
 
                 React.createElement("div", {id: "main", className: "container-fluid margin-top-60"}, 
-                    React.createElement(SideBar, {activeMainMenuID: "mainMenuSysManage", activeMenuID: "sideMenuWescrPersonBadInfo"}), 
+                    React.createElement(SideBar, {activeMainMenuID: "mainMenuSysManage", activeMenuID: "sideMenuWescrPersonalHouseMate"}), 
 
                     React.createElement("div", {className: "content-page"}, 
                         React.createElement("ol", {className: "breadcrumb"}, 
                             React.createElement("li", null, React.createElement("a", {href: "#"}, "系统管理")), 
                             React.createElement("li", null, React.createElement("a", {href: "#"}, "维氏盾")), 
-                            React.createElement("li", {className: "active"}, "个人不良记录")
+                            React.createElement("li", {className: "active"}, "个人户籍及同住人信息")
                         ), 
                         React.createElement("div", {className: "panel panel-default"}, 
                             React.createElement("div", {className: "panel-heading"}, "查询条件"), 
@@ -90,7 +90,7 @@ var PageContent = React.createClass({displayName: "PageContent",
                                 )
                             )
                         ), 
-                        React.createElement(SearchResult, {personBadInfo: this.state.personBadInfo}), 
+                        React.createElement(SearchResult, {personalHouseMate: this.state.personalHouseMate}), 
                         React.createElement(Footer, null)
 
                     )
@@ -104,7 +104,7 @@ var PageContent = React.createClass({displayName: "PageContent",
 var SearchResult = React.createClass({displayName: "SearchResult",
     getInitialState: function () {
         return {
-            personBadInfo: {}
+            personalHouseMate: {}
         };
     },
     handleChange: function (event) {
@@ -118,8 +118,8 @@ var SearchResult = React.createClass({displayName: "SearchResult",
             React.createElement("div", {className: "panel panel-info"}, 
                 React.createElement("div", {className: "panel-heading"}, "查询结果"), 
                 React.createElement("div", {className: "panel-body"}, 
-                    React.createElement("textarea", {className: "form-control", rows: "10", value: this.props.personBadInfo, 
-                              onChange: this.handleChange.bind(this,"personBadInfo")})
+                    React.createElement("textarea", {className: "form-control", rows: "10", value: this.props.personalHouseMate, 
+                              onChange: this.handleChange.bind(this,"personalHouseMate")})
                 )
             )
         );

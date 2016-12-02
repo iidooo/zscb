@@ -1,9 +1,9 @@
-var PageActions = Reflux.createActions(['getPersonBadInfo']);
+var PageActions = Reflux.createActions(['getPersonalHouseMate']);
 
 var PageStore = Reflux.createStore({
     listenables: [PageActions],
-    getPersonBadInfo: function (data) {
-        var url = SiteProperties.serverURL + WescrAPI.getPersonBadInfo;
+    getPersonalHouseMate: function (data) {
+        var url = SiteProperties.serverURL + WescrAPI.getPersonalHouseMate;
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
 
@@ -29,12 +29,12 @@ var PageStore = Reflux.createStore({
 });
 
 var PageContent = React.createClass({
-    mixins: [Reflux.connect(PageStore, 'personBadInfo')],
+    mixins: [Reflux.connect(PageStore, 'personalHouseMate')],
     getInitialState: function () {
         return {
-            idNumber: "440181198810260616",
-            name: "何家俊",
-            personBadInfo: ""
+            idNumber: "33020619730129061X",
+            name: "王旭军",
+            personalHouseMate: ""
         };
     },
     handleChange: function (name, event) {
@@ -43,8 +43,8 @@ var PageContent = React.createClass({
         this.setState(newState);
     },
     handleSearch: function () {
-        this.setState({personBadInfo: ""});
-        PageActions.getPersonBadInfo(this.state);
+        this.setState({personalHouseMate: ""});
+        PageActions.getPersonalHouseMate(this.state);
     },
     render: function () {
         return (
@@ -52,13 +52,13 @@ var PageContent = React.createClass({
                 <Header activeMenuID="mainMenuSysManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuWescrPersonBadInfo"/>
+                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuWescrPersonalHouseMate"/>
 
                     <div className="content-page">
                         <ol className="breadcrumb">
                             <li><a href="#">系统管理</a></li>
                             <li><a href="#">维氏盾</a></li>
-                            <li className='active'>个人不良记录</li>
+                            <li className='active'>个人户籍及同住人信息</li>
                         </ol>
                         <div className="panel panel-default">
                             <div className="panel-heading">查询条件</div>
@@ -90,7 +90,7 @@ var PageContent = React.createClass({
                                 </div>
                             </div>
                         </div>
-                        <SearchResult personBadInfo={this.state.personBadInfo}/>
+                        <SearchResult personalHouseMate={this.state.personalHouseMate}/>
                         <Footer/>
 
                     </div>
@@ -104,7 +104,7 @@ var PageContent = React.createClass({
 var SearchResult = React.createClass({
     getInitialState: function () {
         return {
-            personBadInfo: {}
+            personalHouseMate: {}
         };
     },
     handleChange: function (event) {
@@ -118,8 +118,8 @@ var SearchResult = React.createClass({
             <div className="panel panel-info">
                 <div className="panel-heading">查询结果</div>
                 <div className="panel-body">
-                    <textarea className="form-control" rows="10" value={this.props.personBadInfo}
-                              onChange={this.handleChange.bind(this,"personBadInfo")}></textarea>
+                    <textarea className="form-control" rows="10" value={this.props.personalHouseMate}
+                              onChange={this.handleChange.bind(this,"personalHouseMate")}></textarea>
                 </div>
             </div>
         );

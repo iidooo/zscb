@@ -23,4 +23,6 @@ public class APIConstant {
     public static final String WESCR_GET_PERSONAL_HOUSE_MATE = "/person/getPersonalHouseMate";
 
     public static final String WESCR_QUERY_PERSONLAL_SOCIAL_INFO = "/queryPersonalSocialInfo";
+
+    public static final String WESCR_ZCY_BANK_CARD_PERSONAL_INFO = "/zcyBankCardPersonalInfo";
 }

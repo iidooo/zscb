@@ -99,6 +99,10 @@ BigDAPI = {
 
 WescrAPI = {
     getPersonBadInfo: "/wescr/getPersonBadInfo",
+    getPersonalHouseMate: "/wescr/getPersonalHouseMate",
+    getBlackListByIdentityCard: "/wescr/getBlackListByIdentityCard",
+    queryPersonalSocialInfo: "/wescr/queryPersonalSocialInfo",
+    zcyBankCardPersonalInfo: "/wescr/zcyBankCardPersonalInfo",
 }
 
 BussinessAPI = {
@@ -180,7 +184,7 @@ role = {
     readonly: "readonly"
 };
 
-Pages = {
+Page = {
     login: "/page/login.html",
     bigdAccountInfo: "/page/bigd_account_info.html",
     bigdOrderList: "/page/bigd-order-list.html",
@@ -194,7 +198,11 @@ Pages = {
     profile: "/page/profile.html",
     password: "/page/password.html",
 
-    wescrPersonalBadInfo :"/page/wescr_personal_bad_info.html",
+    wescrPersonalBadInfo: "/page/wescr_personal_bad_info.html",
+    wescrPersonalHouseMate: "/page/wescr_personal_house_mate.html",
+    wescrBlackListByIdentityCard: "/page/wescr_blackList_by_identity_card.html",
+    wescrQueryPersonalSocialInfo: "/page/wescr_query_personal_social_info.html",
+    wescrZcyBankCardPersonalInfo: "/page/wescr_zcy_bank_card_personal_info.html",
 
     users: "/pages/users.html",
     user: "/pages/user.html",

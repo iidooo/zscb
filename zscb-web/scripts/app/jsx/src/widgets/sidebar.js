@@ -13,7 +13,7 @@ var SideBarMenuStore = Reflux.createStore({
         //
         //// 检查token是否过期
         //if (data.accessToken == null || data.accessToken == "") {
-        //    location.href = SiteProperties.clientURL + Pages.login;
+        //    location.href = SiteProperties.clientURL + Page.login;
         //    return false;
         //}
         //
@@ -46,7 +46,7 @@ var SideBar = React.createClass({
 
         //this.state.user = JSON.parse(sessionStorage.getItem(SessionKey.user));
         //if(this.state.user == null){
-        //    location.href = SiteProperties.clientURL + Pages.login;
+        //    location.href = SiteProperties.clientURL + Page.login;
         //}
         //
         //// 得到该用户的当前站点角色
@@ -120,13 +120,13 @@ var SysManageSideBar = React.createClass({
                     </a>
                     <ul>
                         <li>
-                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Pages.bigdAccountInfo}>账户信息</a>
+                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>账户信息</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDNewOrder" href={SiteProperties.webURL + Pages.bigdNewOrder}>资信查询</a>
+                            <a id="sideMenuBigDNewOrder" href={SiteProperties.webURL + Page.bigdNewOrder}>资信查询</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Pages.bigdOrderList}>查询历史</a>
+                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>查询历史</a>
                         </li>
                     </ul>
                 </li>
@@ -138,19 +138,19 @@ var SysManageSideBar = React.createClass({
                     </a>
                     <ul>
                         <li>
-                            <a id="sideMenuWescrPersonBadInfo" href={SiteProperties.webURL + Pages.wescrPersonalBadInfo}>个人不良记录</a>
+                            <a id="sideMenuWescrPersonBadInfo" href={SiteProperties.webURL + Page.wescrPersonalBadInfo}>个人不良记录</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDNewOrder" href={SiteProperties.webURL + Pages.bigdNewOrder}>个人户籍及同住人</a>
+                            <a id="sideMenuescrPersonalHouseMate" href={SiteProperties.webURL + Page.wescrPersonalHouseMate}>个人户籍及同住人</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Pages.bigdOrderList}>个人黑名单信息</a>
+                            <a id="sideMenuWescrBlackListByIdentityCard" href={SiteProperties.webURL + Page.wescrBlackListByIdentityCard}>个人黑名单信息</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Pages.bigdOrderList}>个人社保信息</a>
+                            <a id="sideMenuWescrQueryPersonalSocialInfo" href={SiteProperties.webURL + Page.wescrQueryPersonalSocialInfo}>个人社保信息</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Pages.bigdOrderList}>个人银行卡交易记录</a>
+                            <a id="sideMenuWescrZcyBankCardPersonalInfo" href={SiteProperties.webURL + Page.wescrZcyBankCardPersonalInfo}>个人银行卡交易记录</a>
                         </li>
                     </ul>
                 </li>
@@ -162,19 +162,19 @@ var SysManageSideBar = React.createClass({
                     </a>
                     <ul>
                         <li>
-                            <a id="sideMenuWescrPersonBadInfo" href={SiteProperties.webURL + Pages.wescrPersonalBadInfo}>个人不良记录</a>
+                            <a id="sideMenuWescrPersonBadInfo" href={SiteProperties.webURL + Page.wescrPersonalBadInfo}>个人不良记录</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDNewOrder" href={SiteProperties.webURL + Pages.bigdNewOrder}>个人户籍及同住人</a>
+                            <a id="sideMenuBigDNewOrder" href={SiteProperties.webURL + Page.bigdNewOrder}>个人户籍及同住人</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Pages.bigdOrderList}>个人黑名单信息</a>
+                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>个人黑名单信息</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Pages.bigdOrderList}>个人社保信息</a>
+                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>个人社保信息</a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Pages.bigdOrderList}>个人银行卡交易记录</a>
+                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>个人银行卡交易记录</a>
                         </li>
                     </ul>
                 </li>
@@ -195,13 +195,13 @@ var BusinessManageSideBar = React.createClass({
                     </a>
                     <ul>
                         <li>
-                            <a id="sideMenuCreditSearch" href={SiteProperties.webURL + Pages.creditSearch}>
+                            <a id="sideMenuCreditSearch" href={SiteProperties.webURL + Page.creditSearch}>
                                 <i className="fa fa-search"></i>
                                 <span>资信查询</span>
                             </a>
                         </li>
                         <li>
-                            <a id="sideMenuCreditSearchHistory" href={SiteProperties.webURL + Pages.creditSearchHistory}>
+                            <a id="sideMenuCreditSearchHistory" href={SiteProperties.webURL + Page.creditSearchHistory}>
                                 <i className="fa fa-list"></i>
                                 <span>查询历史</span>
                             </a>
@@ -216,7 +216,7 @@ var BusinessManageSideBar = React.createClass({
                     </a>
                     <ul style={{display:"none"}}>
                         <li>
-                            <a id="sideMenuCreditSearchLog" href={SiteProperties.webURL + Pages.creditSearchLog}>查询记录</a>
+                            <a id="sideMenuCreditSearchLog" href={SiteProperties.webURL + Page.creditSearchLog}>查询记录</a>
                         </li>
                     </ul>
                 </li>
@@ -228,10 +228,10 @@ var BusinessManageSideBar = React.createClass({
                     </a>
                     <ul style={{display:"none"}}>
                         <li>
-                            <a id="sideMenuProfile" href={SiteProperties.webURL + Pages.profile}>基本资料</a>
+                            <a id="sideMenuProfile" href={SiteProperties.webURL + Page.profile}>基本资料</a>
                         </li>
                         <li>
-                            <a id="sideMenuPassword" href={SiteProperties.webURL + Pages.password}>密码修改</a>
+                            <a id="sideMenuPassword" href={SiteProperties.webURL + Page.password}>密码修改</a>
                         </li>
                     </ul>
                 </li>

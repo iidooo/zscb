@@ -17,31 +17,101 @@ import com.iidooo.core.model.ResponseResult;
 @Controller
 public class WescrAction {
     private static final Logger logger = Logger.getLogger(WescrAction.class);
-    
+
     @Autowired
     private WescrService wescrService;
-    
+
     @ResponseBody
     @RequestMapping(value = { "/wescr/getPersonBadInfo" }, method = RequestMethod.POST)
     public ResponseResult getPersonBadInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-//            String id = request.getParameter("id");
-//            
-//            result.checkFieldRequired("id", id);
-//            
-//            if (result.getMessages().size() > 0) {
-//                result.setStatus(ResponseStatus.Failed.getCode());
-//                return result;
-//            }
-            
-            
-            String name = "何家俊";
-            String idNumber = "440181198810260616";
+            String name = request.getParameter("name");
+            String idNumber = request.getParameter("idNumber");
             String data = wescrService.getPersonBadInfo(name, idNumber);
-                       
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(data);
+            System.out.println(data);
+        } catch (Exception e) {
+            logger.fatal(e);
+            result.checkException(e);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = { "/wescr/getPersonalHouseMate" }, method = RequestMethod.POST)
+    public ResponseResult getPersonalHouseMate(HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
+        try {
+            String name = request.getParameter("name");
+            String idNumber = request.getParameter("idNumber");
+            String data = wescrService.getPersonalHouseMate(name, idNumber);
+
+            result.setStatus(ResponseStatus.OK.getCode());
+            result.setData(data);
+            System.out.println(data);
+        } catch (Exception e) {
+            logger.fatal(e);
+            result.checkException(e);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = { "/wescr/getBlackListByIdentityCard" }, method = RequestMethod.POST)
+    public ResponseResult getBlackListByIdentityCard(HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
+        try {
+            String name = request.getParameter("name");
+            String idNumber = request.getParameter("idNumber");
+            String data = wescrService.getBlackListByIdentityCard(name, idNumber);
+
+            result.setStatus(ResponseStatus.OK.getCode());
+            result.setData(data);
+            System.out.println(data);
+        } catch (Exception e) {
+            logger.fatal(e);
+            result.checkException(e);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = { "/wescr/queryPersonalSocialInfo" }, method = RequestMethod.POST)
+    public ResponseResult queryPersonalSocialInfo(HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
+        try {
+            String name = request.getParameter("name");
+            String idNumber = request.getParameter("idNumber");
+            String mobile = request.getParameter("mobile");
+            String data = wescrService.queryPersonalSocialInfo(name, idNumber, mobile);
+
+            result.setStatus(ResponseStatus.OK.getCode());
+            result.setData(data);
+            System.out.println(data);
+        } catch (Exception e) {
+            logger.fatal(e);
+            result.checkException(e);
+        }
+        return result;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = { "/wescr/zcyBankCardPersonalInfo" }, method = RequestMethod.POST)
+    public ResponseResult zcyBankCardPersonalInfo(HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
+        try {
+            String name = request.getParameter("name");
+            String idNumber = request.getParameter("idNumber");
+            String mobile = request.getParameter("mobile");
+            String bankCardNo = request.getParameter("bankCardNo");
+            String data = wescrService.zcyBankCardPersonalInfo(name, idNumber, mobile, bankCardNo);
+
+            result.setStatus(ResponseStatus.OK.getCode());
+            result.setData(data);
+            System.out.println(data);
         } catch (Exception e) {
             logger.fatal(e);
             result.checkException(e);
