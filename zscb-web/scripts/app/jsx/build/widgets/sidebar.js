@@ -162,19 +162,7 @@ var SysManageSideBar = React.createClass({displayName: "SysManageSideBar",
                     ), 
                     React.createElement("ul", null, 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuWescrPersonBadInfo", href: SiteProperties.webURL + Page.wescrPersonalBadInfo}, "个人不良记录")
-                        ), 
-                        React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDNewOrder", href: SiteProperties.webURL + Page.bigdNewOrder}, "个人户籍及同住人")
-                        ), 
-                        React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Page.bigdOrderList}, "个人黑名单信息")
-                        ), 
-                        React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Page.bigdOrderList}, "个人社保信息")
-                        ), 
-                        React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Page.bigdOrderList}, "个人银行卡交易记录")
+                            React.createElement("a", {id: "sideMenuDolphinQueryZrrKxHonest", href: SiteProperties.webURL + Page.dolphinQueryZrrKxHonest}, "资信查询")
                         )
                     )
                 )

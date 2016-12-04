@@ -105,6 +105,10 @@ WescrAPI = {
     zcyBankCardPersonalInfo: "/wescr/zcyBankCardPersonalInfo",
 }
 
+DolphinAPI = {
+    queryZrrKxHonest:"/dolphin/queryZrrKxHonest",
+}
+
 BussinessAPI = {
     getIdentityList: "/bussiness/getIdentityList",
     getIdentityInfo: "/bussiness/getIdentityInfo",
@@ -203,6 +207,7 @@ Page = {
     wescrBlackListByIdentityCard: "/page/wescr_blackList_by_identity_card.html",
     wescrQueryPersonalSocialInfo: "/page/wescr_query_personal_social_info.html",
     wescrZcyBankCardPersonalInfo: "/page/wescr_zcy_bank_card_personal_info.html",
+    dolphinQueryZrrKxHonest:"/page/dolphin_query_zrr_kx_honest.html",
 
     users: "/pages/users.html",
     user: "/pages/user.html",

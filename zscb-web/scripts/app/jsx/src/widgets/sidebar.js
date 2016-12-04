@@ -162,19 +162,7 @@ var SysManageSideBar = React.createClass({
                     </a>
                     <ul>
                         <li>
-                            <a id="sideMenuWescrPersonBadInfo" href={SiteProperties.webURL + Page.wescrPersonalBadInfo}>个人不良记录</a>
-                        </li>
-                        <li>
-                            <a id="sideMenuBigDNewOrder" href={SiteProperties.webURL + Page.bigdNewOrder}>个人户籍及同住人</a>
-                        </li>
-                        <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>个人黑名单信息</a>
-                        </li>
-                        <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>个人社保信息</a>
-                        </li>
-                        <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>个人银行卡交易记录</a>
+                            <a id="sideMenuDolphinQueryZrrKxHonest" href={SiteProperties.webURL + Page.dolphinQueryZrrKxHonest}>资信查询</a>
                         </li>
                     </ul>
                 </li>
