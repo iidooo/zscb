@@ -110,6 +110,7 @@ DolphinAPI = {
 }
 
 BussinessAPI = {
+    creditSearch: "/bussiness/creditSearch",
     getIdentityList: "/bussiness/getIdentityList",
     getIdentityInfo: "/bussiness/getIdentityInfo",
     getRegisterInfo: "/bussiness/getRegisterInfo",

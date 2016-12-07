@@ -1,11 +1,15 @@
 package com.edo.zscb.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,8 @@ import com.edo.zscb.model.po.Legal;
 import com.edo.zscb.model.po.Pawn;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
+import com.edo.zscb.model.vo.CreditSearchCondition;
+import com.edo.zscb.model.vo.CreditSearchHouseOwner;
 import com.edo.zscb.model.vo.SearchCondition;
 import com.edo.zscb.service.CreditService;
 import com.iidooo.core.constant.RegularConstant;
@@ -41,6 +47,57 @@ public class CreditAction {
 
     @Autowired
     private CreditService creditService;
+    
+    @ResponseBody
+    @RequestMapping(value = { "/bussiness/creditSearch" }, method = RequestMethod.POST)
+    public ResponseResult creditSearch(HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
+        try {
+            String selfName = request.getParameter("selfName");
+            String selfIDNumber = request.getParameter("selfIDNumber");
+            String selfMobile = request.getParameter("selfMobile");
+            String selfCardNumber = request.getParameter("selfCardNumber");
+            
+            String mateName = request.getParameter("mateName");
+            String mateIDNumber = request.getParameter("mateIDNumber");
+            String mateMobile = request.getParameter("mateMobile");
+            String mateCardNumber = request.getParameter("mateCardNumber");
+            
+            String houseNumber = request.getParameter("houseNumber");
+            String houseAddress = request.getParameter("houseAddress");
+            String houseArea = request.getParameter("houseArea");
+            String houseOwnerList = request.getParameter("houseOwnerList");
+
+            CreditSearchCondition searchCondition = new CreditSearchCondition();
+            searchCondition.setSelfName(selfName);
+            searchCondition.setSelfIDNumber(selfIDNumber);
+            searchCondition.setSelfMobile(selfMobile);
+            searchCondition.setSelfCardNumber(selfCardNumber);
+            searchCondition.setMateName(mateName);
+            searchCondition.setMateIDNumber(mateIDNumber);
+            searchCondition.setMateMobile(mateMobile);
+            searchCondition.setMateCardNumber(mateCardNumber);
+            searchCondition.setHouseNumber(houseNumber);
+            searchCondition.setHouseAddress(houseAddress);
+            searchCondition.setHouseArea(houseArea);
+            
+            JSONArray jsonArray = JSONArray.fromObject(houseOwnerList);
+            for (Object object : jsonArray) {
+                JSONObject jsonObject = JSONObject.fromObject(object);
+                CreditSearchHouseOwner houseOwner = new CreditSearchHouseOwner();
+                houseOwner.setHouseOwnerName(jsonObject.getString("houseOwnerName"));
+                houseOwner.setHouseOwnerIDNumber(jsonObject.getString("houseOwnerIDNumber"));
+                searchCondition.getHouseOwnerList().add(houseOwner);
+            }
+//            houseOwner.set
+
+//            searchCondition.setHouseOwnerList(houseOwnerList);
+        } catch (Exception e) {
+            logger.fatal(e);
+            result.checkException(e);
+        }
+        return result;
+    }
 
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getIdentityList" }, method = RequestMethod.POST)
