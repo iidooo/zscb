@@ -1,7 +1,9 @@
 package com.edo.wescr.constant;
 
-public class APIConstant {
-
+public class WescrConstant {
+    
+    public static final String DATA_SOURCE = "wescr";
+    
     // 访问API的用户名
     public static final String WESCR_LOGIN_ID = "zheshangceshi";
 

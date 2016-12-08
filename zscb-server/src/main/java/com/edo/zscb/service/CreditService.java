@@ -16,6 +16,13 @@ import com.edo.zscb.model.vo.SearchCondition;
 
 public interface CreditService {
     
+    /**
+     * 征信查询业务服务
+     * @param condition 征信查询的相关条件参数
+     * @return 返回查询出的Identity身份信息，作为报告页显示的唯一参数
+     */
+    Identity creditSearch(SearchCondition condition, Integer operatorID);
+    
     int getIdentityListCount(SearchCondition condition);
     
     List<Identity> getIdentityList(SearchCondition condition);

@@ -8,8 +8,13 @@
 		<result column="Mobile" property="mobile" jdbcType="VARCHAR" />
 		<result column="BankNumber" property="bankNumber" jdbcType="VARCHAR" />
 		<result column="HouseNumber" property="houseNumber" jdbcType="VARCHAR" />
+		<result column="HouseAddress" property="houseAddress" jdbcType="VARCHAR" />
+		<result column="HouseArea" property="houseArea" jdbcType="VARCHAR" />
+		<result column="HouseOwnerUserName" property="houseOwnerUserName" jdbcType="VARCHAR" />
+		<result column="HouseOwnerIDNumber" property="houseOwnerIDNumber" jdbcType="VARCHAR" />
 		<result column="IsMatch" property="isMatch" jdbcType="BIT" />
 		<result column="MateID" property="mateID" jdbcType="INTEGER" />
+		<result column="DataSource" property="dataSource" jdbcType="VARCHAR" />
 		<result column="Remarks" property="remarks" jdbcType="VARCHAR" />
 		<result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="UpdateUserID" property="updateUserID" jdbcType="INTEGER" />
@@ -21,9 +26,12 @@
 		<association select="selectCreateUser" column="createUserID" property="createUser" javaType="com.iidooo.core.model.po.SecurityUser"></association>
 	</resultMap>
 	<sql id="Base_Column_List">
-		I.IdentityID, I.Name, I.IDNumber, I.Mobile, I.BankNumber, I.HouseNumber, I.IsMatch, I.MateID, I.Remarks,
+		I.IdentityID, I.Name, I.IDNumber, I.Mobile, I.BankNumber, I.HouseNumber, I.HouseAddress,
+		I.HouseArea, I.HouseOwnerUserName, I.HouseOwnerIDNumber,
+		I.IsMatch, I.MateID, I.DataSource, I.Remarks,
 		I.UpdateTime, I.UpdateUserID,
-		I.CreateTime, I.CreateUserID, I.IsDelete, I.Version
+		I.CreateTime, I.CreateUserID,
+		I.IsDelete, I.Version
 	</sql>
 
 	<select id="selectCreateUser" parameterType="java.lang.Integer" resultType="com.iidooo.core.model.po.SecurityUser">
@@ -42,6 +50,14 @@
 		<include refid="Base_Column_List" />
 		from credit_identity I
 		where I.IsDelete = 0 and I.IdentityID = #{identityID,jdbcType=INTEGER}
+	</select>
+
+	<!-- 通过身份证号查询获得Identity对象 -->
+	<select id="selectByIDNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from credit_identity I
+		where I.IsDelete = 0 and I.IDNumber = #{idNumber,jdbcType=INTEGER}
 	</select>
 
 	<!-- 查询配偶信息 -->
@@ -94,25 +110,9 @@
 		delete from credit_identity
 		where IdentityID = #{identityID,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="com.edo.zscb.model.po.Identity">
-		insert into credit_identity (IdentityID, Name, IDNumber,
-		Mobile, BankNumber, HouseNumber,
-		IsMatch, MateID,
-		Remarks,
-		UpdateTime, UpdateUserID, CreateTime,
-		CreateUserID, IsDelete, Version
-		)
-		values (#{identityID,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
-		#{IDNumber,jdbcType=VARCHAR},
-		#{mobile,jdbcType=VARCHAR}, #{bankNumber,jdbcType=VARCHAR}, #{houseNumber,jdbcType=VARCHAR},
-		#{isMatch,jdbcType=BIT},
-		#{mateID,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR},
-		#{updateTime,jdbcType=TIMESTAMP}, #{updateUserID,jdbcType=INTEGER},
-		#{createTime,jdbcType=TIMESTAMP},
-		#{createUserID,jdbcType=INTEGER}, #{isDelete,jdbcType=BIT}, #{version,jdbcType=INTEGER}
-		)
-	</insert>
-	<insert id="insertSelective" parameterType="com.edo.zscb.model.po.Identity">
+
+	<!-- 插入Identity对象 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="identityID" parameterType="com.edo.zscb.model.po.Identity">
 		insert into credit_identity
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="identityID != null">
@@ -133,11 +133,26 @@
 			<if test="houseNumber != null">
 				HouseNumber,
 			</if>
+			<if test="houseAddress != null">
+				HouseAddress,
+			</if>
+			<if test="houseArea != null">
+				HouseArea,
+			</if>
+			<if test="houseOwnerUserName != null">
+				HouseOwnerUserName,
+			</if>
+			<if test="houseOwnerIDNumber != null">
+				HouseOwnerIDNumber,
+			</if>
 			<if test="isMatch != null">
 				IsMatch,
 			</if>
 			<if test="mateID != null">
 				MateID,
+			</if>
+			<if test="dataSource != null">
+				DataSource,
 			</if>
 			<if test="remarks != null">
 				Remarks,
@@ -180,11 +195,26 @@
 			<if test="houseNumber != null">
 				#{houseNumber,jdbcType=VARCHAR},
 			</if>
+			<if test="houseAddress != null">
+				#{houseAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="houseArea != null">
+				#{houseArea,jdbcType=VARCHAR},
+			</if>
+			<if test="houseOwnerUserName != null">
+				#{houseOwnerUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="houseOwnerIDNumber != null">
+				#{houseOwnerIDNumber,jdbcType=VARCHAR},
+			</if>
 			<if test="isMatch != null">
 				#{isMatch,jdbcType=BIT},
 			</if>
 			<if test="mateID != null">
 				#{mateID,jdbcType=INTEGER},
+			</if>
+			<if test="dataSource != null">
+				#{dataSource,jdbcType=INTEGER},
 			</if>
 			<if test="remarks != null">
 				#{remarks,jdbcType=VARCHAR},

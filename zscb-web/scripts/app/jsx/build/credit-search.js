@@ -5,8 +5,6 @@ var CreditSearchStore = Reflux.createStore({
     onCreditSearch: function (data) {
         var url = SiteProperties.serverURL + BussinessAPI.creditSearch;
 
-        data.accessKey = SecurityClient.accessKey;
-        data.accessSecret = SecurityClient.accessSecret;
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
         // 检查token是否过期
@@ -21,7 +19,8 @@ var CreditSearchStore = Reflux.createStore({
                 location.href = SiteProperties.webURL + Page.creditBasicReport;
             }
         };
-
+        data.houseOwnerList =  JSON.stringify(data.houseOwnerList);
+        //console.log(data.houseOwnerList);
         ajaxPost(url, data, callback);
     },
 });
@@ -60,6 +59,7 @@ var CreditSearch = React.createClass({displayName: "CreditSearch",
     },
     handleSearch: function () {
         //location.href = SiteProperties.webURL + Page.creditBasicReport;
+        //console.log(this.state.houseOwnerList);
         CreditSearchActions.creditSearch(this.state);
     },
     handleChange: function (name, event) {
@@ -69,9 +69,6 @@ var CreditSearch = React.createClass({displayName: "CreditSearch",
     },
     onChildChanged: function (childState) {
         //console.log(childState);
-        if (childState.houseOwnerList != null) {
-            this.state.houseOwnerList = childState.houseOwnerList;
-        }
         this.setState(this.state);
     },
     render: function () {
@@ -327,7 +324,7 @@ var HouseOwnerItem = React.createClass({displayName: "HouseOwnerItem",
         }
 
         //this.props.callbackParent(this.state.houseOwnerUserName);
-        console.log(this.props.item);
+        //console.log(this.props.item);
     },
     render: function () {
         return (

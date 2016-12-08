@@ -16,12 +16,22 @@ public class Identity {
     private String bankNumber;
 
     private String houseNumber;
+    
+    private String houseAddress;
+    
+    private String houseArea;
+    
+    private String houseOwnerUserName;
+    
+    private String HouseOwnerIDNumber;
 
     private Boolean isMatch;
 
     private Integer mateID;
     
     private Identity mate;
+    
+    private String dataSource;
 
     private String remarks;
 
@@ -87,6 +97,38 @@ public class Identity {
         this.houseNumber = houseNumber == null ? null : houseNumber.trim();
     }
 
+    public String getHouseAddress() {
+        return houseAddress;
+    }
+
+    public void setHouseAddress(String houseAddress) {
+        this.houseAddress = houseAddress;
+    }
+
+    public String getHouseArea() {
+        return houseArea;
+    }
+
+    public void setHouseArea(String houseArea) {
+        this.houseArea = houseArea;
+    }
+
+    public String getHouseOwnerUserName() {
+        return houseOwnerUserName;
+    }
+
+    public void setHouseOwnerUserName(String houseOwnerUserName) {
+        this.houseOwnerUserName = houseOwnerUserName;
+    }
+
+    public String getHouseOwnerIDNumber() {
+        return HouseOwnerIDNumber;
+    }
+
+    public void setHouseOwnerIDNumber(String houseOwnerIDNumber) {
+        HouseOwnerIDNumber = houseOwnerIDNumber;
+    }
+
     public Boolean getIsMatch() {
         return isMatch;
     }
@@ -109,6 +151,14 @@ public class Identity {
 
     public void setMate(Identity mate) {
         this.mate = mate;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public String getRemarks() {

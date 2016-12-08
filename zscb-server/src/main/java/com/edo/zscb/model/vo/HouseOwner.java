@@ -1,6 +1,6 @@
 package com.edo.zscb.model.vo;
 
-public class CreditSearchHouseOwner {
+public class HouseOwner {
 
     private String houseOwnerName;
     private String houseOwnerIDNumber;

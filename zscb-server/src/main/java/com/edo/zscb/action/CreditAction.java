@@ -1,6 +1,5 @@
 package com.edo.zscb.action;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.edo.wescr.service.WescrService;
 import com.edo.zscb.model.po.AssetHouse;
 import com.edo.zscb.model.po.AssetVehicle;
 import com.edo.zscb.model.po.Bussiness;
@@ -28,8 +28,7 @@ import com.edo.zscb.model.po.Legal;
 import com.edo.zscb.model.po.Pawn;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
-import com.edo.zscb.model.vo.CreditSearchCondition;
-import com.edo.zscb.model.vo.CreditSearchHouseOwner;
+import com.edo.zscb.model.vo.HouseOwner;
 import com.edo.zscb.model.vo.SearchCondition;
 import com.edo.zscb.service.CreditService;
 import com.iidooo.core.constant.RegularConstant;
@@ -47,6 +46,9 @@ public class CreditAction {
 
     @Autowired
     private CreditService creditService;
+    
+    @Autowired
+    private WescrService wescrService;
     
     @ResponseBody
     @RequestMapping(value = { "/bussiness/creditSearch" }, method = RequestMethod.POST)
@@ -67,28 +69,36 @@ public class CreditAction {
             String houseAddress = request.getParameter("houseAddress");
             String houseArea = request.getParameter("houseArea");
             String houseOwnerList = request.getParameter("houseOwnerList");
+            
+            Integer operatorID = Integer.parseInt(request.getParameter("operatorID"));
 
-            CreditSearchCondition searchCondition = new CreditSearchCondition();
-            searchCondition.setSelfName(selfName);
-            searchCondition.setSelfIDNumber(selfIDNumber);
-            searchCondition.setSelfMobile(selfMobile);
-            searchCondition.setSelfCardNumber(selfCardNumber);
-            searchCondition.setMateName(mateName);
-            searchCondition.setMateIDNumber(mateIDNumber);
-            searchCondition.setMateMobile(mateMobile);
-            searchCondition.setMateCardNumber(mateCardNumber);
+            SearchCondition searchCondition = new SearchCondition();
+            searchCondition.setName(selfName);
+            searchCondition.setIdNumber(selfIDNumber);
+            searchCondition.setMobile(selfMobile);
+            searchCondition.setCardNumber(selfCardNumber);
             searchCondition.setHouseNumber(houseNumber);
             searchCondition.setHouseAddress(houseAddress);
             searchCondition.setHouseArea(houseArea);
-            
-            JSONArray jsonArray = JSONArray.fromObject(houseOwnerList);
-            for (Object object : jsonArray) {
-                JSONObject jsonObject = JSONObject.fromObject(object);
-                CreditSearchHouseOwner houseOwner = new CreditSearchHouseOwner();
-                houseOwner.setHouseOwnerName(jsonObject.getString("houseOwnerName"));
-                houseOwner.setHouseOwnerIDNumber(jsonObject.getString("houseOwnerIDNumber"));
-                searchCondition.getHouseOwnerList().add(houseOwner);
+
+            if (houseOwnerList != null) {
+                JSONArray jsonArray = JSONArray.fromObject(houseOwnerList);
+                for (Object object : jsonArray) {
+                    JSONObject jsonObject = JSONObject.fromObject(object);
+                    HouseOwner houseOwner = new HouseOwner();
+                    houseOwner.setHouseOwnerName(jsonObject.getString("houseOwnerName"));
+                    houseOwner.setHouseOwnerIDNumber(jsonObject.getString("houseOwnerIDNumber"));
+                    searchCondition.getHouseOwnerList().add(houseOwner);
+                }
             }
+            Identity selfIdentity = creditService.creditSearch(searchCondition, operatorID);
+            wescrService.getPersonBadInfo(operatorID, selfName, selfIDNumber);
+            
+            searchCondition.setName(mateName);
+            searchCondition.setIdNumber(mateIDNumber);
+            searchCondition.setMobile(mateMobile);
+            searchCondition.setCardNumber(mateCardNumber);
+            
 //            houseOwner.set
 
 //            searchCondition.setHouseOwnerList(houseOwnerList);

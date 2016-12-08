@@ -1,11 +1,13 @@
 package com.edo.zscb.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edo.zscb.mapper.AssetHouseMapper;
 import com.edo.zscb.mapper.AssetVehicleMapper;
@@ -27,8 +29,10 @@ import com.edo.zscb.model.po.Legal;
 import com.edo.zscb.model.po.Pawn;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
+import com.edo.zscb.model.vo.HouseOwner;
 import com.edo.zscb.model.vo.SearchCondition;
 import com.edo.zscb.service.CreditService;
+import com.iidooo.core.util.StringUtil;
 
 @Service
 public class CreditServiceImpl implements CreditService {
@@ -37,34 +41,71 @@ public class CreditServiceImpl implements CreditService {
 
     @Autowired
     private IdentityMapper identityMapper;
-    
+
     @Autowired
     private RegisterMapper registerMapper;
-    
+
     @Autowired
     private StaffMapper staffMapper;
-    
+
     @Autowired
     private BussinessMapper bussinessMapper;
-    
+
     @Autowired
     private AssetHouseMapper assetHouseMapper;
-    
+
     @Autowired
     private AssetVehicleMapper assetVehicleMapper;
-    
+
     @Autowired
     private DebtMapper debtMapper;
-    
+
     @Autowired
     private IncomeMapper incomeMapper;
-    
+
     @Autowired
     private LegalMapper legalMapper;
-    
+
     @Autowired
     private PawnMapper pawnMapper;
-    
+
+    @Transactional
+    @Override
+    public Identity creditSearch(SearchCondition condition, Integer operatorID) {
+        Identity result = null;
+        try {
+            result = identityMapper.selectByIDNumber(condition.getIdNumber());
+            if (result == null) {
+                result = new Identity();
+                result.setName(condition.getName());
+                result.setIDNumber(condition.getIdNumber());
+                result.setMobile(condition.getMobile());
+                result.setBankNumber(condition.getCardNumber());
+                result.setHouseNumber(condition.getHouseNumber());
+                result.setHouseAddress(condition.getHouseAddress());
+                result.setHouseArea(condition.getHouseArea());
+                
+                for (HouseOwner item : condition.getHouseOwnerList()) {
+                    if (StringUtil.isNotBlank(result.getHouseOwnerUserName())) {
+                        result.setHouseOwnerUserName(result.getHouseOwnerUserName() + "," + item.getHouseOwnerName());
+                    }
+
+                    if (StringUtil.isNotBlank(result.getHouseOwnerIDNumber())) {
+                        result.setHouseOwnerIDNumber(result.getHouseOwnerIDNumber() + "," + item.getHouseOwnerIDNumber());
+                    }
+                }
+                
+                result.setCreateTime(new Date());
+                result.setCreateUserID(operatorID);
+                
+                identityMapper.insert(result);
+            }
+        } catch (Exception e) {
+            logger.fatal(e);
+        }
+        return result;
+    }
+
     @Override
     public int getIdentityListCount(SearchCondition condition) {
         int result = 0;
@@ -79,52 +120,52 @@ public class CreditServiceImpl implements CreditService {
     @Override
     public List<Identity> getIdentityList(SearchCondition condition) {
         List<Identity> result = new ArrayList<Identity>();
-        
+
         try {
             result = identityMapper.selectForSearch(condition);
         } catch (Exception e) {
             logger.fatal(e);
         }
-        
+
         return result;
     }
 
     @Override
     public Identity getIdentity(Integer identityID) {
         Identity result = new Identity();
-        
+
         try {
             result = identityMapper.selectByPrimaryKey(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }
-        
+
         return result;
     }
 
     @Override
     public Register getRegister(Integer identityID) {
         Register result = new Register();
-        
+
         try {
             result = registerMapper.selectByIdentityID(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }
-        
+
         return result;
     }
 
     @Override
     public Staff getStaff(Integer identityID) {
         Staff result = new Staff();
-        
+
         try {
             result = staffMapper.selectByIdentityID(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }
-        
+
         return result;
     }
 
@@ -204,6 +245,5 @@ public class CreditServiceImpl implements CreditService {
         }
         return result;
     }
-    
-    
+
 }

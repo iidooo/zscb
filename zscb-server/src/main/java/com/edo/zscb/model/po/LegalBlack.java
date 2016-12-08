@@ -5,10 +5,14 @@ import java.util.Date;
 public class LegalBlack {
     private Integer blackID;
 
-    private Integer legalID;
+    private String idNumber;
 
+    private String recordTime;
+    
     private String detail;
 
+    private String dataSource;
+    
     private String remarks;
 
     private Date updateTime;
@@ -31,12 +35,22 @@ public class LegalBlack {
         this.blackID = blackID;
     }
 
-    public Integer getLegalID() {
-        return legalID;
+
+
+    public String getIdNumber() {
+        return idNumber;
     }
 
-    public void setLegalID(Integer legalID) {
-        this.legalID = legalID;
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public String getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(String recordTime) {
+        this.recordTime = recordTime;
     }
 
     public String getDetail() {
@@ -45,6 +59,14 @@ public class LegalBlack {
 
     public void setDetail(String detail) {
         this.detail = detail == null ? null : detail.trim();
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public String getRemarks() {

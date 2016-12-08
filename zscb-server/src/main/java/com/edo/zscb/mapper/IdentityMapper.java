@@ -8,9 +8,12 @@ import com.edo.zscb.model.vo.SearchCondition;
 public interface IdentityMapper {
     int deleteByPrimaryKey(Integer identityID);
 
+    /**
+     * 插入Identity对象
+     * @param record Identity对象
+     * @return 插入操作的返回行数
+     */
     int insert(Identity record);
-
-    int insertSelective(Identity record);
 
     /**
      * 通过IdentityID获得身份信息
@@ -18,6 +21,13 @@ public interface IdentityMapper {
      * @return 身份对象
      */
     Identity selectByPrimaryKey(Integer identityID);
+    
+    /**
+     * 通过身份证号查询获得Identity对象
+     * @param idNumber 身份证号
+     * @return Identity对象
+     */
+    Identity selectByIDNumber(String idNumber);
     
     /**
      * 查询符合条件的借款人身份信息数量

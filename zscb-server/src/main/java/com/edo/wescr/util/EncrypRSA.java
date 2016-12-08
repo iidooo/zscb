@@ -1,4 +1,4 @@
-package com.edo.wescr;
+package com.edo.wescr.util;
  
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;

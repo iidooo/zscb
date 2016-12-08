@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.edo.zscb.service.WescrService;
+import com.edo.wescr.model.WescrResult;
+import com.edo.wescr.service.WescrService;
 import com.iidooo.core.enums.ResponseStatus;
 import com.iidooo.core.model.ResponseResult;
 
@@ -28,7 +29,7 @@ public class WescrAction {
         try {
             String name = request.getParameter("name");
             String idNumber = request.getParameter("idNumber");
-            String data = wescrService.getPersonBadInfo(name, idNumber);
+            WescrResult data = wescrService.getPersonBadInfo(1, name, idNumber);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(data);
