@@ -5,13 +5,15 @@ import java.util.Date;
 public class StaffExp {
     private Integer expID;
 
-    private Integer staffID;
+    private String idNumber;
 
     private String enterDate;
 
     private String leaveDate;
 
     private String company;
+    
+    private String dataSource;
 
     private String remarks;
 
@@ -35,12 +37,12 @@ public class StaffExp {
         this.expID = expID;
     }
 
-    public Integer getStaffID() {
-        return staffID;
+    public String getIdNumber() {
+        return idNumber;
     }
 
-    public void setStaffID(Integer staffID) {
-        this.staffID = staffID;
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
 
     public String getEnterDate() {
@@ -65,6 +67,14 @@ public class StaffExp {
 
     public void setCompany(String company) {
         this.company = company == null ? null : company.trim();
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public String getRemarks() {

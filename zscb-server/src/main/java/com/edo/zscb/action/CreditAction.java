@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.edo.dolphin.service.DolphinService;
 import com.edo.wescr.service.WescrService;
 import com.edo.zscb.model.po.AssetHouse;
 import com.edo.zscb.model.po.AssetVehicle;
@@ -50,6 +51,9 @@ public class CreditAction {
     @Autowired
     private WescrService wescrService;
     
+    @Autowired
+    private DolphinService dolphinService;
+    
     @ResponseBody
     @RequestMapping(value = { "/bussiness/creditSearch" }, method = RequestMethod.POST)
     public ResponseResult creditSearch(HttpServletRequest request, HttpServletResponse response) {
@@ -82,17 +86,18 @@ public class CreditAction {
             searchCondition.setHouseArea(houseArea);
 
             if (houseOwnerList != null) {
-                JSONArray jsonArray = JSONArray.fromObject(houseOwnerList);
-                for (Object object : jsonArray) {
-                    JSONObject jsonObject = JSONObject.fromObject(object);
-                    HouseOwner houseOwner = new HouseOwner();
-                    houseOwner.setHouseOwnerName(jsonObject.getString("houseOwnerName"));
-                    houseOwner.setHouseOwnerIDNumber(jsonObject.getString("houseOwnerIDNumber"));
-                    searchCondition.getHouseOwnerList().add(houseOwner);
-                }
+//                JSONArray jsonArray = JSONArray.fromObject(houseOwnerList);
+//                for (Object object : jsonArray) {
+//                    JSONObject jsonObject = JSONObject.fromObject(object);
+//                    HouseOwner houseOwner = new HouseOwner();
+//                    houseOwner.setHouseOwnerName(jsonObject.getString("houseOwnerName"));
+//                    houseOwner.setHouseOwnerIDNumber(jsonObject.getString("houseOwnerIDNumber"));
+//                    searchCondition.getHouseOwnerList().add(houseOwner);
+//                }
             }
             Identity selfIdentity = creditService.creditSearch(searchCondition, operatorID);
             wescrService.getPersonBadInfo(operatorID, selfName, selfIDNumber);
+            dolphinService.queryZrrKxHonest(operatorID, selfName, selfIDNumber);
             
             searchCondition.setName(mateName);
             searchCondition.setIdNumber(mateIDNumber);

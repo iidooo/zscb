@@ -5,13 +5,17 @@ import java.util.Date;
 public class AssetVehicle {
     private Integer vehicleID;
 
-    private Integer identityID;
+    private String idNumber;
+
+    private String license;
 
     private String maker;
 
     private Boolean isShanghai;
 
     private String status;
+
+    private String dataSource;
 
     private String remarks;
 
@@ -35,12 +39,20 @@ public class AssetVehicle {
         this.vehicleID = vehicleID;
     }
 
-    public Integer getIdentityID() {
-        return identityID;
+    public String getIdNumber() {
+        return idNumber;
     }
 
-    public void setIdentityID(Integer identityID) {
-        this.identityID = identityID;
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
     }
 
     public String getMaker() {
@@ -65,6 +77,14 @@ public class AssetVehicle {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public String getRemarks() {

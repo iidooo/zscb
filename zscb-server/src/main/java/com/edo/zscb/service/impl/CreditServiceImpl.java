@@ -161,7 +161,7 @@ public class CreditServiceImpl implements CreditService {
         Staff result = new Staff();
 
         try {
-            result = staffMapper.selectByIdentityID(identityID);
+//            result = staffMapper.selectByIdentityID(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }

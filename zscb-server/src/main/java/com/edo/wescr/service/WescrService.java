@@ -5,7 +5,7 @@ import com.edo.wescr.model.WescrResult;
 public interface WescrService {
     WescrResult getPersonBadInfo(Integer operatorID, String name, String idNumber);
     
-    WescrResult getPersonalHouseMate(String name, String idNumber);
+    WescrResult getPersonalHouseMate(Integer operatorID, String name, String idNumber);
     
     WescrResult getBlackListByIdentityCard(String name, String idNumber);
     

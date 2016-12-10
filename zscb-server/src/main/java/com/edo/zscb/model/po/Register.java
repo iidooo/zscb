@@ -5,9 +5,9 @@ import java.util.Date;
 public class Register {
     private Integer registerID;
 
-    private Integer identityID;
+    private String idNumber;
 
-    private Boolean isMarried;
+    private String marryStatus;
 
     private String registerAddress;
 
@@ -18,6 +18,8 @@ public class Register {
     private String usedName;
 
     private Integer parentID;
+
+    private String dataSource;
 
     private String remarks;
 
@@ -41,20 +43,20 @@ public class Register {
         this.registerID = registerID;
     }
 
-    public Integer getIdentityID() {
-        return identityID;
+    public String getIdNumber() {
+        return idNumber;
     }
 
-    public void setIdentityID(Integer identityID) {
-        this.identityID = identityID;
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
 
-    public Boolean getIsMarried() {
-        return isMarried;
+    public String getMarryStatus() {
+        return marryStatus;
     }
 
-    public void setIsMarried(Boolean isMarried) {
-        this.isMarried = isMarried;
+    public void setMarryStatus(String marryStatus) {
+        this.marryStatus = marryStatus;
     }
 
     public String getRegisterAddress() {
@@ -95,6 +97,14 @@ public class Register {
 
     public void setParentID(Integer parentID) {
         this.parentID = parentID;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public String getRemarks() {

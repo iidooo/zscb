@@ -1,270 +1,181 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.edo.zscb.mapper.StaffMapper" >
-  <resultMap id="BaseResultMap" type="com.edo.zscb.model.po.Staff" >
-    <id column="StaffID" property="staffID" jdbcType="INTEGER" />
-    <result column="IdentityID" property="identityID" jdbcType="INTEGER" />
-    <result column="SocialCompany" property="socialCompany" jdbcType="VARCHAR" />
-    <result column="SocialStatus" property="socialStatus" jdbcType="VARCHAR" />
-    <result column="SocialLastDate" property="socialLastDate" jdbcType="VARCHAR" />
-    <result column="GraduateSchool" property="graduateSchool" jdbcType="VARCHAR" />
-    <result column="HighestDegree" property="highestDegree" jdbcType="VARCHAR" />
-    <result column="TaxCompany" property="taxCompany" jdbcType="VARCHAR" />
-    <result column="TaxStatus" property="taxStatus" jdbcType="VARCHAR" />
-    <result column="TaxLastDate" property="taxLastDate" jdbcType="VARCHAR" />
-    <result column="Remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="UpdateUserID" property="updateUserID" jdbcType="INTEGER" />
-    <result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
-    <result column="IsDelete" property="isDelete" jdbcType="BIT" />
-    <result column="Version" property="version" jdbcType="INTEGER" />
-    <collection select="selectStaffExpList" column="staffID" property="staffExpList" ofType="com.edo.zscb.model.po.StaffExp"></collection>
-  </resultMap>
-  <sql id="Base_Column_List" >
-    S.StaffID, S.IdentityID, S.SocialCompany, S.SocialStatus, S.SocialLastDate, S.GraduateSchool, 
-    S.HighestDegree, S.TaxCompany, S.TaxStatus, S.TaxLastDate, S.Remarks, S.UpdateTime, S.UpdateUserID, 
-    S.CreateTime, S.CreateUserID, S.IsDelete, S.Version
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from credit_staff
-    where StaffID = #{staffID,jdbcType=INTEGER}
-  </select>
-  
-  <resultMap id="StaffExpResultMap" type="com.edo.zscb.model.po.StaffExp" >
-    <id column="ExpID" property="expID" jdbcType="INTEGER" />
-    <result column="StaffID" property="staffID" jdbcType="INTEGER" />
-    <result column="EnterDate" property="enterDate" jdbcType="VARCHAR" />
-    <result column="LeaveDate" property="leaveDate" jdbcType="VARCHAR" />
-    <result column="Company" property="company" jdbcType="VARCHAR" />
-    <result column="Remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="UpdateUserID" property="updateUserID" jdbcType="INTEGER" />
-    <result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
-    <result column="IsDelete" property="isDelete" jdbcType="BIT" />
-    <result column="Version" property="version" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="StaffExp_Column_List" >
-    E.ExpID, E.StaffID, E.EnterDate, E.LeaveDate, E.Company, E.Remarks, E.UpdateTime, E.UpdateUserID, 
-    E.CreateTime, E.CreateUserID, E.IsDelete, E.Version
-  </sql>
-  <select id="selectStaffExpList" resultMap="StaffExpResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="StaffExp_Column_List" />
-    from credit_staff_exp E
-    where E.IsDelete = 0 and E.StaffID = #{staffID,jdbcType=INTEGER}
-  </select>
-  
-  <!-- 通过身份ID获取职业信息 -->
-  <select id="selectByIdentityID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-  	select 
-    <include refid="Base_Column_List" />
-    from credit_staff S
-    where S.IsDelete = 0 and S.IdentityID = #{identityID,jdbcType=INTEGER}
-  </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from credit_staff
-    where StaffID = #{staffID,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.edo.zscb.model.po.Staff" >
-    insert into credit_staff (StaffID, IdentityID, SocialCompany, 
-      SocialStatus, SocialLastDate, GraduateSchool, 
-      HighestDegree, TaxCompany, TaxStatus, 
-      TaxLastDate, Remarks, UpdateTime, 
-      UpdateUserID, CreateTime, CreateUserID, 
-      IsDelete, Version)
-    values (#{staffID,jdbcType=INTEGER}, #{identityID,jdbcType=INTEGER}, #{socialCompany,jdbcType=VARCHAR}, 
-      #{socialStatus,jdbcType=VARCHAR}, #{socialLastDate,jdbcType=VARCHAR}, #{graduateSchool,jdbcType=VARCHAR}, 
-      #{highestDegree,jdbcType=VARCHAR}, #{taxCompany,jdbcType=VARCHAR}, #{taxStatus,jdbcType=VARCHAR}, 
-      #{taxLastDate,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{updateUserID,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createUserID,jdbcType=INTEGER}, 
-      #{isDelete,jdbcType=BIT}, #{version,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.edo.zscb.model.po.Staff" >
-    insert into credit_staff
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="staffID != null" >
-        StaffID,
-      </if>
-      <if test="identityID != null" >
-        IdentityID,
-      </if>
-      <if test="socialCompany != null" >
-        SocialCompany,
-      </if>
-      <if test="socialStatus != null" >
-        SocialStatus,
-      </if>
-      <if test="socialLastDate != null" >
-        SocialLastDate,
-      </if>
-      <if test="graduateSchool != null" >
-        GraduateSchool,
-      </if>
-      <if test="highestDegree != null" >
-        HighestDegree,
-      </if>
-      <if test="taxCompany != null" >
-        TaxCompany,
-      </if>
-      <if test="taxStatus != null" >
-        TaxStatus,
-      </if>
-      <if test="taxLastDate != null" >
-        TaxLastDate,
-      </if>
-      <if test="remarks != null" >
-        Remarks,
-      </if>
-      <if test="updateTime != null" >
-        UpdateTime,
-      </if>
-      <if test="updateUserID != null" >
-        UpdateUserID,
-      </if>
-      <if test="createTime != null" >
-        CreateTime,
-      </if>
-      <if test="createUserID != null" >
-        CreateUserID,
-      </if>
-      <if test="isDelete != null" >
-        IsDelete,
-      </if>
-      <if test="version != null" >
-        Version,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="staffID != null" >
-        #{staffID,jdbcType=INTEGER},
-      </if>
-      <if test="identityID != null" >
-        #{identityID,jdbcType=INTEGER},
-      </if>
-      <if test="socialCompany != null" >
-        #{socialCompany,jdbcType=VARCHAR},
-      </if>
-      <if test="socialStatus != null" >
-        #{socialStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="socialLastDate != null" >
-        #{socialLastDate,jdbcType=VARCHAR},
-      </if>
-      <if test="graduateSchool != null" >
-        #{graduateSchool,jdbcType=VARCHAR},
-      </if>
-      <if test="highestDegree != null" >
-        #{highestDegree,jdbcType=VARCHAR},
-      </if>
-      <if test="taxCompany != null" >
-        #{taxCompany,jdbcType=VARCHAR},
-      </if>
-      <if test="taxStatus != null" >
-        #{taxStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="taxLastDate != null" >
-        #{taxLastDate,jdbcType=VARCHAR},
-      </if>
-      <if test="remarks != null" >
-        #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUserID != null" >
-        #{updateUserID,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUserID != null" >
-        #{createUserID,jdbcType=INTEGER},
-      </if>
-      <if test="isDelete != null" >
-        #{isDelete,jdbcType=BIT},
-      </if>
-      <if test="version != null" >
-        #{version,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.edo.zscb.model.po.Staff" >
-    update credit_staff
-    <set >
-      <if test="identityID != null" >
-        IdentityID = #{identityID,jdbcType=INTEGER},
-      </if>
-      <if test="socialCompany != null" >
-        SocialCompany = #{socialCompany,jdbcType=VARCHAR},
-      </if>
-      <if test="socialStatus != null" >
-        SocialStatus = #{socialStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="socialLastDate != null" >
-        SocialLastDate = #{socialLastDate,jdbcType=VARCHAR},
-      </if>
-      <if test="graduateSchool != null" >
-        GraduateSchool = #{graduateSchool,jdbcType=VARCHAR},
-      </if>
-      <if test="highestDegree != null" >
-        HighestDegree = #{highestDegree,jdbcType=VARCHAR},
-      </if>
-      <if test="taxCompany != null" >
-        TaxCompany = #{taxCompany,jdbcType=VARCHAR},
-      </if>
-      <if test="taxStatus != null" >
-        TaxStatus = #{taxStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="taxLastDate != null" >
-        TaxLastDate = #{taxLastDate,jdbcType=VARCHAR},
-      </if>
-      <if test="remarks != null" >
-        Remarks = #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUserID != null" >
-        UpdateUserID = #{updateUserID,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        CreateTime = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createUserID != null" >
-        CreateUserID = #{createUserID,jdbcType=INTEGER},
-      </if>
-      <if test="isDelete != null" >
-        IsDelete = #{isDelete,jdbcType=BIT},
-      </if>
-      <if test="version != null" >
-        Version = #{version,jdbcType=INTEGER},
-      </if>
-    </set>
-    where StaffID = #{staffID,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.Staff" >
-    update credit_staff
-    set IdentityID = #{identityID,jdbcType=INTEGER},
-      SocialCompany = #{socialCompany,jdbcType=VARCHAR},
-      SocialStatus = #{socialStatus,jdbcType=VARCHAR},
-      SocialLastDate = #{socialLastDate,jdbcType=VARCHAR},
-      GraduateSchool = #{graduateSchool,jdbcType=VARCHAR},
-      HighestDegree = #{highestDegree,jdbcType=VARCHAR},
-      TaxCompany = #{taxCompany,jdbcType=VARCHAR},
-      TaxStatus = #{taxStatus,jdbcType=VARCHAR},
-      TaxLastDate = #{taxLastDate,jdbcType=VARCHAR},
-      Remarks = #{remarks,jdbcType=VARCHAR},
-      UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
-      UpdateUserID = #{updateUserID,jdbcType=INTEGER},
-      CreateTime = #{createTime,jdbcType=TIMESTAMP},
-      CreateUserID = #{createUserID,jdbcType=INTEGER},
-      IsDelete = #{isDelete,jdbcType=BIT},
-      Version = #{version,jdbcType=INTEGER}
-    where StaffID = #{staffID,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.edo.zscb.mapper.StaffMapper">
+	<resultMap id="BaseResultMap" type="com.edo.zscb.model.po.Staff">
+		<id column="StaffID" property="staffID" jdbcType="INTEGER" />
+		<result column="IDNumber" property="idNumber" jdbcType="VARCHAR" />
+		<result column="SocialCompany" property="socialCompany" jdbcType="VARCHAR" />
+		<result column="SocialStatus" property="socialStatus" jdbcType="VARCHAR" />
+		<result column="SocialLastDate" property="socialLastDate" jdbcType="VARCHAR" />
+		<result column="GraduateSchool" property="graduateSchool" jdbcType="VARCHAR" />
+		<result column="HighestDegree" property="highestDegree" jdbcType="VARCHAR" />
+		<result column="TaxCompany" property="taxCompany" jdbcType="VARCHAR" />
+		<result column="TaxStatus" property="taxStatus" jdbcType="VARCHAR" />
+		<result column="TaxLastDate" property="taxLastDate" jdbcType="VARCHAR" />
+		<result column="DataSource" property="dataSource" jdbcType="VARCHAR" />
+		<result column="Remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="UpdateTime" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="UpdateUserID" property="updateUserID" jdbcType="INTEGER" />
+		<result column="CreateTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="CreateUserID" property="createUserID" jdbcType="INTEGER" />
+		<result column="IsDelete" property="isDelete" jdbcType="BIT" />
+		<result column="Version" property="version" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		S.StaffID, S.IDNumber, S.SocialCompany, S.SocialStatus, S.SocialLastDate, S.GraduateSchool,
+		S.HighestDegree, S.TaxCompany, S.TaxStatus,
+		S.TaxLastDate, S.DataSource, S.Remarks, S.UpdateTime, S.UpdateUserID,
+		S.CreateTime, S.CreateUserID, S.IsDelete, S.Version
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from credit_staff
+		where StaffID = #{staffID,jdbcType=INTEGER}
+	</select>
+
+	<!-- 通过身份证号获得职业信息 -->
+	<select id="selectByIDNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from credit_staff S
+		where S.IsDelete = 0 and S.IDNumber = #{idNumber,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from credit_staff
+		where StaffID = #{staffID,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入职业信息 -->
+	<insert id="insert" parameterType="com.edo.zscb.model.po.Staff">
+		insert into credit_staff
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="idNumber != null">
+				IDNumber,
+			</if>
+			<if test="socialCompany != null">
+				SocialCompany,
+			</if>
+			<if test="socialStatus != null">
+				SocialStatus,
+			</if>
+			<if test="socialLastDate != null">
+				SocialLastDate,
+			</if>
+			<if test="graduateSchool != null">
+				GraduateSchool,
+			</if>
+			<if test="highestDegree != null">
+				HighestDegree,
+			</if>
+			<if test="taxCompany != null">
+				TaxCompany,
+			</if>
+			<if test="taxStatus != null">
+				TaxStatus,
+			</if>
+			<if test="taxLastDate != null">
+				TaxLastDate,
+			</if>
+			<if test="dataSource != null">
+				DataSource,
+			</if>
+			<if test="remarks != null">
+				Remarks,
+			</if>
+			<if test="createTime != null">
+				CreateTime,
+			</if>
+			<if test="createUserID != null">
+				CreateUserID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="idNumber != null">
+				#{idNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="socialCompany != null">
+				#{socialCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="socialStatus != null">
+				#{socialStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="socialLastDate != null">
+				#{socialLastDate,jdbcType=VARCHAR},
+			</if>
+			<if test="graduateSchool != null">
+				#{graduateSchool,jdbcType=VARCHAR},
+			</if>
+			<if test="highestDegree != null">
+				#{highestDegree,jdbcType=VARCHAR},
+			</if>
+			<if test="taxCompany != null">
+				#{taxCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="taxStatus != null">
+				#{taxStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="taxLastDate != null">
+				#{taxLastDate,jdbcType=VARCHAR},
+			</if>
+			<if test="dataSource != null">
+				#{dataSource,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserID != null">
+				#{createUserID,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 更新职业信息 -->
+	<update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.Staff">
+		update credit_staff
+		<set>
+			<if test="idNumber != null">
+				IDNumber = #{idNumber,jdbcType=INTEGER},
+			</if>
+			<if test="socialCompany != null">
+				SocialCompany = #{socialCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="socialStatus != null">
+				SocialStatus = #{socialStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="socialLastDate != null">
+				SocialLastDate = #{socialLastDate,jdbcType=VARCHAR},
+			</if>
+			<if test="graduateSchool != null">
+				GraduateSchool = #{graduateSchool,jdbcType=VARCHAR},
+			</if>
+			<if test="highestDegree != null">
+				HighestDegree = #{highestDegree,jdbcType=VARCHAR},
+			</if>
+			<if test="taxCompany != null">
+				TaxCompany = #{taxCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="taxStatus != null">
+				TaxStatus = #{taxStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="taxLastDate != null">
+				TaxLastDate = #{taxLastDate,jdbcType=VARCHAR},
+			</if>
+			<if test="dataSource != null">
+				DataSource = #{dataSource,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				Remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="updateUserID != null">
+				UpdateUserID = #{updateUserID,jdbcType=INTEGER},
+			</if>
+			Version = Version + 1,
+		</set>
+		where StaffID = #{staffID,jdbcType=INTEGER}
+	</update>
 </mapper>

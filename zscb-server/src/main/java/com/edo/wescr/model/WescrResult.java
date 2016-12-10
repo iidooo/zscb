@@ -13,6 +13,12 @@ public class WescrResult {
     
     private String message;
     
+    // 存在
+    private String identId;
+    
+    // identName
+    private String identName;
+    
     private Object data;
 
     public String getCode() {

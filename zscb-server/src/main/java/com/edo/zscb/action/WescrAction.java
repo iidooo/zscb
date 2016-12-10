@@ -48,7 +48,7 @@ public class WescrAction {
         try {
             String name = request.getParameter("name");
             String idNumber = request.getParameter("idNumber");
-            String data = wescrService.getPersonalHouseMate(name, idNumber);
+            WescrResult data = wescrService.getPersonalHouseMate(1, name, idNumber);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(data);

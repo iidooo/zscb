@@ -7,7 +7,7 @@ import java.util.List;
 public class Staff {
     private Integer staffID;
 
-    private Integer identityID;
+    private String idNumber;
 
     private String socialCompany;
 
@@ -25,6 +25,8 @@ public class Staff {
 
     private String taxLastDate;
 
+    private String dataSource;
+    
     private String remarks;
 
     private Date updateTime;
@@ -49,12 +51,12 @@ public class Staff {
         this.staffID = staffID;
     }
 
-    public Integer getIdentityID() {
-        return identityID;
+    public String getIdNumber() {
+        return idNumber;
     }
 
-    public void setIdentityID(Integer identityID) {
-        this.identityID = identityID;
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
 
     public String getSocialCompany() {
@@ -119,6 +121,14 @@ public class Staff {
 
     public void setTaxLastDate(String taxLastDate) {
         this.taxLastDate = taxLastDate == null ? null : taxLastDate.trim();
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public String getRemarks() {

@@ -71,7 +71,7 @@ public class WescrServiceImpl implements WescrService {
     }
 
     @Override
-    public WescrResult getPersonalHouseMate(String name, String idNumber) {
+    public WescrResult getPersonalHouseMate(Integer operatorID, String name, String idNumber) {
         // TODO Auto-generated method stub
         return null;
     }
