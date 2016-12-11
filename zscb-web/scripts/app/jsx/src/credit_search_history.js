@@ -48,7 +48,7 @@ var SearchHistory = React.createClass({
             SearchHistoryActions.searchSiteUserList(this.state);
         }
     },
-    handleSearch: function(){
+    handleSearch: function () {
         this.state.loginID = this.refs.inputLoginID.value;
         this.state.userName = this.refs.inputUserName.value;
         this.state.sex = this.refs.inputSex.value;
@@ -64,6 +64,7 @@ var SearchHistory = React.createClass({
 
                 <div id="main" className="container-fluid margin-top-60">
                     <SideBar activeMainMenuID="mainMenuBussinessManage" activeMenuID="sideMenuCreditSearchHistory"/>
+
                     <div className="content-page">
                         <Breadcrumb page={Page.creditSearchHistory}/>
 
@@ -98,7 +99,9 @@ var SearchHistory = React.createClass({
                                 </div>
 
                                 <div className="text-right">
-                                    <button type="button" className="btn btn-primary" onClick={this.handleSearch}>查&nbsp;询</button>
+                                    <button type="button" className="btn btn-primary" onClick={this.handleSearch}>
+                                        查&nbsp;询
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -150,12 +153,21 @@ var IdentityTableRow = React.createClass({
         location.href = SiteProperties.webURL + Page.creditBasicReport;
     },
     render: function () {
+        var mateName = "";
+        if (this.props.identity.mate != null && this.props.identity.mate.name != null) {
+            mateName = this.props.identity.mate.name;
+        }
+
+        var idNumber = "";
+        if (this.props.identity.mate != null && this.props.identity.mate.idnumber != null) {
+            idNumber = this.props.identity.mate.idnumber;
+        }
         return (
             <tr>
                 <td>{this.props.identity.name}</td>
                 <td>{this.props.identity.idnumber}</td>
-                <td>{this.props.identity.mate.name}</td>
-                <td>{this.props.identity.mate.idnumber}</td>
+                <td>{mateName}</td>
+                <td>{idNumber}</td>
                 <td>{new Date(this.props.identity.createTime).format('yyyy-MM-dd hh:mm:ss')}</td>
                 <td>
                     <a href="javascript:void(0)"

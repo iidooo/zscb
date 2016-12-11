@@ -247,7 +247,7 @@ public class DolphinServiceImpl implements DolphinService {
             staffExp.setIdNumber(idNumber);
             staffExp.setCompany(socialResource.getCompanyName());
             if (socialResource.getSocialStartTime() != null) {
-                staffExp.setEnterDate(socialResource.getSocialStartTime());
+                staffExp.setEnterDate(socialResource.getSocialStartTime().substring(0,8));
             } else {
                 staffExp.setEnterDate("");
             }

@@ -29,15 +29,15 @@ public interface CreditService {
     
     Identity getIdentity(Integer identityID);
     
-    Register getRegister(Integer identityID);
+    Register getRegister(String idNumber);
     
-    Staff getStaff(Integer identityID);
+    Staff getStaff(String idNumber);
     
     List<Bussiness> getBussinessList(Integer identityID);
     
     List<AssetHouse> getHouseList(Integer identityID);
     
-    List<AssetVehicle> getVehicleList(Integer identityID);
+    List<AssetVehicle> getVehicleList(String idNumber);
     
     Debt getDebt(Integer identityID);
     

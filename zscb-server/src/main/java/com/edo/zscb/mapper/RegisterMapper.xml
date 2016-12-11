@@ -37,7 +37,16 @@
 		select
 		<include refid="Base_Column_List" />
 		from credit_register R
-		where R.IsDelete = 0 and R.IDNumber = #{idNumber,jdbcType=INTEGER}
+		where R.IsDelete = 0 and R.IDNumber = #{idNumber,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 获取同住人信息 -->
+	<select id="selectRegisterMate" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from credit_register R
+		where R.IsDelete = 0 and R.ParentID = #{parentID,jdbcType=INTEGER} and 
+		R.UserName = #{name,jdbcType=VARCHAR}
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -46,7 +55,7 @@
 	</delete>
 
 	<!-- 插入一个户籍信息 -->
-	<insert id="insert" parameterType="com.edo.zscb.model.po.Register">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="registerID" parameterType="com.edo.zscb.model.po.Register">
 		insert into credit_register
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="idNumber != null">

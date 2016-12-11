@@ -7,7 +7,7 @@ public class DolphinConstant {
     
     public static final String DOLPHIN_API_URL = "http://43.254.149.55:8787/dolphin/serviceEnc";
     
-    public static final String DATA_SOURCE = "dolphin";
+    public static final String DATA_SOURCE = "海豚";
     
     public static final String HAS_MARRIED = "已婚";
     

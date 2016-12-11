@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.edo.dolphin.service.DolphinService;
+import com.edo.wescr.model.WescrResult;
 import com.edo.wescr.service.WescrService;
 import com.edo.zscb.model.po.AssetHouse;
 import com.edo.zscb.model.po.AssetVehicle;
@@ -47,13 +48,13 @@ public class CreditAction {
 
     @Autowired
     private CreditService creditService;
-    
+
     @Autowired
     private WescrService wescrService;
-    
+
     @Autowired
     private DolphinService dolphinService;
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/creditSearch" }, method = RequestMethod.POST)
     public ResponseResult creditSearch(HttpServletRequest request, HttpServletResponse response) {
@@ -63,20 +64,29 @@ public class CreditAction {
             String selfIDNumber = request.getParameter("selfIDNumber");
             String selfMobile = request.getParameter("selfMobile");
             String selfCardNumber = request.getParameter("selfCardNumber");
-            
+
             String mateName = request.getParameter("mateName");
             String mateIDNumber = request.getParameter("mateIDNumber");
             String mateMobile = request.getParameter("mateMobile");
             String mateCardNumber = request.getParameter("mateCardNumber");
-            
+
             String houseNumber = request.getParameter("houseNumber");
             String houseAddress = request.getParameter("houseAddress");
             String houseArea = request.getParameter("houseArea");
             String houseOwnerList = request.getParameter("houseOwnerList");
-            
+
             Integer operatorID = Integer.parseInt(request.getParameter("operatorID"));
 
+            Identity mateIdentity = null;
             SearchCondition searchCondition = new SearchCondition();
+            if (!mateName.isEmpty() && !mateIDNumber.isEmpty()) {
+                searchCondition.setName(mateName);
+                searchCondition.setIdNumber(mateIDNumber);
+                searchCondition.setMobile(mateMobile);
+                searchCondition.setCardNumber(mateCardNumber);
+                mateIdentity = creditService.creditSearch(searchCondition, operatorID);
+            }
+
             searchCondition.setName(selfName);
             searchCondition.setIdNumber(selfIDNumber);
             searchCondition.setMobile(selfMobile);
@@ -84,29 +94,43 @@ public class CreditAction {
             searchCondition.setHouseNumber(houseNumber);
             searchCondition.setHouseAddress(houseAddress);
             searchCondition.setHouseArea(houseArea);
+            if (mateIdentity != null) {
+                searchCondition.setMateID(mateIdentity.getIdentityID());
+            }
 
             if (houseOwnerList != null) {
-//                JSONArray jsonArray = JSONArray.fromObject(houseOwnerList);
-//                for (Object object : jsonArray) {
-//                    JSONObject jsonObject = JSONObject.fromObject(object);
-//                    HouseOwner houseOwner = new HouseOwner();
-//                    houseOwner.setHouseOwnerName(jsonObject.getString("houseOwnerName"));
-//                    houseOwner.setHouseOwnerIDNumber(jsonObject.getString("houseOwnerIDNumber"));
-//                    searchCondition.getHouseOwnerList().add(houseOwner);
-//                }
+                // JSONArray jsonArray = JSONArray.fromObject(houseOwnerList);
+                // for (Object object : jsonArray) {
+                // JSONObject jsonObject = JSONObject.fromObject(object);
+                // HouseOwner houseOwner = new HouseOwner();
+                // houseOwner.setHouseOwnerName(jsonObject.getString("houseOwnerName"));
+                // houseOwner.setHouseOwnerIDNumber(jsonObject.getString("houseOwnerIDNumber"));
+                // searchCondition.getHouseOwnerList().add(houseOwner);
+                // }
             }
             Identity selfIdentity = creditService.creditSearch(searchCondition, operatorID);
-            wescrService.getPersonBadInfo(operatorID, selfName, selfIDNumber);
-            dolphinService.queryZrrKxHonest(operatorID, selfName, selfIDNumber);
-            
-            searchCondition.setName(mateName);
-            searchCondition.setIdNumber(mateIDNumber);
-            searchCondition.setMobile(mateMobile);
-            searchCondition.setCardNumber(mateCardNumber);
-            
-//            houseOwner.set
 
-//            searchCondition.setHouseOwnerList(houseOwnerList);
+            if (!selfName.isEmpty() && !selfIDNumber.isEmpty()) {
+                WescrResult wescrResultBadInfo = wescrService.getPersonBadInfo(operatorID, selfName, selfIDNumber);
+                WescrResult wescrResultHouseMate = wescrService.getPersonalHouseMate(operatorID, selfName, selfIDNumber);
+                WescrResult wescrResultBlackList = wescrService.getBlackListByIdentityCard(operatorID, selfName, selfIDNumber);
+                WescrResult wescrResultSocialInfo = wescrService.queryPersonalSocialInfo(operatorID, selfName, selfIDNumber, selfMobile);
+
+                dolphinService.queryZrrKxHonest(operatorID, selfName, selfIDNumber);
+            }
+
+            if (!mateName.isEmpty() && !mateIDNumber.isEmpty()) {
+                wescrService.getPersonBadInfo(operatorID, mateName, mateIDNumber);
+                wescrService.getPersonalHouseMate(operatorID, mateName, mateIDNumber);
+                wescrService.getBlackListByIdentityCard(operatorID, mateName, mateIDNumber);
+                wescrService.queryPersonalSocialInfo(operatorID, mateName, mateIDNumber, mateMobile);
+
+                dolphinService.queryZrrKxHonest(operatorID, mateName, mateIDNumber);
+            }
+
+            // houseOwner.set
+
+            // searchCondition.setHouseOwnerList(houseOwnerList);
         } catch (Exception e) {
             logger.fatal(e);
             result.checkException(e);
@@ -156,7 +180,7 @@ public class CreditAction {
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("page", page);
             data.put("identityList", identityList);
-            
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(data);
 
@@ -166,14 +190,14 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getIdentityInfo" }, method = RequestMethod.POST)
     public ResponseResult getIdentityInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
             String identityID = request.getParameter("identityID");
-            
+
             result.checkFieldRequired("identityID", identityID);
             result.checkFieldInteger("identityID", identityID);
             if (result.getMessages().size() > 0) {
@@ -182,7 +206,7 @@ public class CreditAction {
             }
 
             Identity identity = creditService.getIdentity(Integer.parseInt(identityID));
-            
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(identity);
 
@@ -192,23 +216,23 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getRegisterInfo" }, method = RequestMethod.POST)
     public ResponseResult getRegisterInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
-            
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            String idNumber = request.getParameter("idNumber");
+
+            result.checkFieldRequired("idNumber", idNumber);
+            result.checkFieldInteger("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            Register register = creditService.getRegister(Integer.parseInt(identityID));
-            
+            Register register = creditService.getRegister(idNumber);
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(register);
 
@@ -218,23 +242,23 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getStaffInfo" }, method = RequestMethod.POST)
     public ResponseResult getStaffInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
-            
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            String idNumber = request.getParameter("idNumber");
+
+            result.checkFieldRequired("idNumber", idNumber);
+            result.checkFieldInteger("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            Staff staff = creditService.getStaff(Integer.parseInt(identityID));
-            
+            Staff staff = creditService.getStaff(idNumber);
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(staff);
 
@@ -244,14 +268,14 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getBussinessList" }, method = RequestMethod.POST)
     public ResponseResult getBussinessList(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
             String identityID = request.getParameter("identityID");
-            
+
             result.checkFieldRequired("identityID", identityID);
             result.checkFieldInteger("identityID", identityID);
             if (result.getMessages().size() > 0) {
@@ -260,7 +284,7 @@ public class CreditAction {
             }
 
             List<Bussiness> bussinessList = creditService.getBussinessList(Integer.parseInt(identityID));
-            
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(bussinessList);
 
@@ -270,14 +294,14 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getHouseList" }, method = RequestMethod.POST)
     public ResponseResult getHouseList(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
             String identityID = request.getParameter("identityID");
-            
+
             result.checkFieldRequired("identityID", identityID);
             result.checkFieldInteger("identityID", identityID);
             if (result.getMessages().size() > 0) {
@@ -286,7 +310,7 @@ public class CreditAction {
             }
 
             List<AssetHouse> houseList = creditService.getHouseList(Integer.parseInt(identityID));
-            
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(houseList);
 
@@ -296,23 +320,23 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getVehicleList" }, method = RequestMethod.POST)
     public ResponseResult getVehicleList(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
-            
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            String idNumber = request.getParameter("idNumber");
+
+            result.checkFieldRequired("idNumber", idNumber);
+            result.checkFieldInteger("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            List<AssetVehicle> vehicleList = creditService.getVehicleList(Integer.parseInt(identityID));
-            
+            List<AssetVehicle> vehicleList = creditService.getVehicleList(idNumber);
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(vehicleList);
 
@@ -322,14 +346,14 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getDebtInfo" }, method = RequestMethod.POST)
     public ResponseResult getDebtInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
             String identityID = request.getParameter("identityID");
-            
+
             result.checkFieldRequired("identityID", identityID);
             result.checkFieldInteger("identityID", identityID);
             if (result.getMessages().size() > 0) {
@@ -338,7 +362,7 @@ public class CreditAction {
             }
 
             Debt debt = creditService.getDebt(Integer.parseInt(identityID));
-            
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(debt);
 
@@ -348,14 +372,14 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getIncomeInfo" }, method = RequestMethod.POST)
     public ResponseResult getIncomeInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
             String identityID = request.getParameter("identityID");
-            
+
             result.checkFieldRequired("identityID", identityID);
             result.checkFieldInteger("identityID", identityID);
             if (result.getMessages().size() > 0) {
@@ -364,7 +388,7 @@ public class CreditAction {
             }
 
             Income income = creditService.getIncome(Integer.parseInt(identityID));
-            
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(income);
 
@@ -374,14 +398,14 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getLegalInfo" }, method = RequestMethod.POST)
     public ResponseResult getLegalInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
             String identityID = request.getParameter("identityID");
-            
+
             result.checkFieldRequired("identityID", identityID);
             result.checkFieldInteger("identityID", identityID);
             if (result.getMessages().size() > 0) {
@@ -390,7 +414,7 @@ public class CreditAction {
             }
 
             Legal legal = creditService.getLegal(Integer.parseInt(identityID));
-            
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(legal);
 
@@ -400,14 +424,14 @@ public class CreditAction {
         }
         return result;
     }
-    
+
     @ResponseBody
     @RequestMapping(value = { "/bussiness/getPawnInfo" }, method = RequestMethod.POST)
     public ResponseResult getPawnInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
             String identityID = request.getParameter("identityID");
-            
+
             result.checkFieldRequired("identityID", identityID);
             result.checkFieldInteger("identityID", identityID);
             if (result.getMessages().size() > 0) {
@@ -416,7 +440,7 @@ public class CreditAction {
             }
 
             Pawn pawn = creditService.getPawn(Integer.parseInt(identityID));
-            
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(pawn);
 

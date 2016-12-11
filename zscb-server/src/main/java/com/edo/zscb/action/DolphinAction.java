@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.edo.dolphin.model.DolphinResult;
 import com.edo.dolphin.service.DolphinService;
 import com.iidooo.core.enums.ResponseStatus;
 import com.iidooo.core.model.ResponseResult;
@@ -28,7 +29,7 @@ public class DolphinAction {
         try {
             String name = request.getParameter("name");
             String idNumber = request.getParameter("idNumber");
-            String data = dolphinService.queryZrrKxHonest(name, idNumber);
+            DolphinResult data = dolphinService.queryZrrKxHonest(1, name, idNumber);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(data);

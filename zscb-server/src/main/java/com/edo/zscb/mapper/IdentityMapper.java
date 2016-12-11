@@ -43,7 +43,10 @@ public interface IdentityMapper {
      */
     List<Identity> selectForSearch(SearchCondition condition);
 
-    int updateByPrimaryKeySelective(Identity record);
-
+    /**
+     * 更新身份对象
+     * @param record 身份对象
+     * @return 更新所影响的行数
+     */
     int updateByPrimaryKey(Identity record);
 }

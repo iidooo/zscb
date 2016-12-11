@@ -27,7 +27,8 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		I.IdentityID, I.Name, I.IDNumber, I.Mobile, I.BankNumber, I.HouseNumber, I.HouseAddress,
-		I.HouseArea, I.HouseOwnerUserName, I.HouseOwnerIDNumber,
+		I.HouseArea, I.HouseOwnerUserName,
+		I.HouseOwnerIDNumber,
 		I.IsMatch, I.MateID, I.DataSource, I.Remarks,
 		I.UpdateTime, I.UpdateUserID,
 		I.CreateTime, I.CreateUserID,
@@ -73,7 +74,7 @@
 		select
 		count(I.IdentityID)
 		from credit_identity I
-		where I.IsDelete = 0 and I.MateID &lt;&gt; 0
+		where I.IsDelete = 0
 		<if test="name != null and name != ''">
 			and I.Name like "%${name}%"
 		</if>
@@ -90,7 +91,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from credit_identity I
-		where I.IsDelete = 0 and I.MateID &lt;&gt; 0
+		where I.IsDelete = 0
 		<if test="name != null and name != ''">
 			and I.Name like "%${name}%"
 		</if>
@@ -157,29 +158,14 @@
 			<if test="remarks != null">
 				Remarks,
 			</if>
-			<if test="updateTime != null">
-				UpdateTime,
-			</if>
-			<if test="updateUserID != null">
-				UpdateUserID,
-			</if>
 			<if test="createTime != null">
 				CreateTime,
 			</if>
 			<if test="createUserID != null">
 				CreateUserID,
 			</if>
-			<if test="isDelete != null">
-				IsDelete,
-			</if>
-			<if test="version != null">
-				Version,
-			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="identityID != null">
-				#{identityID,jdbcType=INTEGER},
-			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
@@ -219,27 +205,17 @@
 			<if test="remarks != null">
 				#{remarks,jdbcType=VARCHAR},
 			</if>
-			<if test="updateTime != null">
-				#{updateTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="updateUserID != null">
-				#{updateUserID,jdbcType=INTEGER},
-			</if>
 			<if test="createTime != null">
 				#{createTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="createUserID != null">
 				#{createUserID,jdbcType=INTEGER},
 			</if>
-			<if test="isDelete != null">
-				#{isDelete,jdbcType=BIT},
-			</if>
-			<if test="version != null">
-				#{version,jdbcType=INTEGER},
-			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.edo.zscb.model.po.Identity">
+
+	<!-- 更新身份对象 -->
+	<update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.Identity">
 		update credit_identity
 		<set>
 			<if test="name != null">
@@ -257,6 +233,18 @@
 			<if test="houseNumber != null">
 				HouseNumber = #{houseNumber,jdbcType=VARCHAR},
 			</if>
+			<if test="houseAddress != null">
+				HouseAddress = #{houseAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="houseArea != null">
+				HouseArea = #{houseArea,jdbcType=VARCHAR},
+			</if>
+			<if test="houseOwnerUserName != null">
+				HouseOwnerUserName = #{houseOwnerUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="houseOwnerIDNumber != null">
+				HouseOwnerIDNumber = #{houseOwnerIDNumber,jdbcType=VARCHAR},
+			</if>
 			<if test="isMatch != null">
 				IsMatch = #{isMatch,jdbcType=BIT},
 			</if>
@@ -266,46 +254,11 @@
 			<if test="remarks != null">
 				Remarks = #{remarks,jdbcType=VARCHAR},
 			</if>
-			<if test="updateTime != null">
-				UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
-			</if>
 			<if test="updateUserID != null">
 				UpdateUserID = #{updateUserID,jdbcType=INTEGER},
 			</if>
-			<if test="createTime != null">
-				CreateTime = #{createTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="createUserID != null">
-				CreateUserID = #{createUserID,jdbcType=INTEGER},
-			</if>
-			<if test="isDelete != null">
-				IsDelete = #{isDelete,jdbcType=BIT},
-			</if>
-			<if test="version != null">
-				Version = #{version,jdbcType=INTEGER},
-			</if>
+			Version = Version + 1,
 		</set>
 		where IdentityID = #{identityID,jdbcType=INTEGER}
-	</update>
-	<update id="updateByPrimaryKey" parameterType="com.edo.zscb.model.po.Identity">
-		update credit_identity
-		set Name = #{name,jdbcType=VARCHAR},
-		IDNumber =
-		#{IDNumber,jdbcType=VARCHAR},
-		Mobile = #{mobile,jdbcType=VARCHAR},
-		BankNumber = #{bankNumber,jdbcType=VARCHAR},
-		HouseNumber =
-		#{houseNumber,jdbcType=VARCHAR},
-		IsMatch = #{isMatch,jdbcType=BIT},
-		MateID = #{mateID,jdbcType=INTEGER},
-		Remarks = #{remarks,jdbcType=VARCHAR},
-		UpdateTime = #{updateTime,jdbcType=TIMESTAMP},
-		UpdateUserID = #{updateUserID,jdbcType=INTEGER},
-		CreateTime = #{createTime,jdbcType=TIMESTAMP},
-		CreateUserID = #{createUserID,jdbcType=INTEGER},
-		IsDelete = #{isDelete,jdbcType=BIT},
-		Version = #{version,jdbcType=INTEGER}
-		where IdentityID =
-		#{identityID,jdbcType=INTEGER}
 	</update>
 </mapper>

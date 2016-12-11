@@ -72,33 +72,38 @@ public class CreditServiceImpl implements CreditService {
     @Transactional
     @Override
     public Identity creditSearch(SearchCondition condition, Integer operatorID) {
-        Identity result = null;
+        Identity result = new Identity();
         try {
-            result = identityMapper.selectByIDNumber(condition.getIdNumber());
-            if (result == null) {
-                result = new Identity();
-                result.setName(condition.getName());
-                result.setIDNumber(condition.getIdNumber());
-                result.setMobile(condition.getMobile());
-                result.setBankNumber(condition.getCardNumber());
-                result.setHouseNumber(condition.getHouseNumber());
-                result.setHouseAddress(condition.getHouseAddress());
-                result.setHouseArea(condition.getHouseArea());
-                
-                for (HouseOwner item : condition.getHouseOwnerList()) {
-                    if (StringUtil.isNotBlank(result.getHouseOwnerUserName())) {
-                        result.setHouseOwnerUserName(result.getHouseOwnerUserName() + "," + item.getHouseOwnerName());
-                    }
-
-                    if (StringUtil.isNotBlank(result.getHouseOwnerIDNumber())) {
-                        result.setHouseOwnerIDNumber(result.getHouseOwnerIDNumber() + "," + item.getHouseOwnerIDNumber());
-                    }
+            result.setName(condition.getName());
+            result.setIDNumber(condition.getIdNumber());
+            result.setMobile(condition.getMobile());
+            result.setBankNumber(condition.getCardNumber());
+            result.setHouseNumber(condition.getHouseNumber());
+            result.setHouseAddress(condition.getHouseAddress());
+            result.setHouseArea(condition.getHouseArea());      
+            result.setMateID(condition.getMateID());
+            
+            for (HouseOwner item : condition.getHouseOwnerList()) {
+                if (StringUtil.isNotBlank(result.getHouseOwnerUserName())) {
+                    result.setHouseOwnerUserName(result.getHouseOwnerUserName() + "," + item.getHouseOwnerName());
                 }
-                
+
+                if (StringUtil.isNotBlank(result.getHouseOwnerIDNumber())) {
+                    result.setHouseOwnerIDNumber(result.getHouseOwnerIDNumber() + "," + item.getHouseOwnerIDNumber());
+                }
+            }
+            
+            Identity existIdentity = identityMapper.selectByIDNumber(condition.getIdNumber());
+            if (existIdentity == null) {                
                 result.setCreateTime(new Date());
                 result.setCreateUserID(operatorID);
                 
                 identityMapper.insert(result);
+            } else {
+                result.setIdentityID(existIdentity.getIdentityID());
+                result.setUpdateUserID(operatorID);
+                
+                identityMapper.updateByPrimaryKey(result);
             }
         } catch (Exception e) {
             logger.fatal(e);
@@ -144,11 +149,11 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Register getRegister(Integer identityID) {
+    public Register getRegister(String idNumber) {
         Register result = new Register();
 
         try {
-            result = registerMapper.selectByIdentityID(identityID);
+            result = registerMapper.selectByIDNumber(idNumber);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -157,11 +162,11 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Staff getStaff(Integer identityID) {
+    public Staff getStaff(String idNumber) {
         Staff result = new Staff();
 
         try {
-//            result = staffMapper.selectByIdentityID(identityID);
+            result = staffMapper.selectByIDNumber(idNumber);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -192,10 +197,10 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public List<AssetVehicle> getVehicleList(Integer identityID) {
+    public List<AssetVehicle> getVehicleList(String idNumber) {
         List<AssetVehicle> result = new ArrayList<AssetVehicle>();
         try {
-            result = assetVehicleMapper.selectByIdentityID(identityID);
+            result = assetVehicleMapper.selectByIDNumber(idNumber);
         } catch (Exception e) {
             logger.fatal(e);
         }

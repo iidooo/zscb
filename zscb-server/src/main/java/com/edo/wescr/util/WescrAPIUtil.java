@@ -35,9 +35,11 @@ public class WescrAPIUtil {
         Objparameters.put("userId", WescrConstant.WESCR_LOGIN_ID);// 用户名
         Objparameters.put("secretKey", prikey);
         Objparameters.put("userPwd", WescrAPIUtil.getEncString(WescrConstant.WESCR_LOGIN_PASSWORD, key));// 密码
-        Objparameters.put("name", WescrAPIUtil.getEncString("岳嗣洪", key));// 参数
-        Objparameters.put("card", WescrAPIUtil.getEncString("452426198103102737", key));// 参数
-        System.out.println(execute(WescrConstant.WESCR_GET_PERSONAL_HOUSE_MATE, Objparameters));// 方法名
+        Objparameters.put("name", WescrAPIUtil.getEncString("沈珺", key));// 参数
+        Objparameters.put("iDCardNo", WescrAPIUtil.getEncString("320681199212317234", key));// 参数
+        Objparameters.put("bankCardNo", WescrAPIUtil.getEncString("6226220285875729", key));// 参数
+        Objparameters.put("phoneNo", WescrAPIUtil.getEncString("15921697294", key));// 参数
+        System.out.println(execute(WescrConstant.WESCR_ZCY_BANK_CARD_PERSONAL_INFO, Objparameters));// 方法名
     }
 
     public static String execute(String method, Map<String, String> Objparameters) throws Exception {

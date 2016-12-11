@@ -24,6 +24,8 @@ public class SearchCondition {
     private String houseArea;
 
     private List<HouseOwner> houseOwnerList;
+    
+    private Integer mateID;
 
     private String field;
 
@@ -103,6 +105,14 @@ public class SearchCondition {
 
     public void setHouseOwnerList(List<HouseOwner> houseOwnerList) {
         this.houseOwnerList = houseOwnerList;
+    }
+
+    public Integer getMateID() {
+        return mateID;
+    }
+
+    public void setMateID(Integer mateID) {
+        this.mateID = mateID;
     }
 
     public String getField() {

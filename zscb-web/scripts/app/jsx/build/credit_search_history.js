@@ -48,7 +48,7 @@ var SearchHistory = React.createClass({displayName: "SearchHistory",
             SearchHistoryActions.searchSiteUserList(this.state);
         }
     },
-    handleSearch: function(){
+    handleSearch: function () {
         this.state.loginID = this.refs.inputLoginID.value;
         this.state.userName = this.refs.inputUserName.value;
         this.state.sex = this.refs.inputSex.value;
@@ -64,6 +64,7 @@ var SearchHistory = React.createClass({displayName: "SearchHistory",
 
                 React.createElement("div", {id: "main", className: "container-fluid margin-top-60"}, 
                     React.createElement(SideBar, {activeMainMenuID: "mainMenuBussinessManage", activeMenuID: "sideMenuCreditSearchHistory"}), 
+
                     React.createElement("div", {className: "content-page"}, 
                         React.createElement(Breadcrumb, {page: Page.creditSearchHistory}), 
 
@@ -98,7 +99,9 @@ var SearchHistory = React.createClass({displayName: "SearchHistory",
                                 ), 
 
                                 React.createElement("div", {className: "text-right"}, 
-                                    React.createElement("button", {type: "button", className: "btn btn-primary", onClick: this.handleSearch}, "查 询")
+                                    React.createElement("button", {type: "button", className: "btn btn-primary", onClick: this.handleSearch}, 
+                                        "查 询"
+                                    )
                                 )
                             )
                         ), 
@@ -150,12 +153,21 @@ var IdentityTableRow = React.createClass({displayName: "IdentityTableRow",
         location.href = SiteProperties.webURL + Page.creditBasicReport;
     },
     render: function () {
+        var mateName = "";
+        if (this.props.identity.mate != null && this.props.identity.mate.name != null) {
+            mateName = this.props.identity.mate.name;
+        }
+
+        var idNumber = "";
+        if (this.props.identity.mate != null && this.props.identity.mate.idnumber != null) {
+            idNumber = this.props.identity.mate.idnumber;
+        }
         return (
             React.createElement("tr", null, 
                 React.createElement("td", null, this.props.identity.name), 
                 React.createElement("td", null, this.props.identity.idnumber), 
-                React.createElement("td", null, this.props.identity.mate.name), 
-                React.createElement("td", null, this.props.identity.mate.idnumber), 
+                React.createElement("td", null, mateName), 
+                React.createElement("td", null, idNumber), 
                 React.createElement("td", null, new Date(this.props.identity.createTime).format('yyyy-MM-dd hh:mm:ss')), 
                 React.createElement("td", null, 
                     React.createElement("a", {href: "javascript:void(0)", 

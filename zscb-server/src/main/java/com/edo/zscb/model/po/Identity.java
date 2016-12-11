@@ -7,9 +7,9 @@ import com.iidooo.core.model.po.SecurityUser;
 public class Identity {
     private Integer identityID;
 
-    private String name;
+    private String name = "";
 
-    private String IDNumber;
+    private String IDNumber = "";
 
     private String mobile;
 

@@ -7,9 +7,9 @@ public interface WescrService {
     
     WescrResult getPersonalHouseMate(Integer operatorID, String name, String idNumber);
     
-    WescrResult getBlackListByIdentityCard(String name, String idNumber);
+    WescrResult getBlackListByIdentityCard(Integer operatorID, String name, String idNumber);
     
-    WescrResult queryPersonalSocialInfo(String name, String idNumber, String mobile);
+    WescrResult queryPersonalSocialInfo(Integer operatorID, String name, String idNumber, String mobile);
     
-    WescrResult zcyBankCardPersonalInfo(String name, String idNumber, String mobile, String bankCardNo);
+    WescrResult zcyBankCardPersonalInfo(Integer operatorID, String name, String idNumber, String mobile, String bankCardNo);
 }

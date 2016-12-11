@@ -1,5 +1,7 @@
 package com.edo.zscb.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.edo.zscb.model.po.Register;
 
 public interface RegisterMapper {
@@ -21,6 +23,14 @@ public interface RegisterMapper {
      */
     Register selectByIDNumber(String idNumber);
 
+    /**
+     * 获取同住人信息
+     * @param parentID 主要户籍用户
+     * @param name 同住人姓名
+     * @return 同住人对象
+     */
+    Register selectRegisterMate(@Param("parentID")Integer parentID, @Param("name")String name);
+    
     /**
      * 更新户籍信息
      * @param record 户籍信息对象
