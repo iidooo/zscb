@@ -21,9 +21,12 @@ SessionKey = {
     operatorID: "OPERATOR_ID",// Login 的User ID
     userID: "USER_ID", // 编辑中的User ID
     user: "SECURITY_USER",
-    selfIdentityID: "SELF_IDENTITY_ID",
-    mateIdentityID: "MATE_IDENTITY_ID",
+    //selfIdentityID: "SELF_IDENTITY_ID",
+    //mateIdentityID: "MATE_IDENTITY_ID",
     orderID: "ORDER_ID",
+    selfIDNumber: "SELF_ID_NUMBER",
+    mateIDNumber: "MATE_ID_NUMBER",
+    dataSource: "DATA_SOURCE",
 };
 
 SecurityClient = {
@@ -106,7 +109,7 @@ WescrAPI = {
 }
 
 DolphinAPI = {
-    queryZrrKxHonest:"/dolphin/queryZrrKxHonest",
+    creditSearch: "/dolphin/creditSearch",
 }
 
 BussinessAPI = {
@@ -115,6 +118,7 @@ BussinessAPI = {
     getIdentityInfo: "/bussiness/getIdentityInfo",
     getRegisterInfo: "/bussiness/getRegisterInfo",
     getStaffInfo: "/bussiness/getStaffInfo",
+    getStaffExpList:"/bussiness/getStaffExpList",
     getBussinessList: "/bussiness/getBussinessList",
     getHouseList: "/bussiness/getHouseList",
     getVehicleList: "/bussiness/getVehicleList",
@@ -208,7 +212,10 @@ Page = {
     wescrBlackListByIdentityCard: "/page/wescr_blackList_by_identity_card.html",
     wescrQueryPersonalSocialInfo: "/page/wescr_query_personal_social_info.html",
     wescrZcyBankCardPersonalInfo: "/page/wescr_zcy_bank_card_personal_info.html",
-    dolphinQueryZrrKxHonest:"/page/dolphin_query_zrr_kx_honest.html",
+
+    dolphinCreditSearch: "/page/dolphin-credit-search.html",
+    dolphinCreditSearchHistory: "/page/dolphin-search-history.html",
+    dolphinCreditReport: "/page/dolphin-basic-report.html",
 
     users: "/pages/users.html",
     user: "/pages/user.html",

@@ -64,7 +64,8 @@ var ReportLegalSelf = React.createClass({
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.selfIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportLegalSelfActions.getLegalInfo(this.state);
     },
     render: function () {
@@ -143,7 +144,8 @@ var ReportLegalMate = React.createClass({
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.mateIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.mateIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportLegalMateActions.getLegalInfo(this.state);
     },
     render: function () {

@@ -22,10 +22,12 @@ import com.edo.dolphin.model.VehicleResource;
 import com.edo.dolphin.service.DolphinService;
 import com.edo.dolphin.util.DolphinAPIUtil;
 import com.edo.zscb.mapper.AssetVehicleMapper;
+import com.edo.zscb.mapper.IdentityMapper;
 import com.edo.zscb.mapper.RegisterMapper;
 import com.edo.zscb.mapper.StaffExpMapper;
 import com.edo.zscb.mapper.StaffMapper;
 import com.edo.zscb.model.po.AssetVehicle;
+import com.edo.zscb.model.po.Identity;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
 import com.edo.zscb.model.po.StaffExp;
@@ -65,7 +67,7 @@ public class DolphinServiceImpl implements DolphinService {
 
             if (!result.getResult().equals("1005")) {
                 return result;
-            }
+            }           
 
             @SuppressWarnings("unchecked")
             List<Element> resourceList = root.elements("RESOURCE");
@@ -286,7 +288,7 @@ public class DolphinServiceImpl implements DolphinService {
                 register.setMarryStatus(DolphinConstant.HAS_NOT_MARRIED);
             }
 
-            Register existRegister = registerMapper.selectByIDNumber(idNumber);
+            Register existRegister = registerMapper.selectByIDNumber(idNumber, DolphinConstant.DATA_SOURCE);
             if (existRegister == null) {
                 register.setCreateTime(new Date());
                 register.setCreateUserID(operatorID);

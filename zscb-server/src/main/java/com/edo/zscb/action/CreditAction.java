@@ -30,6 +30,7 @@ import com.edo.zscb.model.po.Legal;
 import com.edo.zscb.model.po.Pawn;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
+import com.edo.zscb.model.po.StaffExp;
 import com.edo.zscb.model.vo.HouseOwner;
 import com.edo.zscb.model.vo.SearchCondition;
 import com.edo.zscb.service.CreditService;
@@ -145,12 +146,12 @@ public class CreditAction {
         try {
             String name = request.getParameter("name");
             String idNumber = request.getParameter("idNumber");
-            String mobile = request.getParameter("mobile");
+            String dataSource = request.getParameter("dataSource");
 
             SearchCondition condition = new SearchCondition();
             condition.setName(name);
             condition.setIdNumber(idNumber);
-            condition.setMobile(mobile);
+            condition.setDataSource(dataSource);
 
             int recordSum = creditService.getIdentityListCount(condition);
 
@@ -196,16 +197,15 @@ public class CreditAction {
     public ResponseResult getIdentityInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
-
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
+            result.checkFieldRequired("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            Identity identity = creditService.getIdentity(Integer.parseInt(identityID));
+            Identity identity = creditService.getIdentity(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(identity);
@@ -223,15 +223,15 @@ public class CreditAction {
         ResponseResult result = new ResponseResult();
         try {
             String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
 
             result.checkFieldRequired("idNumber", idNumber);
-            result.checkFieldInteger("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            Register register = creditService.getRegister(idNumber);
+            Register register = creditService.getRegister(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(register);
@@ -249,18 +249,44 @@ public class CreditAction {
         ResponseResult result = new ResponseResult();
         try {
             String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
 
             result.checkFieldRequired("idNumber", idNumber);
-            result.checkFieldInteger("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            Staff staff = creditService.getStaff(idNumber);
+            Staff staff = creditService.getStaff(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(staff);
+
+        } catch (Exception e) {
+            logger.fatal(e);
+            result.checkException(e);
+        }
+        return result;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = { "/bussiness/getStaffExpList" }, method = RequestMethod.POST)
+    public ResponseResult getStaffExpList(HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
+        try {
+            String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
+
+            result.checkFieldRequired("idNumber", idNumber);
+            if (result.getMessages().size() > 0) {
+                result.setStatus(ResponseStatus.Failed.getCode());
+                return result;
+            }
+
+            List<StaffExp> staffExpList = creditService.getStaffExpList(idNumber, dataSource);
+
+            result.setStatus(ResponseStatus.OK.getCode());
+            result.setData(staffExpList);
 
         } catch (Exception e) {
             logger.fatal(e);
@@ -274,16 +300,16 @@ public class CreditAction {
     public ResponseResult getBussinessList(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
+            String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
 
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            result.checkFieldRequired("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            List<Bussiness> bussinessList = creditService.getBussinessList(Integer.parseInt(identityID));
+            List<Bussiness> bussinessList = creditService.getBussinessList(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(bussinessList);
@@ -300,16 +326,16 @@ public class CreditAction {
     public ResponseResult getHouseList(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
+            String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
 
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            result.checkFieldRequired("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            List<AssetHouse> houseList = creditService.getHouseList(Integer.parseInt(identityID));
+            List<AssetHouse> houseList = creditService.getHouseList(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(houseList);
@@ -327,15 +353,15 @@ public class CreditAction {
         ResponseResult result = new ResponseResult();
         try {
             String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
 
             result.checkFieldRequired("idNumber", idNumber);
-            result.checkFieldInteger("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            List<AssetVehicle> vehicleList = creditService.getVehicleList(idNumber);
+            List<AssetVehicle> vehicleList = creditService.getVehicleList(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(vehicleList);
@@ -352,16 +378,16 @@ public class CreditAction {
     public ResponseResult getDebtInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
+            String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
 
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            result.checkFieldRequired("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            Debt debt = creditService.getDebt(Integer.parseInt(identityID));
+            Debt debt = creditService.getDebt(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(debt);
@@ -378,16 +404,16 @@ public class CreditAction {
     public ResponseResult getIncomeInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
+            String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
 
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            result.checkFieldRequired("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            Income income = creditService.getIncome(Integer.parseInt(identityID));
+            Income income = creditService.getIncome(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(income);
@@ -404,16 +430,16 @@ public class CreditAction {
     public ResponseResult getLegalInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
+            String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
 
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            result.checkFieldRequired("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            Legal legal = creditService.getLegal(Integer.parseInt(identityID));
+            Legal legal = creditService.getLegal(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(legal);
@@ -430,16 +456,16 @@ public class CreditAction {
     public ResponseResult getPawnInfo(HttpServletRequest request, HttpServletResponse response) {
         ResponseResult result = new ResponseResult();
         try {
-            String identityID = request.getParameter("identityID");
+            String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
 
-            result.checkFieldRequired("identityID", identityID);
-            result.checkFieldInteger("identityID", identityID);
+            result.checkFieldRequired("idNumber", idNumber);
             if (result.getMessages().size() > 0) {
                 result.setStatus(ResponseStatus.Failed.getCode());
                 return result;
             }
 
-            Pawn pawn = creditService.getPawn(Integer.parseInt(identityID));
+            Pawn pawn = creditService.getPawn(idNumber, dataSource);
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(pawn);

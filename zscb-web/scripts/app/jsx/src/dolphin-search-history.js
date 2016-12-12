@@ -7,6 +7,7 @@ var SearchHistoryStore = Reflux.createStore({
 
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
+        data.dataSource = "dolphin";
 
         // 检查token是否过期
         if (data.accessToken == null || data.accessToken == "") {
@@ -48,7 +49,7 @@ var SearchHistory = React.createClass({
             SearchHistoryActions.searchSiteUserList(this.state);
         }
     },
-    handleSearch: function(){
+    handleSearch: function () {
         this.state.loginID = this.refs.inputLoginID.value;
         this.state.userName = this.refs.inputUserName.value;
         this.state.sex = this.refs.inputSex.value;
@@ -60,12 +61,17 @@ var SearchHistory = React.createClass({
     render: function () {
         return (
             <div>
-                <Header activeMenuID="mainMenuBussinessManage"/>
+                <Header activeMenuID="mainMenuSysManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMainMenuID="mainMenuBussinessManage" activeMenuID="sideMenuCreditSearchHistory"/>
+                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuDolphinCreditSearchHistory"/>
+
                     <div className="content-page">
-                        <Breadcrumb page={Page.creditSearchHistory}/>
+                        <ol className="breadcrumb">
+                            <li><a href="#">系统管理</a></li>
+                            <li><a href="#">海豚</a></li>
+                            <li className='active'>资信查询历史</li>
+                        </ol>
 
                         <div className="panel panel-default">
                             <div className="panel-heading">查询条件</div>
@@ -88,17 +94,10 @@ var SearchHistory = React.createClass({
                                         </div>
                                     </div>
                                     <div className="col-xs-4">
-                                        <div className="col-xs-4 control-label">
-                                            <label>手机号</label>
-                                        </div>
-                                        <div className="col-xs-8">
-                                            <input type="text" className="form-control" ref="inputMobile"/>
-                                        </div>
+                                        <button type="button" className="btn btn-primary" onClick={this.handleSearch}>
+                                            查&nbsp;询
+                                        </button>
                                     </div>
-                                </div>
-
-                                <div className="text-right">
-                                    <button type="button" className="btn btn-primary" onClick={this.handleSearch}>查&nbsp;询</button>
                                 </div>
                             </div>
                         </div>
@@ -144,31 +143,33 @@ var IdentityDataTable = React.createClass({
 });
 
 var IdentityTableRow = React.createClass({
-    handleLink: function (selfIdentityID, mateIdentityID) {
-        sessionStorage.setItem(SessionKey.selfIdentityID, selfIdentityID);
-        sessionStorage.setItem(SessionKey.mateIdentityID, mateIdentityID);
-        location.href = SiteProperties.webURL + Page.creditBasicReport;
+    handleLink: function (selfIDNumber, mateIDNumber) {
+        console.log(selfIDNumber);
+        console.log(mateIDNumber);
+        sessionStorage.setItem(SessionKey.selfIDNumber, selfIDNumber);
+        sessionStorage.setItem(SessionKey.mateIDNumber, mateIDNumber);
+        location.href = SiteProperties.webURL + Page.dolphinCreditReport;
     },
     render: function () {
         var mateName = "";
-        if(this.props.identity.mate !=null && this.props.identity.mate.name != null){
+        if (this.props.identity.mate != null && this.props.identity.mate.name != null) {
             mateName = this.props.identity.mate.name;
         }
 
-        var idNumber = "";
-        if(this.props.identity.mate!= nulthis.props.identity.mate.idnumber != null){
-            idNumber = this.props.identity.mate.idnumber;
+        var mateIDNumber = "";
+        if (this.props.identity.mate != null && this.props.identity.mate.idnumber != null) {
+            mateIDNumber = this.props.identity.mate.idnumber;
         }
         return (
             <tr>
                 <td>{this.props.identity.name}</td>
                 <td>{this.props.identity.idnumber}</td>
                 <td>{mateName}</td>
-                <td>{idNumber}</td>
+                <td>{mateIDNumber}</td>
                 <td>{new Date(this.props.identity.createTime).format('yyyy-MM-dd hh:mm:ss')}</td>
                 <td>
                     <a href="javascript:void(0)"
-                       onClick={this.handleLink.bind(null, this.props.identity.identityID, this.props.identity.mateID)}>查看报告</a>
+                       onClick={this.handleLink.bind(null, this.props.identity.idnumber, mateIDNumber)}>查看报告</a>
                 </td>
             </tr>
         );

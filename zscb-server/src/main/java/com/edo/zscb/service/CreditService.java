@@ -12,6 +12,7 @@ import com.edo.zscb.model.po.Legal;
 import com.edo.zscb.model.po.Pawn;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
+import com.edo.zscb.model.po.StaffExp;
 import com.edo.zscb.model.vo.SearchCondition;
 
 public interface CreditService {
@@ -27,23 +28,31 @@ public interface CreditService {
     
     List<Identity> getIdentityList(SearchCondition condition);
     
-    Identity getIdentity(Integer identityID);
+    Identity getIdentity(String idNumber, String dataSource);
     
-    Register getRegister(String idNumber);
+    Register getRegister(String idNumber, String dataSource);
     
-    Staff getStaff(String idNumber);
+    Staff getStaff(String idNumber, String dataSource);
     
-    List<Bussiness> getBussinessList(Integer identityID);
+    /**
+     * 获得工作经历
+     * @param idNumber 身份证号
+     * @param dataSource 数据源
+     * @return 工作经历列表
+     */
+    List<StaffExp> getStaffExpList(String idNumber, String dataSource);
     
-    List<AssetHouse> getHouseList(Integer identityID);
+    List<Bussiness> getBussinessList(String idNumber, String dataSource);
     
-    List<AssetVehicle> getVehicleList(String idNumber);
+    List<AssetHouse> getHouseList(String idNumber, String dataSource);
     
-    Debt getDebt(Integer identityID);
+    List<AssetVehicle> getVehicleList(String idNumber, String dataSource);
     
-    Income getIncome(Integer identityID);
+    Debt getDebt(String idNumber, String dataSource);
     
-    Legal getLegal(Integer identityID);
+    Income getIncome(String idNumber, String dataSource);
     
-    Pawn getPawn(Integer identityID);
+    Legal getLegal(String idNumber, String dataSource);
+    
+    Pawn getPawn(String idNumber, String dataSource);
 }

@@ -64,7 +64,8 @@ var ReportIncomeSelf = React.createClass({
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.selfIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportIncomeSelfActions.getIncomeInfo(this.state);
     },
     render: function () {
@@ -128,7 +129,8 @@ var ReportIncomeMate = React.createClass({
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.mateIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.mateIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportIncomeMateActions.getIncomeInfo(this.state);
     },
     render: function () {

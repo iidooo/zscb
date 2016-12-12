@@ -89,7 +89,8 @@ var ReportSocialSelf = React.createClass({displayName: "ReportSocialSelf",
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.selfIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportSocialSelfActions.getStaffInfo(this.state);
     },
     render: function () {
@@ -150,7 +151,8 @@ var ReportSocialMate = React.createClass({displayName: "ReportSocialMate",
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.mateIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.mateIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportSocialMateActions.getStaffInfo(this.state);
     },
     render: function () {
@@ -176,14 +178,44 @@ var ReportSocialMate = React.createClass({displayName: "ReportSocialMate",
     }
 });
 
-var ReportExpSelf = React.createClass({displayName: "ReportExpSelf",
-    mixins: [Reflux.connect(ReportSocialSelfStore, 'staff')],
-    getInitialState: function () {
-        return {
-            staff: {
-                staffExpList: []
+var ReportExpSelfActions = Reflux.createActions(['getStaffExpList']);
+var ReportExpSelfStore = Reflux.createStore({
+    listenables: [ReportExpSelfActions],
+    onGetStaffExpList: function (data) {
+        var url = SiteProperties.serverURL + BussinessAPI.getStaffExpList;
+
+        data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
+        data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
+
+        // 检查token是否过期
+        if (data.accessToken == null || data.accessToken == "") {
+            location.href = SiteProperties.webURL + Page.login;
+            return false;
+        }
+
+        var self = this;
+        var callback = function (result) {
+            if (result.status == 200) {
+                self.trigger(result.data);
+            } else {
+                console.log(result);
             }
         };
+
+        ajaxPost(url, data, callback);
+    },
+});
+var ReportExpSelf = React.createClass({displayName: "ReportExpSelf",
+    mixins: [Reflux.connect(ReportExpSelfStore, 'staffExpList')],
+    getInitialState: function () {
+        return {
+            staffExpList: []
+        };
+    },
+    componentDidMount: function () {
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
+        ReportExpSelfActions.getStaffExpList(this.state);
     },
     render: function () {
         return (
@@ -197,7 +229,7 @@ var ReportExpSelf = React.createClass({displayName: "ReportExpSelf",
                     React.createElement("th", {className: "col-xs-3 text-center"}, "离职时间"), 
                     React.createElement("th", {className: "col-xs-6 text-center"}, "公司名称")
                 ), 
-                this.state.staff.staffExpList.map(function (item) {
+                this.state.staffExpList.map(function (item) {
                     return React.createElement(ReportExpItemSelf, {key: item.expID, item: item})
                 })
                 )
@@ -217,14 +249,44 @@ var ReportExpItemSelf = React.createClass({displayName: "ReportExpItemSelf",
     }
 });
 
-var ReportExpMate = React.createClass({displayName: "ReportExpMate",
-    mixins: [Reflux.connect(ReportSocialMateStore, 'staff')],
-    getInitialState: function () {
-        return {
-            staff: {
-                staffExpList: []
+var ReportExpMateActions = Reflux.createActions(['getStaffExpList']);
+var ReportExpMateStore = Reflux.createStore({
+    listenables: [ReportExpMateActions],
+    onGetStaffExpList: function (data) {
+        var url = SiteProperties.serverURL + BussinessAPI.getStaffExpList;
+
+        data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
+        data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
+
+        // 检查token是否过期
+        if (data.accessToken == null || data.accessToken == "") {
+            location.href = SiteProperties.webURL + Page.login;
+            return false;
+        }
+
+        var self = this;
+        var callback = function (result) {
+            if (result.status == 200) {
+                self.trigger(result.data);
+            } else {
+                console.log(result);
             }
         };
+
+        ajaxPost(url, data, callback);
+    },
+});
+var ReportExpMate = React.createClass({displayName: "ReportExpMate",
+    mixins: [Reflux.connect(ReportExpMateStore, 'staffExpList')],
+    getInitialState: function () {
+        return {
+            staffExpList: []
+        };
+    },
+    componentDidMount: function () {
+        this.state.idNumber = sessionStorage.getItem(SessionKey.mateIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
+        ReportExpMateActions.getStaffExpList(this.state);
     },
     render: function () {
         return (
@@ -238,7 +300,7 @@ var ReportExpMate = React.createClass({displayName: "ReportExpMate",
                     React.createElement("th", {className: "col-xs-3 text-center"}, "离职时间"), 
                     React.createElement("th", {className: "col-xs-6 text-center"}, "公司名称")
                 ), 
-                this.state.staff.staffExpList.map(function (item) {
+                this.state.staffExpList.map(function (item) {
                     return React.createElement(ReportExpItemMate, {key: item.expID, item: item})
                 })
                 )
@@ -263,8 +325,7 @@ var ReportEduSelf = React.createClass({displayName: "ReportEduSelf",
     mixins: [Reflux.connect(ReportSocialSelfStore, 'staff')],
     getInitialState: function () {
         return {
-            staff: {
-            }
+            staff: {}
         };
     },
     render: function () {
@@ -291,8 +352,7 @@ var ReportEduMate = React.createClass({displayName: "ReportEduMate",
     mixins: [Reflux.connect(ReportSocialMateStore, 'staff')],
     getInitialState: function () {
         return {
-            staff: {
-            }
+            staff: {}
         };
     },
     render: function () {
@@ -321,8 +381,7 @@ var ReportTaxSelf = React.createClass({displayName: "ReportTaxSelf",
     mixins: [Reflux.connect(ReportSocialSelfStore, 'staff')],
     getInitialState: function () {
         return {
-            staff: {
-            }
+            staff: {}
         };
     },
     render: function () {
@@ -351,8 +410,7 @@ var ReportTaxMate = React.createClass({displayName: "ReportTaxMate",
     mixins: [Reflux.connect(ReportSocialMateStore, 'staff')],
     getInitialState: function () {
         return {
-            staff: {
-            }
+            staff: {}
         };
     },
     render: function () {

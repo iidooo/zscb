@@ -21,7 +21,7 @@ public interface RegisterMapper {
      * @param idNumber 身份ID
      * @return 户籍信息
      */
-    Register selectByIDNumber(String idNumber);
+    Register selectByIDNumber(@Param("idNumber")String idNumber, @Param("dataSource")String dataSource);
 
     /**
      * 获取同住人信息

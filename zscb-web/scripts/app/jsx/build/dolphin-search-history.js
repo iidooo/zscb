@@ -7,6 +7,7 @@ var SearchHistoryStore = Reflux.createStore({
 
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
+        data.dataSource = "dolphin";
 
         // 检查token是否过期
         if (data.accessToken == null || data.accessToken == "") {
@@ -48,7 +49,7 @@ var SearchHistory = React.createClass({displayName: "SearchHistory",
             SearchHistoryActions.searchSiteUserList(this.state);
         }
     },
-    handleSearch: function(){
+    handleSearch: function () {
         this.state.loginID = this.refs.inputLoginID.value;
         this.state.userName = this.refs.inputUserName.value;
         this.state.sex = this.refs.inputSex.value;
@@ -60,12 +61,17 @@ var SearchHistory = React.createClass({displayName: "SearchHistory",
     render: function () {
         return (
             React.createElement("div", null, 
-                React.createElement(Header, {activeMenuID: "mainMenuBussinessManage"}), 
+                React.createElement(Header, {activeMenuID: "mainMenuSysManage"}), 
 
                 React.createElement("div", {id: "main", className: "container-fluid margin-top-60"}, 
-                    React.createElement(SideBar, {activeMainMenuID: "mainMenuBussinessManage", activeMenuID: "sideMenuCreditSearchHistory"}), 
+                    React.createElement(SideBar, {activeMainMenuID: "mainMenuSysManage", activeMenuID: "sideMenuDolphinCreditSearchHistory"}), 
+
                     React.createElement("div", {className: "content-page"}, 
-                        React.createElement(Breadcrumb, {page: Page.creditSearchHistory}), 
+                        React.createElement("ol", {className: "breadcrumb"}, 
+                            React.createElement("li", null, React.createElement("a", {href: "#"}, "系统管理")), 
+                            React.createElement("li", null, React.createElement("a", {href: "#"}, "海豚")), 
+                            React.createElement("li", {className: "active"}, "资信查询历史")
+                        ), 
 
                         React.createElement("div", {className: "panel panel-default"}, 
                             React.createElement("div", {className: "panel-heading"}, "查询条件"), 
@@ -88,17 +94,10 @@ var SearchHistory = React.createClass({displayName: "SearchHistory",
                                         )
                                     ), 
                                     React.createElement("div", {className: "col-xs-4"}, 
-                                        React.createElement("div", {className: "col-xs-4 control-label"}, 
-                                            React.createElement("label", null, "手机号")
-                                        ), 
-                                        React.createElement("div", {className: "col-xs-8"}, 
-                                            React.createElement("input", {type: "text", className: "form-control", ref: "inputMobile"})
+                                        React.createElement("button", {type: "button", className: "btn btn-primary", onClick: this.handleSearch}, 
+                                            "查 询"
                                         )
                                     )
-                                ), 
-
-                                React.createElement("div", {className: "text-right"}, 
-                                    React.createElement("button", {type: "button", className: "btn btn-primary", onClick: this.handleSearch}, "查 询")
                                 )
                             )
                         ), 
@@ -144,31 +143,33 @@ var IdentityDataTable = React.createClass({displayName: "IdentityDataTable",
 });
 
 var IdentityTableRow = React.createClass({displayName: "IdentityTableRow",
-    handleLink: function (selfIdentityID, mateIdentityID) {
-        sessionStorage.setItem(SessionKey.selfIdentityID, selfIdentityID);
-        sessionStorage.setItem(SessionKey.mateIdentityID, mateIdentityID);
-        location.href = SiteProperties.webURL + Page.creditBasicReport;
+    handleLink: function (selfIDNumber, mateIDNumber) {
+        console.log(selfIDNumber);
+        console.log(mateIDNumber);
+        sessionStorage.setItem(SessionKey.selfIDNumber, selfIDNumber);
+        sessionStorage.setItem(SessionKey.mateIDNumber, mateIDNumber);
+        location.href = SiteProperties.webURL + Page.dolphinCreditReport;
     },
     render: function () {
         var mateName = "";
-        if(this.props.identity.mate !=null && this.props.identity.mate.name != null){
+        if (this.props.identity.mate != null && this.props.identity.mate.name != null) {
             mateName = this.props.identity.mate.name;
         }
 
-        var idNumber = "";
-        if(this.props.identity.mate!= nulthis.props.identity.mate.idnumber != null){
-            idNumber = this.props.identity.mate.idnumber;
+        var mateIDNumber = "";
+        if (this.props.identity.mate != null && this.props.identity.mate.idnumber != null) {
+            mateIDNumber = this.props.identity.mate.idnumber;
         }
         return (
             React.createElement("tr", null, 
                 React.createElement("td", null, this.props.identity.name), 
                 React.createElement("td", null, this.props.identity.idnumber), 
                 React.createElement("td", null, mateName), 
-                React.createElement("td", null, idNumber), 
+                React.createElement("td", null, mateIDNumber), 
                 React.createElement("td", null, new Date(this.props.identity.createTime).format('yyyy-MM-dd hh:mm:ss')), 
                 React.createElement("td", null, 
                     React.createElement("a", {href: "javascript:void(0)", 
-                       onClick: this.handleLink.bind(null, this.props.identity.identityID, this.props.identity.mateID)}, "查看报告")
+                       onClick: this.handleLink.bind(null, this.props.identity.idnumber, mateIDNumber)}, "查看报告")
                 )
             )
         );

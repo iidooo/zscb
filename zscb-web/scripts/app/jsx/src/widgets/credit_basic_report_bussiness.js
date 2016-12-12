@@ -55,7 +55,8 @@ var ReportBussinessSelf = React.createClass({
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.selfIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportBussinessSelfActions.getBussinessList(this.state);
     },
     render: function () {
@@ -121,7 +122,8 @@ var ReportBussinessMate = React.createClass({
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.mateIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.mateIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportBussinessMateActions.getBussinessList(this.state);
     },
     render: function () {

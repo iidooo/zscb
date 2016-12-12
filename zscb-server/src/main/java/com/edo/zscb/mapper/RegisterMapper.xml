@@ -37,7 +37,8 @@
 		select
 		<include refid="Base_Column_List" />
 		from credit_register R
-		where R.IsDelete = 0 and R.IDNumber = #{idNumber,jdbcType=VARCHAR}
+		where R.IsDelete = 0 and R.IDNumber = #{idNumber,jdbcType=VARCHAR} and 
+		R.DataSource = #{dataSource,jdbcType=VARCHAR}
 	</select>
 	
 	<!-- 获取同住人信息 -->

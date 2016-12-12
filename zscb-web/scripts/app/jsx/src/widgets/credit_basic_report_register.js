@@ -44,6 +44,7 @@ var ReportMarriedSelfStore = Reflux.createStore({
             return false;
         }
 
+        console.log(data);
         var self = this;
         var callback = function (result) {
             if (result.status == 200) {
@@ -64,16 +65,11 @@ var ReportMarriedSelf = React.createClass({
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.selfIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportMarriedSelfActions.getRegisterInfo(this.state);
     },
     render: function () {
-        var isMarried = "";
-        if(this.state.register.isMarried){
-            isMarried = "已婚";
-        } else{
-            isMarried = "未婚";
-        }
         return (
             <table className="table table-bordered table-condensed table_inline">
                 <tbody>
@@ -82,7 +78,7 @@ var ReportMarriedSelf = React.createClass({
                 </tr>
                 <tr>
                     <th className="col-xs-3">婚姻</th>
-                    <td colSpan="3" className="text-center">{isMarried}</td>
+                    <td colSpan="3" className="text-center">{this.state.register.marryStatus}</td>
                 </tr>
                 </tbody>
             </table>
@@ -125,16 +121,11 @@ var ReportMarriedMate = React.createClass({
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.mateIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.mateIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportMarriedMateActions.getRegisterInfo(this.state);
     },
     render: function () {
-        var isMarried = "";
-        if(this.state.register.isMarried){
-            isMarried = "已婚";
-        } else{
-            isMarried = "未婚";
-        }
         return (
             <table className="table table-bordered table-condensed table_inline">
                 <tbody>
@@ -143,7 +134,7 @@ var ReportMarriedMate = React.createClass({
                 </tr>
                 <tr>
                     <th className="col-xs-3">婚姻</th>
-                    <td colSpan="3" className="text-center">{isMarried}</td>
+                    <td colSpan="3" className="text-center">{this.state.register.marryStatus}</td>
                 </tr>
                 </tbody>
             </table>
@@ -159,12 +150,6 @@ var ReportRegisterSelf = React.createClass({
         };
     },
     render: function () {
-        var isMarried = "";
-        if(this.state.register.isMarried){
-            isMarried = "已婚";
-        } else{
-            isMarried = "未婚";
-        }
         return (
             <table className="table table-bordered table-condensed table_inline">
                 <tbody>
@@ -183,7 +168,7 @@ var ReportRegisterSelf = React.createClass({
                 </tr>
                 <tr>
                     <th>婚姻</th>
-                    <td>{isMarried}</td>
+                    <td>{this.state.register.marryStatus}</td>
                     <th>曾用名</th>
                     <td>{this.state.register.usedName}</td>
                 </tr>
@@ -204,12 +189,6 @@ var ReportRegisterMate = React.createClass({
         };
     },
     render: function () {
-        var isMarried = "";
-        if(this.state.register.isMarried){
-            isMarried = "已婚";
-        } else{
-            isMarried = "未婚";
-        }
         return (
             <table className="table table-bordered table-condensed table_inline">
                 <tbody>
@@ -228,7 +207,7 @@ var ReportRegisterMate = React.createClass({
                 </tr>
                 <tr>
                     <th>婚姻</th>
-                    <td>{isMarried}</td>
+                    <td>{this.state.register.marryStatus}</td>
                     <th>曾用名</th>
                     <td>{this.state.register.usedName}</td>
                 </tr>

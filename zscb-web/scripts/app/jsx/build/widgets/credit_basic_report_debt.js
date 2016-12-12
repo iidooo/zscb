@@ -56,7 +56,8 @@ var ReportDebtSelf = React.createClass({displayName: "ReportDebtSelf",
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.selfIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportDebtSelfActions.getDebtInfo(this.state);
     },
     render: function () {
@@ -161,7 +162,8 @@ var ReportDebtMate = React.createClass({displayName: "ReportDebtMate",
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.mateIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.mateIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportDebtMateActions.getDebtInfo(this.state);
     },
     render: function () {

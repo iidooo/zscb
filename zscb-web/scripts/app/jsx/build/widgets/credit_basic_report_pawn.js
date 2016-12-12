@@ -33,7 +33,8 @@ var ReportPawn = React.createClass({displayName: "ReportPawn",
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.selfIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportPawnActions.getPawnInfo(this.state);
     },
     render: function () {

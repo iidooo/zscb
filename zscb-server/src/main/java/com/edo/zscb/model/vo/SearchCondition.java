@@ -26,6 +26,8 @@ public class SearchCondition {
     private List<HouseOwner> houseOwnerList;
     
     private Integer mateID;
+    
+    private String dataSource;
 
     private String field;
 
@@ -113,6 +115,14 @@ public class SearchCondition {
 
     public void setMateID(Integer mateID) {
         this.mateID = mateID;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public String getField() {

@@ -40,7 +40,7 @@ var ReportIdentitySelfStore = Reflux.createStore({
             if (result.status == 200) {
                 self.trigger(result.data);
             } else {
-                console.log(result);
+                //console.log(result);
             }
         };
 
@@ -55,7 +55,8 @@ var ReportIdentitySelf = React.createClass({displayName: "ReportIdentitySelf",
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.selfIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportIdentitySelfActions.getIdentityInfo(this.state);
     },
     render: function () {
@@ -126,7 +127,7 @@ var ReportIdentityMateStore = Reflux.createStore({
             if (result.status == 200) {
                 self.trigger(result.data);
             } else {
-                console.log(result);
+                //console.log(result);
             }
         };
 
@@ -141,7 +142,8 @@ var ReportIdentityMate = React.createClass({displayName: "ReportIdentityMate",
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.mateIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.mateIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportIdentityMateActions.getIdentityInfo(this.state);
     },
     render: function () {

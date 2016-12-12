@@ -58,7 +58,8 @@
 		select
 		<include refid="Base_Column_List" />
 		from credit_identity I
-		where I.IsDelete = 0 and I.IDNumber = #{idNumber,jdbcType=INTEGER}
+		where I.IsDelete = 0 and I.IDNumber = #{idNumber,jdbcType=VARCHAR} and
+		I.DataSource = #{dataSource, jdbcType=VARCHAR}
 	</select>
 
 	<!-- 查询配偶信息 -->
@@ -81,9 +82,7 @@
 		<if test="idNumber != null and idNumber != ''">
 			and I.IDNumber like "%${idNumber}%"
 		</if>
-		<if test="mobile != null and mobile != ''">
-			and I.Mobile like "%${mobile}%"
-		</if>
+		and I.DataSource = #{dataSource, jdbcType=VARCHAR}
 	</select>
 
 	<!-- 查询符合条件的借款人身份信息 -->
@@ -98,9 +97,7 @@
 		<if test="idNumber != null and idNumber != ''">
 			and I.IDNumber like "%${idNumber}%"
 		</if>
-		<if test="mobile != null and mobile != ''">
-			and I.Mobile like "%${mobile}%"
-		</if>
+		and I.DataSource = #{dataSource, jdbcType=VARCHAR}
 		<if test="page != null">
 			order by ${page.sortField} ${page.sortType}
 			limit ${page.start}, ${page.pageSize}

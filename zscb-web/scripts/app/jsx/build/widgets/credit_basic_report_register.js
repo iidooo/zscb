@@ -44,6 +44,7 @@ var ReportMarriedSelfStore = Reflux.createStore({
             return false;
         }
 
+        console.log(data);
         var self = this;
         var callback = function (result) {
             if (result.status == 200) {
@@ -64,16 +65,11 @@ var ReportMarriedSelf = React.createClass({displayName: "ReportMarriedSelf",
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.selfIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportMarriedSelfActions.getRegisterInfo(this.state);
     },
     render: function () {
-        var isMarried = "";
-        if(this.state.register.isMarried){
-            isMarried = "已婚";
-        } else{
-            isMarried = "未婚";
-        }
         return (
             React.createElement("table", {className: "table table-bordered table-condensed table_inline"}, 
                 React.createElement("tbody", null, 
@@ -82,7 +78,7 @@ var ReportMarriedSelf = React.createClass({displayName: "ReportMarriedSelf",
                 ), 
                 React.createElement("tr", null, 
                     React.createElement("th", {className: "col-xs-3"}, "婚姻"), 
-                    React.createElement("td", {colSpan: "3", className: "text-center"}, isMarried)
+                    React.createElement("td", {colSpan: "3", className: "text-center"}, this.state.register.marryStatus)
                 )
                 )
             )
@@ -125,16 +121,11 @@ var ReportMarriedMate = React.createClass({displayName: "ReportMarriedMate",
         };
     },
     componentDidMount: function () {
-        this.state.identityID = sessionStorage.getItem(SessionKey.mateIdentityID);
+        this.state.idNumber = sessionStorage.getItem(SessionKey.mateIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
         ReportMarriedMateActions.getRegisterInfo(this.state);
     },
     render: function () {
-        var isMarried = "";
-        if(this.state.register.isMarried){
-            isMarried = "已婚";
-        } else{
-            isMarried = "未婚";
-        }
         return (
             React.createElement("table", {className: "table table-bordered table-condensed table_inline"}, 
                 React.createElement("tbody", null, 
@@ -143,7 +134,7 @@ var ReportMarriedMate = React.createClass({displayName: "ReportMarriedMate",
                 ), 
                 React.createElement("tr", null, 
                     React.createElement("th", {className: "col-xs-3"}, "婚姻"), 
-                    React.createElement("td", {colSpan: "3", className: "text-center"}, isMarried)
+                    React.createElement("td", {colSpan: "3", className: "text-center"}, this.state.register.marryStatus)
                 )
                 )
             )
@@ -159,12 +150,6 @@ var ReportRegisterSelf = React.createClass({displayName: "ReportRegisterSelf",
         };
     },
     render: function () {
-        var isMarried = "";
-        if(this.state.register.isMarried){
-            isMarried = "已婚";
-        } else{
-            isMarried = "未婚";
-        }
         return (
             React.createElement("table", {className: "table table-bordered table-condensed table_inline"}, 
                 React.createElement("tbody", null, 
@@ -183,7 +168,7 @@ var ReportRegisterSelf = React.createClass({displayName: "ReportRegisterSelf",
                 ), 
                 React.createElement("tr", null, 
                     React.createElement("th", null, "婚姻"), 
-                    React.createElement("td", null, isMarried), 
+                    React.createElement("td", null, this.state.register.marryStatus), 
                     React.createElement("th", null, "曾用名"), 
                     React.createElement("td", null, this.state.register.usedName)
                 ), 
@@ -204,12 +189,6 @@ var ReportRegisterMate = React.createClass({displayName: "ReportRegisterMate",
         };
     },
     render: function () {
-        var isMarried = "";
-        if(this.state.register.isMarried){
-            isMarried = "已婚";
-        } else{
-            isMarried = "未婚";
-        }
         return (
             React.createElement("table", {className: "table table-bordered table-condensed table_inline"}, 
                 React.createElement("tbody", null, 
@@ -228,7 +207,7 @@ var ReportRegisterMate = React.createClass({displayName: "ReportRegisterMate",
                 ), 
                 React.createElement("tr", null, 
                     React.createElement("th", null, "婚姻"), 
-                    React.createElement("td", null, isMarried), 
+                    React.createElement("td", null, this.state.register.marryStatus), 
                     React.createElement("th", null, "曾用名"), 
                     React.createElement("td", null, this.state.register.usedName)
                 ), 

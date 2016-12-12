@@ -23,7 +23,7 @@ public interface StaffExpMapper {
      * @param idNumber 身份证号
      * @return 工作经历一览
      */
-    List<StaffExp> selectByIDNumber(String idNumber);
+    List<StaffExp> selectStaffExpList(@Param("idNumber")String idNumber, @Param("dataSource")String dataSource);
     
     /**
      * 通过身份证号获得工作经历

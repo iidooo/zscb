@@ -2,8 +2,11 @@ package com.edo.zscb.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.edo.zscb.model.po.Identity;
 import com.edo.zscb.model.vo.SearchCondition;
+import com.sun.org.glassfish.gmbal.ParameterNames;
 
 public interface IdentityMapper {
     int deleteByPrimaryKey(Integer identityID);
@@ -27,7 +30,7 @@ public interface IdentityMapper {
      * @param idNumber 身份证号
      * @return Identity对象
      */
-    Identity selectByIDNumber(String idNumber);
+    Identity selectByIDNumber(@Param("idNumber")String idNumber, @Param("dataSource")String dataSource);
     
     /**
      * 查询符合条件的借款人身份信息数量

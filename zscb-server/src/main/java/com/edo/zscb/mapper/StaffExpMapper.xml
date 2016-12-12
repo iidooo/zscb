@@ -29,11 +29,12 @@
 	</select>
 
 	<!-- 通过身份证号获得工作经历一览 -->
-	<select id="selectByIDNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="selectStaffExpList" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from credit_staff_exp S
-		where S.IsDelete = 0 and S.IDNumber = #{idNumber,jdbcType=VARCHAR}
+		where S.IsDelete = 0 and S.IDNumber = #{idNumber,jdbcType=VARCHAR} and 
+		S.DataSource = #{dataSource,jdbcType=VARCHAR}
 	</select>
 	
 	<!-- 通过身份证号获得工作经历 -->

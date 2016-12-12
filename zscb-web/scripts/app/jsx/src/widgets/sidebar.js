@@ -141,16 +141,20 @@ var SysManageSideBar = React.createClass({
                             <a id="sideMenuWescrPersonBadInfo" href={SiteProperties.webURL + Page.wescrPersonalBadInfo}>个人不良记录</a>
                         </li>
                         <li>
-                            <a id="sideMenuescrPersonalHouseMate" href={SiteProperties.webURL + Page.wescrPersonalHouseMate}>个人户籍及同住人</a>
+                            <a id="sideMenuescrPersonalHouseMate"
+                               href={SiteProperties.webURL + Page.wescrPersonalHouseMate}>个人户籍及同住人</a>
                         </li>
                         <li>
-                            <a id="sideMenuWescrBlackListByIdentityCard" href={SiteProperties.webURL + Page.wescrBlackListByIdentityCard}>个人黑名单信息</a>
+                            <a id="sideMenuWescrBlackListByIdentityCard"
+                               href={SiteProperties.webURL + Page.wescrBlackListByIdentityCard}>个人黑名单信息</a>
                         </li>
                         <li>
-                            <a id="sideMenuWescrQueryPersonalSocialInfo" href={SiteProperties.webURL + Page.wescrQueryPersonalSocialInfo}>个人社保信息</a>
+                            <a id="sideMenuWescrQueryPersonalSocialInfo"
+                               href={SiteProperties.webURL + Page.wescrQueryPersonalSocialInfo}>个人社保信息</a>
                         </li>
                         <li>
-                            <a id="sideMenuWescrZcyBankCardPersonalInfo" href={SiteProperties.webURL + Page.wescrZcyBankCardPersonalInfo}>个人银行卡交易记录</a>
+                            <a id="sideMenuWescrZcyBankCardPersonalInfo"
+                               href={SiteProperties.webURL + Page.wescrZcyBankCardPersonalInfo}>个人银行卡交易记录</a>
                         </li>
                     </ul>
                 </li>
@@ -162,8 +166,20 @@ var SysManageSideBar = React.createClass({
                     </a>
                     <ul>
                         <li>
-                            <a id="sideMenuDolphinQueryZrrKxHonest" href={SiteProperties.webURL + Page.dolphinQueryZrrKxHonest}>资信查询</a>
+                            <a id="sideMenuDolphinCreditSearch" href={SiteProperties.webURL + Page.dolphinCreditSearch}>
+                                <i className="fa fa-search"></i>
+                                <span>资信查询</span>
+                            </a>
                         </li>
+
+                        <li>
+                            <a id="sideMenuDolphinCreditSearchHistory"
+                               href={SiteProperties.webURL + Page.dolphinCreditSearchHistory}>
+                                <i className="fa fa-list"></i>
+                                <span>查询历史</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
             </ul>

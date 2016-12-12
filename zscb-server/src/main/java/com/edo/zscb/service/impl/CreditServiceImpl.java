@@ -18,6 +18,7 @@ import com.edo.zscb.mapper.IncomeMapper;
 import com.edo.zscb.mapper.LegalMapper;
 import com.edo.zscb.mapper.PawnMapper;
 import com.edo.zscb.mapper.RegisterMapper;
+import com.edo.zscb.mapper.StaffExpMapper;
 import com.edo.zscb.mapper.StaffMapper;
 import com.edo.zscb.model.po.AssetHouse;
 import com.edo.zscb.model.po.AssetVehicle;
@@ -29,6 +30,7 @@ import com.edo.zscb.model.po.Legal;
 import com.edo.zscb.model.po.Pawn;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
+import com.edo.zscb.model.po.StaffExp;
 import com.edo.zscb.model.vo.HouseOwner;
 import com.edo.zscb.model.vo.SearchCondition;
 import com.edo.zscb.service.CreditService;
@@ -47,6 +49,9 @@ public class CreditServiceImpl implements CreditService {
 
     @Autowired
     private StaffMapper staffMapper;
+    
+    @Autowired
+    private StaffExpMapper staffExpMapper;
 
     @Autowired
     private BussinessMapper bussinessMapper;
@@ -80,9 +85,9 @@ public class CreditServiceImpl implements CreditService {
             result.setBankNumber(condition.getCardNumber());
             result.setHouseNumber(condition.getHouseNumber());
             result.setHouseAddress(condition.getHouseAddress());
-            result.setHouseArea(condition.getHouseArea());      
+            result.setHouseArea(condition.getHouseArea());
             result.setMateID(condition.getMateID());
-            
+            result.setDataSource(condition.getDataSource());
             for (HouseOwner item : condition.getHouseOwnerList()) {
                 if (StringUtil.isNotBlank(result.getHouseOwnerUserName())) {
                     result.setHouseOwnerUserName(result.getHouseOwnerUserName() + "," + item.getHouseOwnerName());
@@ -92,17 +97,17 @@ public class CreditServiceImpl implements CreditService {
                     result.setHouseOwnerIDNumber(result.getHouseOwnerIDNumber() + "," + item.getHouseOwnerIDNumber());
                 }
             }
-            
-            Identity existIdentity = identityMapper.selectByIDNumber(condition.getIdNumber());
-            if (existIdentity == null) {                
+
+            Identity existIdentity = identityMapper.selectByIDNumber(condition.getIdNumber(), condition.getDataSource());
+            if (existIdentity == null) {
                 result.setCreateTime(new Date());
                 result.setCreateUserID(operatorID);
-                
+
                 identityMapper.insert(result);
             } else {
                 result.setIdentityID(existIdentity.getIdentityID());
                 result.setUpdateUserID(operatorID);
-                
+
                 identityMapper.updateByPrimaryKey(result);
             }
         } catch (Exception e) {
@@ -136,11 +141,11 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Identity getIdentity(Integer identityID) {
+    public Identity getIdentity(String idNumber, String dataSource) {
         Identity result = new Identity();
 
         try {
-            result = identityMapper.selectByPrimaryKey(identityID);
+            result = identityMapper.selectByIDNumber(idNumber, dataSource);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -149,11 +154,11 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Register getRegister(String idNumber) {
+    public Register getRegister(String idNumber, String dataSource) {
         Register result = new Register();
 
         try {
-            result = registerMapper.selectByIDNumber(idNumber);
+            result = registerMapper.selectByIDNumber(idNumber, dataSource);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -162,7 +167,7 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Staff getStaff(String idNumber) {
+    public Staff getStaff(String idNumber, String dataSource) {
         Staff result = new Staff();
 
         try {
@@ -175,10 +180,23 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public List<Bussiness> getBussinessList(Integer identityID) {
+    public List<StaffExp> getStaffExpList(String idNumber, String dataSource) {
+        List<StaffExp> result = new ArrayList<StaffExp>();
+        
+        try {
+            result = staffExpMapper.selectStaffExpList(idNumber, dataSource);
+        } catch (Exception e) {
+            logger.fatal(e);
+        }
+        
+        return result;
+    }
+
+    @Override
+    public List<Bussiness> getBussinessList(String idNumber, String dataSource) {
         List<Bussiness> result = new ArrayList<Bussiness>();
         try {
-            result = bussinessMapper.selectByIdentityID(identityID);
+            // result = bussinessMapper.selectByIdentityID(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -186,10 +204,10 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public List<AssetHouse> getHouseList(Integer identityID) {
+    public List<AssetHouse> getHouseList(String idNumber, String dataSource) {
         List<AssetHouse> result = new ArrayList<AssetHouse>();
         try {
-            result = assetHouseMapper.selectByIdentityID(identityID);
+            // result = assetHouseMapper.selectByIdentityID(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -197,7 +215,7 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public List<AssetVehicle> getVehicleList(String idNumber) {
+    public List<AssetVehicle> getVehicleList(String idNumber, String dataSource) {
         List<AssetVehicle> result = new ArrayList<AssetVehicle>();
         try {
             result = assetVehicleMapper.selectByIDNumber(idNumber);
@@ -208,10 +226,10 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Debt getDebt(Integer identityID) {
+    public Debt getDebt(String idNumber, String dataSource) {
         Debt result = new Debt();
         try {
-            result = debtMapper.selectByIdentityID(identityID);
+            // result = debtMapper.selectByIdentityID(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -219,10 +237,10 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Income getIncome(Integer identityID) {
+    public Income getIncome(String idNumber, String dataSource) {
         Income result = new Income();
         try {
-            result = incomeMapper.selectByIdentityID(identityID);
+            // result = incomeMapper.selectByIdentityID(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -230,10 +248,10 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Legal getLegal(Integer identityID) {
+    public Legal getLegal(String idNumber, String dataSource) {
         Legal result = new Legal();
         try {
-            result = legalMapper.selectByIdentityID(identityID);
+            // result = legalMapper.selectByIdentityID(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -241,10 +259,10 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
-    public Pawn getPawn(Integer identityID) {
+    public Pawn getPawn(String idNumber, String dataSource) {
         Pawn result = new Pawn();
         try {
-            result = pawnMapper.selectByIdentityID(identityID);
+            // result = pawnMapper.selectByIdentityID(identityID);
         } catch (Exception e) {
             logger.fatal(e);
         }
