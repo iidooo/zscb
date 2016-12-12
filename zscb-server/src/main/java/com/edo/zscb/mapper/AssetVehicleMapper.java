@@ -23,7 +23,7 @@ public interface AssetVehicleMapper {
      * @param idNumber 身份ID
      * @return 车辆资产列表
      */
-    List<AssetVehicle> selectByIDNumber(String idNumber);
+    List<AssetVehicle> selectVehicleList(@Param("idNumber")String idNumber, @Param("dataSource")String dataSource);
     
     /**
      * 通过身份ID和车辆License获取车辆资产对象

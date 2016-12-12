@@ -31,11 +31,12 @@
 	</select>
 
 	<!-- 通过身份ID获得车辆资产列表 -->
-	<select id="selectByIDNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="selectVehicleList" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from credit_asset_vehicle V
-		where V.IsDelete = 0 and V.IDNumber = #{idNumber,jdbcType=VARCHAR}
+		where V.IsDelete = 0 and V.IDNumber = #{idNumber,jdbcType=VARCHAR} and 
+		V.DataSource = #{dataSource,jdbcType=VARCHAR}
 	</select>
 
 	<!-- 通过身份ID和车辆License获取车辆资产对象 -->

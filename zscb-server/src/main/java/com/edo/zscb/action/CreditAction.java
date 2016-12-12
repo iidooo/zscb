@@ -27,6 +27,7 @@ import com.edo.zscb.model.po.Debt;
 import com.edo.zscb.model.po.Identity;
 import com.edo.zscb.model.po.Income;
 import com.edo.zscb.model.po.Legal;
+import com.edo.zscb.model.po.LegalBlack;
 import com.edo.zscb.model.po.Pawn;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
@@ -92,6 +93,7 @@ public class CreditAction {
             searchCondition.setIdNumber(selfIDNumber);
             searchCondition.setMobile(selfMobile);
             searchCondition.setCardNumber(selfCardNumber);
+            searchCondition.setIsMain(true);
             searchCondition.setHouseNumber(houseNumber);
             searchCondition.setHouseAddress(houseAddress);
             searchCondition.setHouseArea(houseArea);
@@ -443,6 +445,32 @@ public class CreditAction {
 
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(legal);
+
+        } catch (Exception e) {
+            logger.fatal(e);
+            result.checkException(e);
+        }
+        return result;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = { "/bussiness/getLegalBlackList" }, method = RequestMethod.POST)
+    public ResponseResult getLegalBlackList(HttpServletRequest request, HttpServletResponse response) {
+        ResponseResult result = new ResponseResult();
+        try {
+            String idNumber = request.getParameter("idNumber");
+            String dataSource = request.getParameter("dataSource");
+
+            result.checkFieldRequired("idNumber", idNumber);
+            if (result.getMessages().size() > 0) {
+                result.setStatus(ResponseStatus.Failed.getCode());
+                return result;
+            }
+
+            List<LegalBlack> legalBlackList = creditService.getLegalBlackList(idNumber, dataSource);
+
+            result.setStatus(ResponseStatus.OK.getCode());
+            result.setData(legalBlackList);
 
         } catch (Exception e) {
             logger.fatal(e);

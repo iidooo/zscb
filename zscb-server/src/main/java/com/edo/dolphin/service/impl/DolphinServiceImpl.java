@@ -225,7 +225,7 @@ public class DolphinServiceImpl implements DolphinService {
             staff.setSocialLastDate(socialResource.getSocialUpdateTime().substring(0,9));
             staff.setDataSource(DolphinConstant.DATA_SOURCE);
 
-            Staff existStaff = staffMapper.selectByIDNumber(idNumber);
+            Staff existStaff = staffMapper.selectByIDNumber(idNumber, DolphinConstant.DATA_SOURCE);
             if (existStaff == null) {
                 staff.setCreateTime(new Date());
                 staff.setCreateUserID(operatorID);

@@ -190,14 +190,44 @@ var ReportLegalMate = React.createClass({
 });
 
 
-var ReportBlackListSelf = React.createClass({
-    mixins: [Reflux.connect(ReportLegalSelfStore, 'legal')],
-    getInitialState: function () {
-        return {
-            legal: {
-                blackList: []
+var ReportBlackListSelfActions = Reflux.createActions(['getLegalBlackList']);
+var ReportBlackListSelfStore = Reflux.createStore({
+    listenables: [ReportBlackListSelfActions],
+    onGetLegalBlackList: function (data) {
+        var url = SiteProperties.serverURL + BussinessAPI.getLegalBlackList;
+
+        data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
+        data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
+
+        // 检查token是否过期
+        if (data.accessToken == null || data.accessToken == "") {
+            location.href = SiteProperties.webURL + Page.login;
+            return false;
+        }
+
+        var self = this;
+        var callback = function (result) {
+            if (result.status == 200) {
+                self.trigger(result.data);
+            } else {
+                console.log(result);
             }
         };
+
+        ajaxPost(url, data, callback);
+    },
+});
+var ReportBlackListSelf = React.createClass({
+    mixins: [Reflux.connect(ReportBlackListSelfStore, 'legalBlackList')],
+    getInitialState: function () {
+        return {
+            legalBlackList: []
+        };
+    },
+    componentDidMount: function () {
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
+        ReportBlackListSelfActions.getLegalBlackList(this.state);
     },
     render: function () {
         return (
@@ -206,7 +236,7 @@ var ReportBlackListSelf = React.createClass({
                 <tr>
                     <th colSpan="4" className="text-center">借款人</th>
                 </tr>
-                {this.state.legal.blackList.map(function (item, index) {
+                {this.state.legalBlackList.map(function (item, index) {
                     return <ReportBlackListItemSelf key={item.blackID} item={item} index={index}/>
                 })}
                 </tbody>
@@ -225,14 +255,44 @@ var ReportBlackListItemSelf = React.createClass({
     }
 });
 
-var ReportBlackListMate = React.createClass({
-    mixins: [Reflux.connect(ReportLegalMateStore, 'legal')],
-    getInitialState: function () {
-        return {
-            legal: {
-                blackList: []
+var ReportBlackListMateActions = Reflux.createActions(['getLegalBlackList']);
+var ReportBlackListMateStore = Reflux.createStore({
+    listenables: [ReportBlackListMateActions],
+    onGetLegalBlackList: function (data) {
+        var url = SiteProperties.serverURL + BussinessAPI.getLegalBlackList;
+
+        data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
+        data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
+
+        // 检查token是否过期
+        if (data.accessToken == null || data.accessToken == "") {
+            location.href = SiteProperties.webURL + Page.login;
+            return false;
+        }
+
+        var self = this;
+        var callback = function (result) {
+            if (result.status == 200) {
+                self.trigger(result.data);
+            } else {
+                console.log(result);
             }
         };
+
+        ajaxPost(url, data, callback);
+    },
+});
+var ReportBlackListMate = React.createClass({
+    mixins: [Reflux.connect(ReportBlackListMateStore, 'legalBlackList')],
+    getInitialState: function () {
+        return {
+            legalBlackList: []
+        };
+    },
+    componentDidMount: function () {
+        this.state.idNumber = sessionStorage.getItem(SessionKey.selfIDNumber);
+        this.state.dataSource = sessionStorage.getItem(SessionKey.dataSource);
+        ReportBlackListMateActions.getLegalBlackList(this.state);
     },
     render: function () {
         return (
@@ -241,7 +301,7 @@ var ReportBlackListMate = React.createClass({
                 <tr>
                     <th colSpan="4" className="text-center">借款人</th>
                 </tr>
-                {this.state.legal.blackList.map(function (item, index) {
+                {this.state.legalBlackList.map(function (item, index) {
                     return <ReportBlackListItemMate key={item.blackID} item={item} index={index}/>
                 })}
                 </tbody>

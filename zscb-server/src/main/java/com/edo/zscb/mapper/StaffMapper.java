@@ -1,5 +1,7 @@
 package com.edo.zscb.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.edo.zscb.model.po.Staff;
 
 public interface StaffMapper {
@@ -19,7 +21,7 @@ public interface StaffMapper {
      * @param idNumber 身份证号
      * @return 职业信息对象
      */
-    Staff selectByIDNumber(String idNumber);
+    Staff selectByIDNumber(@Param("idNumber")String idNumber, @Param("dataSource")String dataSource);
 
     /**
      * 更新职业信息

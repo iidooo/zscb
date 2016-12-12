@@ -21,11 +21,23 @@
 	</sql>
 
 	<!-- 通过身份证ID获取黑名单对象 -->
-	<select id="selectByIDNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="selectLegalBlack" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from credit_legal_black
-		where IsDelete = 0 and IDNumber = #{idNumber,jdbcType=VARCHAR}
+		where IsDelete = 0 and IDNumber = #{idNumber,jdbcType=VARCHAR} and 
+		DataSource = #{dataSource,jdbcType=VARCHAR} and 
+		RecordTime = #{recordTime,jdbcType=VARCHAR} and 
+		Detail = #{detail,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 获得黑名单信息一览 -->
+	<select id="selectLegalBlackList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from credit_legal_black
+		where IsDelete = 0 and IDNumber = #{idNumber,jdbcType=VARCHAR} and 
+		DataSource = #{dataSource,jdbcType=VARCHAR}
 	</select>
 
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">

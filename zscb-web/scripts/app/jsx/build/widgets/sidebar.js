@@ -138,24 +138,20 @@ var SysManageSideBar = React.createClass({displayName: "SysManageSideBar",
                     ), 
                     React.createElement("ul", null, 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuWescrPersonBadInfo", href: SiteProperties.webURL + Page.wescrPersonalBadInfo}, "个人不良记录")
+                            React.createElement("a", {id: "sideMenuWescrCreditSearch", href: SiteProperties.webURL + Page.wescrCreditSearch}, 
+                                React.createElement("i", {className: "fa fa-search"}), 
+                                React.createElement("span", null, "资信查询")
+                            )
                         ), 
+
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuescrPersonalHouseMate", 
-                               href: SiteProperties.webURL + Page.wescrPersonalHouseMate}, "个人户籍及同住人")
-                        ), 
-                        React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuWescrBlackListByIdentityCard", 
-                               href: SiteProperties.webURL + Page.wescrBlackListByIdentityCard}, "个人黑名单信息")
-                        ), 
-                        React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuWescrQueryPersonalSocialInfo", 
-                               href: SiteProperties.webURL + Page.wescrQueryPersonalSocialInfo}, "个人社保信息")
-                        ), 
-                        React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuWescrZcyBankCardPersonalInfo", 
-                               href: SiteProperties.webURL + Page.wescrZcyBankCardPersonalInfo}, "个人银行卡交易记录")
+                            React.createElement("a", {id: "sideMenuWescrCreditSearchHistory", 
+                               href: SiteProperties.webURL + Page.wescrCreditSearchHistory}, 
+                                React.createElement("i", {className: "fa fa-list"}), 
+                                React.createElement("span", null, "查询历史")
+                            )
                         )
+
                     )
                 ), 
                 React.createElement("li", null, 

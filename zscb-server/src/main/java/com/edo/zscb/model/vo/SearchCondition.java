@@ -27,6 +27,8 @@ public class SearchCondition {
     
     private Integer mateID;
     
+    private boolean isMain;
+    
     private String dataSource;
 
     private String field;
@@ -115,6 +117,14 @@ public class SearchCondition {
 
     public void setMateID(Integer mateID) {
         this.mateID = mateID;
+    }
+
+    public boolean getIsMain() {
+        return isMain;
+    }
+
+    public void setIsMain(boolean isMain) {
+        this.isMain = isMain;
     }
 
     public String getDataSource() {

@@ -35,11 +35,12 @@
 	</select>
 
 	<!-- 通过身份证号获得职业信息 -->
-	<select id="selectByIDNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="selectByIDNumber" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from credit_staff S
-		where S.IsDelete = 0 and S.IDNumber = #{idNumber,jdbcType=VARCHAR}
+		where S.IsDelete = 0 and S.IDNumber = #{idNumber,jdbcType=VARCHAR} and 
+		S.DataSource = #{dataSource,jdbcType=VARCHAR}
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

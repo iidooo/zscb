@@ -7,7 +7,7 @@ var SearchHistoryStore = Reflux.createStore({
 
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        data.dataSource = "dolphin";
+        data.dataSource = "wescr";
 
         // 检查token是否过期
         if (data.accessToken == null || data.accessToken == "") {
@@ -64,12 +64,12 @@ var SearchHistory = React.createClass({displayName: "SearchHistory",
                 React.createElement(Header, {activeMenuID: "mainMenuSysManage"}), 
 
                 React.createElement("div", {id: "main", className: "container-fluid margin-top-60"}, 
-                    React.createElement(SideBar, {activeMainMenuID: "mainMenuSysManage", activeMenuID: "sideMenuDolphinCreditSearchHistory"}), 
+                    React.createElement(SideBar, {activeMainMenuID: "mainMenuSysManage", activeMenuID: "sideMenuWescrCreditSearchHistory"}), 
 
                     React.createElement("div", {className: "content-page"}, 
                         React.createElement("ol", {className: "breadcrumb"}, 
                             React.createElement("li", null, React.createElement("a", {href: "#"}, "系统管理")), 
-                            React.createElement("li", null, React.createElement("a", {href: "#"}, "海豚")), 
+                            React.createElement("li", null, React.createElement("a", {href: "#"}, "维氏盾")), 
                             React.createElement("li", {className: "active"}, "资信查询历史")
                         ), 
 
@@ -146,8 +146,8 @@ var IdentityTableRow = React.createClass({displayName: "IdentityTableRow",
     handleLink: function (selfIDNumber, mateIDNumber) {
         sessionStorage.setItem(SessionKey.selfIDNumber, selfIDNumber);
         sessionStorage.setItem(SessionKey.mateIDNumber, mateIDNumber);
-        sessionStorage.setItem(SessionKey.dataSource, "dolphin");
-        location.href = SiteProperties.webURL + Page.dolphinCreditReport;
+        sessionStorage.setItem(SessionKey.dataSource, "wescr");
+        location.href = SiteProperties.webURL + Page.wescrCreditReport;
     },
     render: function () {
         var mateName = "";

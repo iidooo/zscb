@@ -101,11 +101,7 @@ BigDAPI = {
 }
 
 WescrAPI = {
-    getPersonBadInfo: "/wescr/getPersonBadInfo",
-    getPersonalHouseMate: "/wescr/getPersonalHouseMate",
-    getBlackListByIdentityCard: "/wescr/getBlackListByIdentityCard",
-    queryPersonalSocialInfo: "/wescr/queryPersonalSocialInfo",
-    zcyBankCardPersonalInfo: "/wescr/zcyBankCardPersonalInfo",
+    creditSearch: "/wescr/creditSearch",
 }
 
 DolphinAPI = {
@@ -125,6 +121,7 @@ BussinessAPI = {
     getDebtInfo: "/bussiness/getDebtInfo",
     getIncomeInfo: "/bussiness/getIncomeInfo",
     getLegalInfo: "/bussiness/getLegalInfo",
+    getLegalBlackList: "/bussiness/getLegalBlackList",
     getPawnInfo: "/bussiness/getPawnInfo",
 }
 
@@ -207,11 +204,9 @@ Page = {
     profile: "/page/profile.html",
     password: "/page/password.html",
 
-    wescrPersonalBadInfo: "/page/wescr_personal_bad_info.html",
-    wescrPersonalHouseMate: "/page/wescr_personal_house_mate.html",
-    wescrBlackListByIdentityCard: "/page/wescr_blackList_by_identity_card.html",
-    wescrQueryPersonalSocialInfo: "/page/wescr_query_personal_social_info.html",
-    wescrZcyBankCardPersonalInfo: "/page/wescr_zcy_bank_card_personal_info.html",
+    wescrCreditSearch: "/page/wescr-credit-search.html",
+    wescrCreditSearchHistory: "/page/wescr-search-history.html",
+    wescrCreditReport: "/page/wescr-basic-report.html",
 
     dolphinCreditSearch: "/page/dolphin-credit-search.html",
     dolphinCreditSearchHistory: "/page/dolphin-search-history.html",

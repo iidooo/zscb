@@ -47,7 +47,7 @@
 		<include refid="Base_Column_List" />
 		from credit_register R
 		where R.IsDelete = 0 and R.ParentID = #{parentID,jdbcType=INTEGER} and 
-		R.UserName = #{name,jdbcType=VARCHAR}
+		R.UsedName = #{name,jdbcType=VARCHAR}
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

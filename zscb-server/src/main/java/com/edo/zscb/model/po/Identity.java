@@ -16,21 +16,23 @@ public class Identity {
     private String bankNumber;
 
     private String houseNumber;
-    
+
     private String houseAddress;
-    
+
     private String houseArea;
-    
+
     private String houseOwnerUserName;
-    
+
     private String HouseOwnerIDNumber;
 
     private Boolean isMatch;
 
+    private Boolean isMain;
+
     private Integer mateID;
-    
+
     private Identity mate;
-    
+
     private String dataSource;
 
     private String remarks;
@@ -42,7 +44,7 @@ public class Identity {
     private Date createTime;
 
     private Integer createUserID;
-    
+
     private SecurityUser createUser;
 
     private Boolean isDelete;
@@ -137,6 +139,14 @@ public class Identity {
         this.isMatch = isMatch;
     }
 
+    public Boolean getIsMain() {
+        return isMain;
+    }
+
+    public void setIsMain(Boolean isMain) {
+        this.isMain = isMain;
+    }
+
     public Integer getMateID() {
         return mateID;
     }
@@ -199,7 +209,7 @@ public class Identity {
 
     public void setCreateUserID(Integer createUserID) {
         this.createUserID = createUserID;
-    }    
+    }
 
     public SecurityUser getCreateUser() {
         return createUser;

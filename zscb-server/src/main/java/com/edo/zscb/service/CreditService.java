@@ -9,6 +9,7 @@ import com.edo.zscb.model.po.Debt;
 import com.edo.zscb.model.po.Identity;
 import com.edo.zscb.model.po.Income;
 import com.edo.zscb.model.po.Legal;
+import com.edo.zscb.model.po.LegalBlack;
 import com.edo.zscb.model.po.Pawn;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
@@ -53,6 +54,14 @@ public interface CreditService {
     Income getIncome(String idNumber, String dataSource);
     
     Legal getLegal(String idNumber, String dataSource);
+    
+    /**
+     * 得到黑名单一览
+     * @param idNumber 身份证号
+     * @param dataSource 数据源
+     * @return 黑名单一览对象
+     */
+    List<LegalBlack> getLegalBlackList(String idNumber, String dataSource);
     
     Pawn getPawn(String idNumber, String dataSource);
 }

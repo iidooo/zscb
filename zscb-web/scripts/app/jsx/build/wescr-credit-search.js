@@ -3,12 +3,11 @@ var CreditSearchActions = Reflux.createActions(['creditSearch']);
 var CreditSearchStore = Reflux.createStore({
     listenables: [CreditSearchActions],
     onCreditSearch: function (data) {
-        var url = SiteProperties.serverURL + DolphinAPI.creditSearch;
+        var url = SiteProperties.serverURL + WescrAPI.creditSearch;
 
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        data.dataSource = "dolphin";
-
+        data.dataSource = "wescr";
         // 检查token是否过期
         if (data.accessToken == null || data.accessToken == "") {
             location.href = SiteProperties.webURL + Page.login;
@@ -21,8 +20,8 @@ var CreditSearchStore = Reflux.createStore({
                 //console.log(data.selfIDNumber);
                 sessionStorage.setItem(SessionKey.selfIDNumber, data.selfIDNumber);
                 sessionStorage.setItem(SessionKey.mateIDNumber, data.mateIDNumber);
-                sessionStorage.setItem(SessionKey.dataSource, "dolphin");
-                location.href = SiteProperties.webURL + Page.dolphinCreditReport;
+                sessionStorage.setItem(SessionKey.dataSource, "wescr");
+                location.href = SiteProperties.webURL + Page.wescrCreditReport;
             }
         };
         data.houseOwnerList =  JSON.stringify(data.houseOwnerList);
@@ -83,12 +82,12 @@ var CreditSearch = React.createClass({displayName: "CreditSearch",
                 React.createElement(Header, {activeMenuID: "mainMenuSysManage"}), 
 
                 React.createElement("div", {id: "main", className: "container-fluid margin-top-60"}, 
-                    React.createElement(SideBar, {activeMainMenuID: "mainMenuSysManage", activeMenuID: "sideMenuDolphinCreditSearch"}), 
+                    React.createElement(SideBar, {activeMainMenuID: "mainMenuSysManage", activeMenuID: "sideMenuWescrCreditSearch"}), 
 
                     React.createElement("div", {className: "content-page"}, 
                         React.createElement("ol", {className: "breadcrumb"}, 
                             React.createElement("li", null, React.createElement("a", {href: "#"}, "系统管理")), 
-                            React.createElement("li", null, React.createElement("a", {href: "#"}, "海豚")), 
+                            React.createElement("li", null, React.createElement("a", {href: "#"}, "维氏盾")), 
                             React.createElement("li", {className: "active"}, "资信查询")
                         ), 
                         React.createElement("div", {className: "panel panel-default"}, 

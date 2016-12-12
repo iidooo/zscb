@@ -3,12 +3,11 @@ var CreditSearchActions = Reflux.createActions(['creditSearch']);
 var CreditSearchStore = Reflux.createStore({
     listenables: [CreditSearchActions],
     onCreditSearch: function (data) {
-        var url = SiteProperties.serverURL + DolphinAPI.creditSearch;
+        var url = SiteProperties.serverURL + WescrAPI.creditSearch;
 
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        data.dataSource = "dolphin";
-
+        data.dataSource = "wescr";
         // 检查token是否过期
         if (data.accessToken == null || data.accessToken == "") {
             location.href = SiteProperties.webURL + Page.login;
@@ -21,8 +20,8 @@ var CreditSearchStore = Reflux.createStore({
                 //console.log(data.selfIDNumber);
                 sessionStorage.setItem(SessionKey.selfIDNumber, data.selfIDNumber);
                 sessionStorage.setItem(SessionKey.mateIDNumber, data.mateIDNumber);
-                sessionStorage.setItem(SessionKey.dataSource, "dolphin");
-                location.href = SiteProperties.webURL + Page.dolphinCreditReport;
+                sessionStorage.setItem(SessionKey.dataSource, "wescr");
+                location.href = SiteProperties.webURL + Page.wescrCreditReport;
             }
         };
         data.houseOwnerList =  JSON.stringify(data.houseOwnerList);
@@ -83,12 +82,12 @@ var CreditSearch = React.createClass({
                 <Header activeMenuID="mainMenuSysManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuDolphinCreditSearch"/>
+                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuWescrCreditSearch"/>
 
                     <div className="content-page">
                         <ol className="breadcrumb">
                             <li><a href="#">系统管理</a></li>
-                            <li><a href="#">海豚</a></li>
+                            <li><a href="#">维氏盾</a></li>
                             <li className='active'>资信查询</li>
                         </ol>
                         <div className="panel panel-default">

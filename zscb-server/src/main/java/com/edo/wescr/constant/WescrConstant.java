@@ -2,7 +2,7 @@ package com.edo.wescr.constant;
 
 public class WescrConstant {
     
-    public static final String DATA_SOURCE = "维氏顿";
+    public static final String DATA_SOURCE = "wescr";
     
     // 访问API的用户名
     public static final String WESCR_LOGIN_ID = "zheshangceshi";

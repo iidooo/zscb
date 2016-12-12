@@ -13,6 +13,7 @@
 		<result column="HouseOwnerUserName" property="houseOwnerUserName" jdbcType="VARCHAR" />
 		<result column="HouseOwnerIDNumber" property="houseOwnerIDNumber" jdbcType="VARCHAR" />
 		<result column="IsMatch" property="isMatch" jdbcType="BIT" />
+		<result column="IsMain" property="isMain" jdbcType="BIT" />		
 		<result column="MateID" property="mateID" jdbcType="INTEGER" />
 		<result column="DataSource" property="dataSource" jdbcType="VARCHAR" />
 		<result column="Remarks" property="remarks" jdbcType="VARCHAR" />
@@ -29,7 +30,7 @@
 		I.IdentityID, I.Name, I.IDNumber, I.Mobile, I.BankNumber, I.HouseNumber, I.HouseAddress,
 		I.HouseArea, I.HouseOwnerUserName,
 		I.HouseOwnerIDNumber,
-		I.IsMatch, I.MateID, I.DataSource, I.Remarks,
+		I.IsMatch, I.IsMain, I.MateID, I.DataSource, I.Remarks,
 		I.UpdateTime, I.UpdateUserID,
 		I.CreateTime, I.CreateUserID,
 		I.IsDelete, I.Version
@@ -82,6 +83,7 @@
 		<if test="idNumber != null and idNumber != ''">
 			and I.IDNumber like "%${idNumber}%"
 		</if>
+		and I.IsMain = 1
 		and I.DataSource = #{dataSource, jdbcType=VARCHAR}
 	</select>
 
@@ -98,6 +100,7 @@
 			and I.IDNumber like "%${idNumber}%"
 		</if>
 		and I.DataSource = #{dataSource, jdbcType=VARCHAR}
+		and I.IsMain = 1
 		<if test="page != null">
 			order by ${page.sortField} ${page.sortType}
 			limit ${page.start}, ${page.pageSize}
@@ -146,6 +149,9 @@
 			<if test="isMatch != null">
 				IsMatch,
 			</if>
+			<if test="isMain != null">
+				IsMain,
+			</if>
 			<if test="mateID != null">
 				MateID,
 			</if>
@@ -192,6 +198,9 @@
 			</if>
 			<if test="isMatch != null">
 				#{isMatch,jdbcType=BIT},
+			</if>
+			<if test="isMain != null">
+				#{isMain,jdbcType=BIT},
 			</if>
 			<if test="mateID != null">
 				#{mateID,jdbcType=INTEGER},
@@ -244,6 +253,9 @@
 			</if>
 			<if test="isMatch != null">
 				IsMatch = #{isMatch,jdbcType=BIT},
+			</if>
+			<if test="isMain != null">
+				IsMain = #{isMain,jdbcType=BIT},
 			</if>
 			<if test="mateID != null">
 				MateID = #{mateID,jdbcType=INTEGER},

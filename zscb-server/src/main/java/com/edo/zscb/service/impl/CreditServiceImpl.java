@@ -15,6 +15,7 @@ import com.edo.zscb.mapper.BussinessMapper;
 import com.edo.zscb.mapper.DebtMapper;
 import com.edo.zscb.mapper.IdentityMapper;
 import com.edo.zscb.mapper.IncomeMapper;
+import com.edo.zscb.mapper.LegalBlackMapper;
 import com.edo.zscb.mapper.LegalMapper;
 import com.edo.zscb.mapper.PawnMapper;
 import com.edo.zscb.mapper.RegisterMapper;
@@ -27,6 +28,7 @@ import com.edo.zscb.model.po.Debt;
 import com.edo.zscb.model.po.Identity;
 import com.edo.zscb.model.po.Income;
 import com.edo.zscb.model.po.Legal;
+import com.edo.zscb.model.po.LegalBlack;
 import com.edo.zscb.model.po.Pawn;
 import com.edo.zscb.model.po.Register;
 import com.edo.zscb.model.po.Staff;
@@ -49,7 +51,7 @@ public class CreditServiceImpl implements CreditService {
 
     @Autowired
     private StaffMapper staffMapper;
-    
+
     @Autowired
     private StaffExpMapper staffExpMapper;
 
@@ -70,6 +72,9 @@ public class CreditServiceImpl implements CreditService {
 
     @Autowired
     private LegalMapper legalMapper;
+    
+    @Autowired
+    private LegalBlackMapper legalBlackMapper;
 
     @Autowired
     private PawnMapper pawnMapper;
@@ -87,6 +92,7 @@ public class CreditServiceImpl implements CreditService {
             result.setHouseAddress(condition.getHouseAddress());
             result.setHouseArea(condition.getHouseArea());
             result.setMateID(condition.getMateID());
+            result.setIsMain(condition.getIsMain());
             result.setDataSource(condition.getDataSource());
             for (HouseOwner item : condition.getHouseOwnerList()) {
                 if (StringUtil.isNotBlank(result.getHouseOwnerUserName())) {
@@ -171,7 +177,7 @@ public class CreditServiceImpl implements CreditService {
         Staff result = new Staff();
 
         try {
-            result = staffMapper.selectByIDNumber(idNumber);
+            result = staffMapper.selectByIDNumber(idNumber, dataSource);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -182,13 +188,13 @@ public class CreditServiceImpl implements CreditService {
     @Override
     public List<StaffExp> getStaffExpList(String idNumber, String dataSource) {
         List<StaffExp> result = new ArrayList<StaffExp>();
-        
+
         try {
             result = staffExpMapper.selectStaffExpList(idNumber, dataSource);
         } catch (Exception e) {
             logger.fatal(e);
         }
-        
+
         return result;
     }
 
@@ -218,7 +224,7 @@ public class CreditServiceImpl implements CreditService {
     public List<AssetVehicle> getVehicleList(String idNumber, String dataSource) {
         List<AssetVehicle> result = new ArrayList<AssetVehicle>();
         try {
-            result = assetVehicleMapper.selectByIDNumber(idNumber);
+            result = assetVehicleMapper.selectVehicleList(idNumber, dataSource);
         } catch (Exception e) {
             logger.fatal(e);
         }
@@ -252,6 +258,17 @@ public class CreditServiceImpl implements CreditService {
         Legal result = new Legal();
         try {
             // result = legalMapper.selectByIdentityID(identityID);
+        } catch (Exception e) {
+            logger.fatal(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<LegalBlack> getLegalBlackList(String idNumber, String dataSource) {
+        List<LegalBlack> result = new ArrayList<LegalBlack>();
+        try {
+             result = legalBlackMapper.selectLegalBlackList(idNumber, dataSource);
         } catch (Exception e) {
             logger.fatal(e);
         }

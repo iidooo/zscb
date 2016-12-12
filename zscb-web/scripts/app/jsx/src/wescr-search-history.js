@@ -7,7 +7,7 @@ var SearchHistoryStore = Reflux.createStore({
 
         data.accessToken = sessionStorage.getItem(SessionKey.accessToken);
         data.operatorID = sessionStorage.getItem(SessionKey.operatorID);
-        data.dataSource = "dolphin";
+        data.dataSource = "wescr";
 
         // 检查token是否过期
         if (data.accessToken == null || data.accessToken == "") {
@@ -64,12 +64,12 @@ var SearchHistory = React.createClass({
                 <Header activeMenuID="mainMenuSysManage"/>
 
                 <div id="main" className="container-fluid margin-top-60">
-                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuDolphinCreditSearchHistory"/>
+                    <SideBar activeMainMenuID="mainMenuSysManage" activeMenuID="sideMenuWescrCreditSearchHistory"/>
 
                     <div className="content-page">
                         <ol className="breadcrumb">
                             <li><a href="#">系统管理</a></li>
-                            <li><a href="#">海豚</a></li>
+                            <li><a href="#">维氏盾</a></li>
                             <li className='active'>资信查询历史</li>
                         </ol>
 
@@ -146,8 +146,8 @@ var IdentityTableRow = React.createClass({
     handleLink: function (selfIDNumber, mateIDNumber) {
         sessionStorage.setItem(SessionKey.selfIDNumber, selfIDNumber);
         sessionStorage.setItem(SessionKey.mateIDNumber, mateIDNumber);
-        sessionStorage.setItem(SessionKey.dataSource, "dolphin");
-        location.href = SiteProperties.webURL + Page.dolphinCreditReport;
+        sessionStorage.setItem(SessionKey.dataSource, "wescr");
+        location.href = SiteProperties.webURL + Page.wescrCreditReport;
     },
     render: function () {
         var mateName = "";

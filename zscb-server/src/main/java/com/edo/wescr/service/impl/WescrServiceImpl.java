@@ -1,5 +1,6 @@
 package com.edo.wescr.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.edo.wescr.model.SocialInfo;
 import com.edo.wescr.model.WescrResult;
 import com.edo.wescr.service.WescrService;
 import com.edo.wescr.util.WescrAPIUtil;
+import com.edo.zscb.mapper.IdentityMapper;
 import com.edo.zscb.mapper.LegalBlackMapper;
 import com.edo.zscb.mapper.RegisterMapper;
 import com.edo.zscb.mapper.StaffExpMapper;
@@ -34,6 +36,9 @@ import com.edo.zscb.model.po.StaffExp;
 @Service
 public class WescrServiceImpl implements WescrService {
     private static final Logger logger = Logger.getLogger(WescrServiceImpl.class);
+
+    @Autowired
+    private IdentityMapper identityMapper;
 
     @Autowired
     private LegalBlackMapper legalBlackMapper;
@@ -66,6 +71,13 @@ public class WescrServiceImpl implements WescrService {
             if ("0".equals(code)) {
                 result.setCode(code);
                 result.setMessage(json.getString("MESSAGE"));
+
+                // 更新身份信息
+                Identity identity = identityMapper.selectByIDNumber(idNumber, WescrConstant.DATA_SOURCE);
+                identity.setIsMatch(true);
+                identity.setUpdateUserID(operatorID);
+                identityMapper.updateByPrimaryKey(identity);
+
                 PersonBadInfo personBadInfo = (PersonBadInfo) JSONObject.toBean(json.getJSONObject("data"), PersonBadInfo.class);
                 result.setData(personBadInfo);
 
@@ -75,7 +87,7 @@ public class WescrServiceImpl implements WescrService {
                 legalBlack.setDetail(personBadInfo.getHethercrime());
                 legalBlack.setDataSource(WescrConstant.DATA_SOURCE);
 
-                LegalBlack existLegalBlack = legalBlackMapper.selectByIDNumber(idNumber);
+                LegalBlack existLegalBlack = legalBlackMapper.selectLegalBlack(legalBlack);
                 if (existLegalBlack == null) {
                     legalBlack.setCreateTime(new Date());
                     legalBlack.setCreateUserID(operatorID);
@@ -111,6 +123,13 @@ public class WescrServiceImpl implements WescrService {
             if ("200".equals(code)) {
                 result.setCode(code);
                 result.setMessage(json.getString("MESSAGE"));
+
+                // 更新身份信息
+                Identity identity = identityMapper.selectByIDNumber(idNumber, WescrConstant.DATA_SOURCE);
+                identity.setIsMatch(true);
+                identity.setUpdateUserID(operatorID);
+                identityMapper.updateByPrimaryKey(identity);
+
                 PersonInfo personInfo = (PersonInfo) JSONObject.toBean(json.getJSONObject("resultInfo"), PersonInfo.class);
                 @SuppressWarnings("unchecked")
                 List<HouseMateInfo> houseMateInfoList = (List<HouseMateInfo>) JSONArray.toCollection(json.getJSONArray("mcSaddInfoList"),
@@ -126,7 +145,7 @@ public class WescrServiceImpl implements WescrService {
                 register.setUsedName(personInfo.getNameUsd());
                 register.setDataSource(WescrConstant.DATA_SOURCE);
 
-                Register existRegister = registerMapper.selectByIDNumber(idNumber);
+                Register existRegister = registerMapper.selectByIDNumber(idNumber, WescrConstant.DATA_SOURCE);
                 if (existRegister == null) {
                     register.setCreateTime(new Date());
                     register.setCreateUserID(operatorID);
@@ -180,6 +199,13 @@ public class WescrServiceImpl implements WescrService {
             if ("0".equals(code)) {
                 result.setCode(code);
                 result.setMessage(json.getString("MESSAGE"));
+
+                // 更新身份信息
+                Identity identity = identityMapper.selectByIDNumber(idNumber, WescrConstant.DATA_SOURCE);
+                identity.setIsMatch(true);
+                identity.setUpdateUserID(operatorID);
+                identityMapper.updateByPrimaryKey(identity);
+
                 @SuppressWarnings("unchecked")
                 List<BlackInfo> blackInfoList = (List<BlackInfo>) JSONArray.toCollection(json.getJSONArray("data"), BlackInfo.class);
                 result.setData(blackInfoList);
@@ -189,8 +215,7 @@ public class WescrServiceImpl implements WescrService {
                     legalBlack.setIdNumber(idNumber);
                     legalBlack.setDetail(item.getType() + item.getOverdue_date());
                     legalBlack.setDataSource(WescrConstant.DATA_SOURCE);
-
-                    LegalBlack existLegalBlack = legalBlackMapper.selectByIDNumber(idNumber);
+                    LegalBlack existLegalBlack = legalBlackMapper.selectLegalBlack(legalBlack);
                     if (existLegalBlack == null) {
                         legalBlack.setCreateTime(new Date());
                         legalBlack.setCreateUserID(operatorID);
@@ -227,11 +252,40 @@ public class WescrServiceImpl implements WescrService {
             JSONObject json = JSONObject.fromObject(jsonString);
             String code = json.getString("CODE");
             if ("0".equals(code)) {
-                
                 result.setCode(code);
                 result.setMessage(json.getString("MESSAGE"));
-                @SuppressWarnings("unchecked")
-                List<SocialInfo> socialInfoList = (List<SocialInfo>) JSONArray.toCollection(json.getJSONArray("socialList"), SocialInfo.class);
+
+                // 更新身份信息
+                Identity identity = identityMapper.selectByIDNumber(idNumber, WescrConstant.DATA_SOURCE);
+                identity.setIsMatch(true);
+                identity.setUpdateUserID(operatorID);
+                identityMapper.updateByPrimaryKey(identity);
+
+                JSONArray socialJsonArray = json.getJSONArray("socialList");
+                List<SocialInfo> socialInfoList = new ArrayList<SocialInfo>();
+                for (Object object : socialJsonArray) {
+                    JSONObject jsonObject = JSONObject.fromObject(object);
+                    SocialInfo socialInfo = new SocialInfo();
+                    // 入职时间
+                    socialInfo.setJdwrq(jsonObject.getString("jdwrq"));
+                    // 离职时间
+                    socialInfo.setZxgxsj(jsonObject.getString("zxgxsj"));
+                    // 单位名称
+                    socialInfo.setDwmc(jsonObject.getString("dwmc"));
+                    // 姓名
+                    socialInfo.setName(jsonObject.getString("name"));
+                    // 手机号
+                    socialInfo.setMobile(jsonObject.getString("mobile"));
+                    // 身份证号
+                    socialInfo.setIdCard(jsonObject.getString("idCard"));
+                    // 缴纳社会保险金状态
+                    socialInfo.setJnshbxjzthz(jsonObject.getString("jnshbxjzthz"));
+                    // 领取社会保险金状态
+                    socialInfo.setLqyljzthz(jsonObject.getString("lqyljzthz"));
+                    // 社会保险登记号
+                    socialInfo.setShbxdjm(jsonObject.getString("shbxdjm"));
+                    socialInfoList.add(socialInfo);
+                }
                 result.setData(socialInfoList);
 
                 for (SocialInfo item : socialInfoList) {
@@ -260,7 +314,7 @@ public class WescrServiceImpl implements WescrService {
                         staff.setSocialStatus(item.getJnshbxjzthz());
                         staff.setDataSource(WescrConstant.DATA_SOURCE);
 
-                        Staff existStaff = staffMapper.selectByIDNumber(idNumber);
+                        Staff existStaff = staffMapper.selectByIDNumber(idNumber, WescrConstant.DATA_SOURCE);
                         if (existStaff == null) {
                             staff.setCreateTime(new Date());
                             staff.setCreateUserID(operatorID);
@@ -282,8 +336,36 @@ public class WescrServiceImpl implements WescrService {
 
     @Override
     public WescrResult zcyBankCardPersonalInfo(Integer operatorID, String name, String idNumber, String mobile, String bankCardNo) {
-        // TODO Auto-generated method stub
-        return null;
+        WescrResult result = new WescrResult();
+        try {
+            String key = WescrAPIUtil.randChar(10);
+            String prikey = WescrAPIUtil.publicEnc(key, WescrConstant.WESCR_SECRET_KEY);
+            Map<String, String> Objparameters = new HashMap<String, String>();
+            Objparameters.put("userId", WescrConstant.WESCR_LOGIN_ID);// 用户名
+            Objparameters.put("secretKey", prikey);
+            Objparameters.put("userPwd", WescrAPIUtil.getEncString(WescrConstant.WESCR_LOGIN_PASSWORD, key));// 密码
+            Objparameters.put("name", WescrAPIUtil.getEncString(name, key));// 参数
+            Objparameters.put("iDCardNo", WescrAPIUtil.getEncString(idNumber, key));// 参数
+            Objparameters.put("phoneNo", WescrAPIUtil.getEncString(mobile, key));// 参数
+            Objparameters.put("bankCardNo", WescrAPIUtil.getEncString(bankCardNo, key));// 参数
+            String jsonString = WescrAPIUtil.execute(WescrConstant.WESCR_ZCY_BANK_CARD_PERSONAL_INFO, Objparameters);// 方法名
+
+            JSONObject json = JSONObject.fromObject(jsonString);
+            String code = json.getString("CODE");
+            if ("200".equals(code)) {
+                result.setCode(code);
+                result.setMessage(json.getString("MESSAGE"));
+
+                // 更新身份信息
+                Identity identity = identityMapper.selectByIDNumber(idNumber, WescrConstant.DATA_SOURCE);
+                identity.setIsMatch(true);
+                identity.setUpdateUserID(operatorID);
+                identityMapper.updateByPrimaryKey(identity);
+            }
+        } catch (Exception e) {
+            logger.fatal(e);
+        }
+        return result;
     }
 
 }

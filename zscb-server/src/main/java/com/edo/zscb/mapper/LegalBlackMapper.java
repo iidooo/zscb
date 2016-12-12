@@ -1,5 +1,9 @@
 package com.edo.zscb.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.edo.zscb.model.po.LegalBlack;
 
 public interface LegalBlackMapper {
@@ -17,7 +21,15 @@ public interface LegalBlackMapper {
      * @param idNumber 身份证ID
      * @return 黑名单对象
      */
-    LegalBlack selectByIDNumber(String idNumber);
+    LegalBlack selectLegalBlack(LegalBlack record);
+    
+    /**
+     * 获得黑名单信息一览
+     * @param idNumber 身份证号
+     * @param dataSource 数据源
+     * @return 黑名单列表
+     */
+    List<LegalBlack> selectLegalBlackList(@Param("idNumber")String idNumber, @Param("dataSource")String dataSource);
 
     LegalBlack selectByPrimaryKey(Integer blackID);
 
