@@ -9,7 +9,7 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.edo.bigd.constant.APIConstant;
+import com.edo.bigd.constant.BigDConstant;
 import com.edo.zscb.model.vo.BigDAccount;
 import com.edo.zscb.model.vo.BigDOrder;
 import com.edo.zscb.model.vo.BigDOrderList;
@@ -17,7 +17,7 @@ import com.edo.zscb.model.vo.SearchCondition;
 import com.edo.zscb.service.BigDService;
 import com.iidooo.core.util.DateUtil;
 
-@Service
+
 public class BigDServiceImpl implements BigDService {
 
     private static final Logger logger = Logger.getLogger(BigDServiceImpl.class);
@@ -27,12 +27,12 @@ public class BigDServiceImpl implements BigDService {
         BigDAccount result = null;
         try {
             JSONObject data = new JSONObject();
-            data.put("identification", APIConstant.BIGD_LOGIN_ID);
-            data.put("password", APIConstant.BIGD_LOGIN_PASSWORD);
+            data.put("identification", BigDConstant.BIGD_LOGIN_ID);
+            data.put("password", BigDConstant.BIGD_LOGIN_PASSWORD);
 
-            String url = APIConstant.BIGD_API_URL + APIConstant.BIGD_API_LOGIN;
+            String url = BigDConstant.BIGD_API_URL + BigDConstant.BIGD_API_LOGIN;
             String[] command = { "curl", "--url", url, "-k", "--data", data.toString(), "-H", "Content-type: application/json", "-c",
-                    APIConstant.BIGD_COOKIE_PATH };
+                    BigDConstant.BIGD_COOKIE_PATH };
             ProcessBuilder process = new ProcessBuilder(command);
             Process p;
             p = process.start();
@@ -60,9 +60,9 @@ public class BigDServiceImpl implements BigDService {
             data.put("start_complete_time", startTime);
             data.put("end_complete_time", endTime);
 
-            String url = APIConstant.BIGD_API_URL + APIConstant.BIGD_API_ORDER + "?page=1&per_page=100";
+            String url = BigDConstant.BIGD_API_URL + BigDConstant.BIGD_API_ORDER + "?page=1&per_page=100";
 //            "--data", data.toString(), "-H", "Content-type: application/json", 
-            String[] command = { "curl", "--url", url, "-k", "-b", APIConstant.BIGD_COOKIE_PATH };
+            String[] command = { "curl", "--url", url, "-k", "-b", BigDConstant.BIGD_COOKIE_PATH };
             ProcessBuilder process = new ProcessBuilder(command);
             Process p;
             p = process.start();
@@ -86,8 +86,8 @@ public class BigDServiceImpl implements BigDService {
     public BigDOrder getOrder(Integer id) {
         BigDOrder result = null;
         try {
-            String url = APIConstant.BIGD_API_URL + APIConstant.BIGD_API_ORDER_EXPORT + id.toString();
-            String[] command = { "curl", "--url", url, "-k", "-H", "Content-type: application/json", "-b", APIConstant.BIGD_COOKIE_PATH };
+            String url = BigDConstant.BIGD_API_URL + BigDConstant.BIGD_API_ORDER_EXPORT + id.toString();
+            String[] command = { "curl", "--url", url, "-k", "-H", "Content-type: application/json", "-b", BigDConstant.BIGD_COOKIE_PATH };
             ProcessBuilder process = new ProcessBuilder(command);
             Process p;
             p = process.start();
@@ -130,9 +130,9 @@ public class BigDServiceImpl implements BigDService {
             data.put("search_fields", searchFields);
             data.put("search_params", searchParams);
 
-            String url = APIConstant.BIGD_API_URL + APIConstant.BIGD_API_NEW_ORDER_SIMPLE;
+            String url = BigDConstant.BIGD_API_URL + BigDConstant.BIGD_API_NEW_ORDER_SIMPLE;
             String[] command = { "curl", "--url", url, "-k", "--data", data.toString(), "-H", "Content-type: application/json", "-b",
-                    APIConstant.BIGD_COOKIE_PATH };
+                    BigDConstant.BIGD_COOKIE_PATH };
             ProcessBuilder process = new ProcessBuilder(command);
             Process p;
             p = process.start();

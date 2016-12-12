@@ -9,17 +9,23 @@ import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import com.edo.bigd.constant.APIConstant;
-import com.iidooo.core.util.HttpUtil;
+import com.edo.bigd.constant.BigDConstant;
+import com.iidooo.core.util.DateUtil;
 
 public class Test {
 
     public static void main(String[] args) throws Exception {
+        Test.login();
+        Test.idIsMatch();
+    }
+
+    private static void login() {
         JSONObject data = new JSONObject();
-        data.put("identification", APIConstant.BIGD_LOGIN_ID);
-        data.put("password", APIConstant.BIGD_LOGIN_PASSWORD);
+        data.put("identification", BigDConstant.BIGD_LOGIN_ID);
+        data.put("password", BigDConstant.BIGD_LOGIN_PASSWORD);
 
         // String result = HttpUtil.doPost(APIConstant.API_URL + APIConstant.API_LOGIN, data.toString());
         // System.out.println(result);
@@ -80,9 +86,9 @@ public class Test {
         // respInt = insr.read();
         // }
 
-        String username = APIConstant.BIGD_LOGIN_ID;
-        String password = APIConstant.BIGD_LOGIN_PASSWORD;
-        String url = APIConstant.BIGD_API_URL + APIConstant.BIGD_API_LOGIN;
+        String username = BigDConstant.BIGD_LOGIN_ID;
+        String password = BigDConstant.BIGD_LOGIN_PASSWORD;
+        String url = BigDConstant.BIGD_API_URL + BigDConstant.BIGD_API_LOGIN;
         String[] command = { "curl", "--url", url, "-k", "--data", data.toString(), "-H", "Content-type: application/json", "-c", "~/cookie123" };
         ProcessBuilder process = new ProcessBuilder(command);
         Process p;
@@ -93,13 +99,52 @@ public class Test {
             String line = null;
             while ((line = reader.readLine()) != null) {
                 builder.append(line);
-            }            
+            }
             data = JSONObject.fromObject(builder.toString());
-            
-            System.out.print(data);
+
+//            System.out.print(data);
         } catch (IOException e) {
             System.out.print("error");
             e.printStackTrace();
+        }
+    }
+
+    private static void idIsMatch() {
+        try {
+
+            JSONObject data = new JSONObject();
+            data.put("name", "order_" + DateUtil.getNow(DateUtil.DATE_TIME_FULL_SIMPLE));
+            data.put("remark", "order_" + DateUtil.getNow(DateUtil.DATE_TIME_FULL_SIMPLE));
+
+            JSONArray searchFields = new JSONArray();
+            // 添加要查询的字段
+            searchFields.add("idn_is_match");
+
+            JSONArray searchParams = new JSONArray();
+            JSONObject searchParamSelf = new JSONObject();
+            searchParamSelf.put("id_number", "31022919840724043X");
+            searchParamSelf.put("name", "王轶贤");
+            searchParams.add(searchParamSelf);
+
+            data.put("search_fields", searchFields);
+            data.put("search_params", searchParams);
+
+            String url = BigDConstant.BIGD_API_URL + BigDConstant.BIGD_API_NEW_ORDER_SIMPLE;
+            String[] command = { "curl", "--url", url, "-k", "--data", data.toString(), "-H", "Content-type: application/json", "-b",
+                    BigDConstant.BIGD_COOKIE_PATH };
+            ProcessBuilder process = new ProcessBuilder(command);
+            Process p;
+            p = process.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            StringBuilder builder = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+            data = JSONObject.fromObject(builder.toString());
+            System.out.print(data);
+        } catch (Exception e) {
+            // TODO: handle exception
         }
     }
 

@@ -94,10 +94,7 @@ SexMap = {
 ContentTypeList = [];
 
 BigDAPI = {
-    getAccountInfo: "/bigd/getAccountInfo",
-    getOrderList: "/bigd/getOrderList",
-    createNewOrder: "/bigd/createNewOrder",
-    getOrder: "/bigd/getOrder",
+    creditSearch: "/bigd/creditSearch",
 }
 
 WescrAPI = {
@@ -192,10 +189,7 @@ role = {
 
 Page = {
     login: "/page/login.html",
-    bigdAccountInfo: "/page/bigd_account_info.html",
-    bigdOrderList: "/page/bigd-order-list.html",
-    bigdOrderDetail: "/page/bigd-order-detail.html",
-    bigdNewOrder: "/page/bigd-new-order.html",
+
     systemManage: "/page/system-manage.html",
     creditSearch: "/page/credit-search.html",
     creditSearchHistory: "/page/credit_search_history.html",
@@ -203,6 +197,10 @@ Page = {
     creditBasicReport: "/page/credit_basic_report.html",
     profile: "/page/profile.html",
     password: "/page/password.html",
+
+    bigdCreditSearch: "/page/bigd-credit-search.html",
+    bigdCreditSearchHistory: "/page/bigd-search-history.html",
+    bigdCreditReport: "/page/bigd-basic-report.html",
 
     wescrCreditSearch: "/page/wescr-credit-search.html",
     wescrCreditSearchHistory: "/page/wescr-search-history.html",

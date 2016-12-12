@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 import net.sf.json.JSONObject;
 
-import com.edo.bigd.constant.APIConstant;
+import com.edo.bigd.constant.BigDConstant;
 
 public class TestOrder {
     public static void main(String[] args) throws Exception {
@@ -14,7 +14,7 @@ public class TestOrder {
         data.put("page", "1");
         data.put("per_page", "10");
         
-        String url = APIConstant.BIGD_API_URL + APIConstant.BIGD_API_ORDER;
+        String url = BigDConstant.BIGD_API_URL + BigDConstant.BIGD_API_ORDER;
         String[] command = { "curl", "--url", url, "-k","-b", "/Users/Ethan/cookie123" };
         ProcessBuilder process = new ProcessBuilder(command);
         Process p;

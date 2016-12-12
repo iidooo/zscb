@@ -1,6 +1,8 @@
 package com.edo.bigd.constant;
 
-public class APIConstant {
+public class BigDConstant {
+    
+    public static final String DATA_SOURCE = "bigd";
     
     public static final String BIGD_LOGIN_ID = "cztest";
     

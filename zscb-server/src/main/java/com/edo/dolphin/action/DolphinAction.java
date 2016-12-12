@@ -21,10 +21,10 @@ import com.iidooo.core.model.ResponseResult;
 @Controller
 public class DolphinAction {
     private static final Logger logger = Logger.getLogger(DolphinAction.class);
-    
+
     @Autowired
     private DolphinService dolphinService;
-    
+
     @Autowired
     private CreditService creditService;
 
@@ -68,6 +68,7 @@ public class DolphinAction {
             searchCondition.setHouseNumber(houseNumber);
             searchCondition.setHouseAddress(houseAddress);
             searchCondition.setHouseArea(houseArea);
+            searchCondition.setIsMain(true);
             searchCondition.setDataSource(DolphinConstant.DATA_SOURCE);
             if (mateIdentity != null) {
                 searchCondition.setMateID(mateIdentity.getIdentityID());
@@ -85,14 +86,14 @@ public class DolphinAction {
             }
             Identity selfIdentity = creditService.creditSearch(searchCondition, operatorID);
 
-            if (!selfName.isEmpty() && !selfIDNumber.isEmpty()) {                
+            if (!selfName.isEmpty() && !selfIDNumber.isEmpty()) {
                 dolphinService.queryZrrKxHonest(operatorID, selfName, selfIDNumber);
             }
 
             if (!mateName.isEmpty() && !mateIDNumber.isEmpty()) {
                 dolphinService.queryZrrKxHonest(operatorID, mateName, mateIDNumber);
             }
-            
+
             result.setStatus(ResponseStatus.OK.getCode());
             result.setData(selfIdentity);
         } catch (Exception e) {

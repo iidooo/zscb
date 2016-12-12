@@ -23,7 +23,7 @@ import com.iidooo.core.enums.ResponseStatus;
 import com.iidooo.core.model.Page;
 import com.iidooo.core.model.ResponseResult;
 
-@Controller
+
 public class BigDAction {
 
     private static final Logger logger = Logger.getLogger(BigDAction.class);

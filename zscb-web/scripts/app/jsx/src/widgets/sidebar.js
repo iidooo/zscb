@@ -120,13 +120,16 @@ var SysManageSideBar = React.createClass({
                     </a>
                     <ul>
                         <li>
-                            <a id="sideMenuBigDAccountInfo" href={SiteProperties.webURL + Page.bigdAccountInfo}>账户信息</a>
+                            <a id="sideMenuBigDCreditSearch" href={SiteProperties.webURL + Page.bigdCreditSearch}>
+                                <i className="fa fa-search"></i>
+                                <span>资信查询</span>
+                            </a>
                         </li>
                         <li>
-                            <a id="sideMenuBigDNewOrder" href={SiteProperties.webURL + Page.bigdNewOrder}>资信查询</a>
-                        </li>
-                        <li>
-                            <a id="sideMenuBigDOrderHistory" href={SiteProperties.webURL + Page.bigdOrderList}>查询历史</a>
+                            <a id="sideMenuBigDCreditSearchHistory" href={SiteProperties.webURL + Page.bigdCreditSearchHistory}>
+                                <i className="fa fa-list"></i>
+                                <span>查询历史</span>
+                            </a>
                         </li>
                     </ul>
                 </li>

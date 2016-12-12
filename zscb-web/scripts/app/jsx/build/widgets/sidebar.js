@@ -120,13 +120,16 @@ var SysManageSideBar = React.createClass({displayName: "SysManageSideBar",
                     ), 
                     React.createElement("ul", null, 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDAccountInfo", href: SiteProperties.webURL + Page.bigdAccountInfo}, "账户信息")
+                            React.createElement("a", {id: "sideMenuBigDCreditSearch", href: SiteProperties.webURL + Page.bigdCreditSearch}, 
+                                React.createElement("i", {className: "fa fa-search"}), 
+                                React.createElement("span", null, "资信查询")
+                            )
                         ), 
                         React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDNewOrder", href: SiteProperties.webURL + Page.bigdNewOrder}, "资信查询")
-                        ), 
-                        React.createElement("li", null, 
-                            React.createElement("a", {id: "sideMenuBigDOrderHistory", href: SiteProperties.webURL + Page.bigdOrderList}, "查询历史")
+                            React.createElement("a", {id: "sideMenuBigDCreditSearchHistory", href: SiteProperties.webURL + Page.bigdCreditSearchHistory}, 
+                                React.createElement("i", {className: "fa fa-list"}), 
+                                React.createElement("span", null, "查询历史")
+                            )
                         )
                     )
                 ), 
