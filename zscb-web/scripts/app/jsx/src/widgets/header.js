@@ -41,7 +41,7 @@ var MainMenu = React.createClass({
         return (
             <ul className="nav navbar-nav">
                 <li id="mainMenuSysManage">
-                    <a href={SiteProperties.webURL + Page.systemManage}>系统管理</a>
+                    <a href={SiteProperties.webURL + Page.bigdCreditSearch}>系统管理</a>
                 </li>
                 <li id="mainMenuBussinessManage">
                     <a href={SiteProperties.webURL + Page.creditSearch}>征信业务</a>

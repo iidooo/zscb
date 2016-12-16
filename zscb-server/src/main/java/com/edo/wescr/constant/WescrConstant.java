@@ -5,7 +5,7 @@ public class WescrConstant {
     public static final String DATA_SOURCE = "wescr";
     
     // 访问API的用户名
-    public static final String WESCR_LOGIN_ID = "zheshangceshi";
+    public static final String WESCR_LOGIN_ID = "zheshangyinhang";
 
     // 访问API的密码
     public static final String WESCR_LOGIN_PASSWORD = "12345678";

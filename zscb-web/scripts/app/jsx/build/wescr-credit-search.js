@@ -211,7 +211,8 @@ var CreditSearch = React.createClass({displayName: "CreditSearch",
                                             houseOwnerList: this.state.houseOwnerList}), 
 
                                 React.createElement("div", {className: "text-right"}, 
-                                    React.createElement("button", {type: "button", className: "btn btn-primary", onClick: this.handleSearch}, "查询"
+                                    React.createElement("button", {type: "button", className: "btn btn-primary ladda-button", onClick: this.handleSearch, "data-style": "expand-left"}, 
+                                        React.createElement("span", {className: "ladda-label"}, "查询")
                                     )
                                 )
                             )

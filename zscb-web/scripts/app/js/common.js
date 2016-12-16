@@ -1,18 +1,18 @@
 SiteProperties = {
     // 开发环境
-    webURL: "http://localhost:63342/zscb-web",
-    serverURL: "http://localhost:8080/zscb-server",
+    //webURL: "http://localhost:63342/zscb-web",
+    //serverURL: "http://localhost:8080/zscb-server",
     // 测试环境
-    //webURL: "http://www.edo-network.com/zscb-web",
-    //serverURL: "http://www.edo-network.com/zscb-server",
+    webURL: "http://www.edo-network.com/zscb-web",
+    serverURL: "http://www.edo-network.com/zscb-server",
 
 
     // 正式环境
     //clientURL : "http://www.iidooo.com/cms-admin",
     //serverURL : "http://www.iidooo.com/cms-server",
 
-    siteVersion: "1.0.0.0 B20160921",
-    cmsAPIVersion: "0.1.1.0 B20160711",
+    siteVersion: "1.0.1.0 B20161213",
+    cmsAPIVersion: "1.0.1.0 B20161213",
 };
 
 // 存储在SessionStorage中的key
@@ -287,6 +287,9 @@ function ajaxPost(url, data, callback) {
         url: url,
         dataType: "json",
         data: data,
+        beforeSend:function () {
+            // 显示loading
+        },
         success: function (result) {
             callback(result);
         },

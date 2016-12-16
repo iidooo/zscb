@@ -41,7 +41,7 @@ var MainMenu = React.createClass({displayName: "MainMenu",
         return (
             React.createElement("ul", {className: "nav navbar-nav"}, 
                 React.createElement("li", {id: "mainMenuSysManage"}, 
-                    React.createElement("a", {href: SiteProperties.webURL + Page.systemManage}, "系统管理")
+                    React.createElement("a", {href: SiteProperties.webURL + Page.bigdCreditSearch}, "系统管理")
                 ), 
                 React.createElement("li", {id: "mainMenuBussinessManage"}, 
                     React.createElement("a", {href: SiteProperties.webURL + Page.creditSearch}, "征信业务")

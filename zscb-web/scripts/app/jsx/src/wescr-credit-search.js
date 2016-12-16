@@ -211,7 +211,8 @@ var CreditSearch = React.createClass({
                                             houseOwnerList={this.state.houseOwnerList}/>
 
                                 <div className="text-right">
-                                    <button type="button" className="btn btn-primary" onClick={this.handleSearch}>查询
+                                    <button type="button" className="btn btn-primary ladda-button" onClick={this.handleSearch} data-style="expand-left">
+                                        <span className="ladda-label">查询</span>
                                     </button>
                                 </div>
                             </div>

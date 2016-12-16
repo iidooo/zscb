@@ -13,7 +13,7 @@ var LoginStore = Reflux.createStore({
                 sessionStorage.setItem(SessionKey.operatorID, result.data.userID);
                 // 用户信息用的地方比较多，以json格式存储进sessionStorage
                 sessionStorage.setItem(SessionKey.user, JSON.stringify(result.data.user));
-                location.href = SiteProperties.webURL + Page.systemManage;
+                location.href = SiteProperties.webURL + Page.bigdCreditSearch;
             } else {
                 var message = Message.LOGIN_FAILED;
                 $("#messageBox").show().text(message);
