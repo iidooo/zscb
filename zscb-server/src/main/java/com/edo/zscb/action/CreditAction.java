@@ -119,7 +119,7 @@ public class CreditAction {
                 WescrResult wescrResultBlackList = wescrService.getBlackListByIdentityCard(operatorID, selfName, selfIDNumber);
                 WescrResult wescrResultSocialInfo = wescrService.queryPersonalSocialInfo(operatorID, selfName, selfIDNumber, selfMobile);
 
-                dolphinService.queryZrrKxHonest(operatorID, selfName, selfIDNumber);
+                dolphinService.queryZrrKxHonest(operatorID, selfName, selfIDNumber, selfMobile);
             }
 
             if (!mateName.isEmpty() && !mateIDNumber.isEmpty()) {
@@ -128,7 +128,7 @@ public class CreditAction {
                 wescrService.getBlackListByIdentityCard(operatorID, mateName, mateIDNumber);
                 wescrService.queryPersonalSocialInfo(operatorID, mateName, mateIDNumber, mateMobile);
 
-                dolphinService.queryZrrKxHonest(operatorID, mateName, mateIDNumber);
+                dolphinService.queryZrrKxHonest(operatorID, mateName, mateIDNumber, mateMobile);
             }
 
             // houseOwner.set

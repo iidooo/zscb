@@ -147,7 +147,7 @@ var IdentityTableRow = React.createClass({
         sessionStorage.setItem(SessionKey.selfIDNumber, selfIDNumber);
         sessionStorage.setItem(SessionKey.mateIDNumber, mateIDNumber);
         sessionStorage.setItem(SessionKey.dataSource, "dolphin");
-        location.href = SiteProperties.webURL + Page.dolphinCreditReport;
+        location.href = SiteProperties.webURL + Page.bigdCreditReport;
     },
     render: function () {
         var mateName = "";

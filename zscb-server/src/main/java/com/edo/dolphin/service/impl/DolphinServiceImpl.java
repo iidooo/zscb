@@ -50,11 +50,11 @@ public class DolphinServiceImpl implements DolphinService {
     private AssetVehicleMapper assetVehicleMapper;
 
     @Override
-    public DolphinResult queryZrrKxHonest(Integer operatorID, String name, String idNumber) {
+    public DolphinResult queryZrrKxHonest(Integer operatorID, String name, String idNumber, String mobile) {
         DolphinResult result = new DolphinResult();
 
         try {
-            String data = DolphinAPIUtil.execute(name, idNumber);
+            String data = DolphinAPIUtil.execute(name, idNumber, mobile);
 
             Document document = DocumentHelper.parseText(data);
             Element root = document.getRootElement();
@@ -67,7 +67,7 @@ public class DolphinServiceImpl implements DolphinService {
 
             if (!result.getResult().equals("1005")) {
                 return result;
-            }           
+            }
 
             @SuppressWarnings("unchecked")
             List<Element> resourceList = root.elements("RESOURCE");

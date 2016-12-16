@@ -22,13 +22,13 @@ public class DolphinAPIUtil {
 
     public static void main(String args[]) {
         try {
-            DolphinAPIUtil.execute("王轶贤", "31022919840724043X");
+            DolphinAPIUtil.execute("王轶贤", "31022919840724043X", "13816867453");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static String execute(String name, String idNumber){
+    public static String execute(String name, String idNumber, String mobile){
         String result = "";
         WSS4JOutHandler wsOut;
         Service srvcModel = new ObjectServiceFactory().create(AppQueryService.class);
@@ -51,8 +51,8 @@ public class DolphinAPIUtil {
             wsOut = new WSS4JOutHandler(properties);
             client.addOutHandler(new DOMOutHandler());
             client.addOutHandler(wsOut);
-            String licenseFile = "15033333333";
-            String[] param = new String[] { "123" };
+            String licenseFile = mobile;
+            String[] param = null;
             result = srvc.queryZrrKxHonest(xm, zjhm, uname, password, param, licenseFile);
             System.out.println(result);
             client.close();

@@ -87,11 +87,11 @@ public class DolphinAction {
             Identity selfIdentity = creditService.creditSearch(searchCondition, operatorID);
 
             if (!selfName.isEmpty() && !selfIDNumber.isEmpty()) {
-                dolphinService.queryZrrKxHonest(operatorID, selfName, selfIDNumber);
+                dolphinService.queryZrrKxHonest(operatorID, selfName, selfIDNumber, selfMobile);
             }
 
             if (!mateName.isEmpty() && !mateIDNumber.isEmpty()) {
-                dolphinService.queryZrrKxHonest(operatorID, mateName, mateIDNumber);
+                dolphinService.queryZrrKxHonest(operatorID, mateName, mateIDNumber, mateMobile);
             }
 
             result.setStatus(ResponseStatus.OK.getCode());
